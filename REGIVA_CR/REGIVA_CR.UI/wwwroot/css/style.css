@@ -1,0 +1,18 @@
+﻿
+:root {
+    --litepicker-day-width: 48px;
+}
+
+.litepicker {
+    font-size: 1rem;
+    z-index: 1060 !important;
+}
+
+.litepicker .container__days .day-item {
+    font-size: 0.80rem;
+}
+
+.litepicker .month-item-name, .litepicker .month-item-year {
+    font-size: 1.1rem !important;
+}
+

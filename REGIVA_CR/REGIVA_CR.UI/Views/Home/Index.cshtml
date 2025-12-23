@@ -1,0 +1,101 @@
+﻿@{
+    // CAMBIO: Preferencia por ViewData en .NET Core
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <div class="page-pretitle">Resumen</div>
+                <h2 class="page-title">Dashboard General</h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-new-report">
+                    Nuevo Reporte
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row row-deck row-cards">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="subheader">Ingresos</div>
+                            <div class="ms-auto lh-1"><span class="text-green">+8% <i class="bi bi-graph-up-arrow"></i></span></div>
+                        </div>
+                        <div class="h1 mb-3">$4,300</div>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-primary" style="width:75%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="subheader">Usuarios Activos</div>
+                            <div class="ms-auto lh-1"><span class="text-yellow">0% <i class="bi bi-dash-lg"></i></span></div>
+                        </div>
+                        <div class="h1 mb-3">1,250</div>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-yellow" style="width:40%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Facturas Recientes</h3>
+                    </div>
+
+                    <div class="table-responsive-md">
+                        <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                                <tr>
+                                    <th class="w-1">No.</th>
+                                    <th>Asunto</th>
+                                    <th>Cliente</th>
+                                    <th>Estado</th>
+                                    <th>Precio</th>
+                                    <th class="w-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="text-muted">001401</span></td>
+                                    <td><a href="#" class="text-reset">Diseño Web App</a></td>
+                                    <td>Carlson Limited</td>
+                                    <td><span class="badge bg-success me-1"></span> Pagado</td>
+                                    <td>$887</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-toggle="dropdown">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="bi bi-eye me-2 text-muted"></i> Ver
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="bi bi-download me-2 text-muted"></i> Descargar
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

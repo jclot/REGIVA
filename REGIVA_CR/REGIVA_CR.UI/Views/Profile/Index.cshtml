@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Perfil";
+}
+
+<div class="page-header">
+    <div class="container-xl">
+        <h2 class="page-title">Mi Perfil</h2>
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <span class="avatar avatar-xl mb-3" style="background-image: url(https://ui-avatars.com/api/?name=Admin+User&background=0ca678&color=fff)"></span>
+                        <h3 class="m-0 mb-1">Administrador Principal</h3>
+                        <div class="text-muted">admin@ejemplo.com</div>
+                        <span class="badge bg-blue-lt mt-3">Rol: Admin</span>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Profile" asp-action="Settings" class="btn btn-outline-primary w-100">Editar Perfil</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Actividad Reciente</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="steps steps-vertical">
+                            <li class="step-item">
+                                <div class="h4 m-0">Generó reporte de ventas</div>
+                                <div class="text-muted">Exportó datos a PDF correctamente.</div>
+                                <span class="badge bg-green-lt mt-2">Hace 2 horas</span>
+                            </li>
+                            <li class="step-item">
+                                <div class="h4 m-0">Inicio de sesión</div>
+                                <div class="text-muted">Desde IP 192.168.1.1</div>
+                                <span class="badge bg-blue-lt mt-2">Hace 1 día</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

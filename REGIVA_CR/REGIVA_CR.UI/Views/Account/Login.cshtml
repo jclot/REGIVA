@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login - ADMIN PANEL</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="~/css/tabler.min.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column theme-light">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="#" class="navbar-brand navbar-brand-autodark">
+                    <i class="bi bi-speedometer2 fs-2"></i> ADMIN PANEL
+                </a>
+            </div>
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="h2 text-center mb-4">Iniciar Sesión</h2>
+                    <form asp-controller="Home" asp-action="Index" method="get" autocomplete="off">
+                        <div class="mb-3">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" placeholder="admin@ejemplo.com">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" placeholder="••••••••">
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center text-muted mt-3">
+                ¿No tienes cuenta? <a asp-controller="Account" asp-action="Register">Regístrate</a>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/tabler.min.js" asp-append-version="true"></script>
+</body>
+</html>

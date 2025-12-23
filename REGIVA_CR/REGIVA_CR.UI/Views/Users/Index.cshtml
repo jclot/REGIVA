@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">Gestión de Usuarios</h2>
+            </div>
+            <div class="col-auto ms-auto">
+                <a href="#" class="btn btn-primary"><i class="bi bi-person-plus-fill me-1"></i>Agregar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-vcenter card-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th class="w-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="d-flex py-1 align-items-center">
+                                    <span class="avatar me-2" style="background-image: url(https://ui-avatars.com/api/?name=Juan+Perez&background=d6336c&color=fff)"></span>
+                                    <div class="flex-fill">
+                                        <div class="font-weight-medium">Juan Pérez</div>
+                                        <div class="text-muted"><a href="#" class="text-reset">juan@demo.com</a></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-muted">Administrador</td>
+                            <td><span class="badge bg-green-lt">Activo</span></td>
+                            <td>
+                                <div class="btn-list flex-nowrap">
+                                    <a href="#" class="btn btn-ghost-secondary btn-icon"><i class="bi bi-pencil"></i></a>
+                                    <a href="#" class="btn btn-ghost-danger btn-icon"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
