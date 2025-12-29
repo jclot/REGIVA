@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "_PublicLayout";
+    ViewData["Title"] = "Planes y Precios";
+}
+
+<div class="py-5">
+    <div class="container-xl">
+        <div class="text-center mb-5">
+            <h1 class="mb-2">Planes transparentes</h1>
+            <p class="text-muted">Sin costos ocultos ni contratos a largo plazo.</p>
+        </div>
+        
+        <div class="row row-cards justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="text-uppercase text-muted font-weight-bold">Basic</div>
+                        <div class="display-5 fw-bold my-3">Gratis</div>
+                        <ul class="list-unstyled lh-lg">
+                            <li><i class="bi bi-check-lg text-success me-2"></i> <strong>20</strong> Documentos/mes</li>
+                            <li><i class="bi bi-check-lg text-success me-2"></i> 1 Usuario</li>
+                            <li><i class="bi bi-x-lg text-danger me-2"></i> Sin IA Predictiva</li>
+                            <li><i class="bi bi-check-lg text-success me-2"></i> Soporte por Email</li>
+                        </ul>
+                        <div class="mt-4">
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary w-100">Elegir Gratis</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-active">
+                    <div class="ribbon ribbon-top bg-green"><i class="bi bi-star-fill"></i></div>
+                    <div class="card-body text-center">
+                        <div class="text-uppercase text-primary font-weight-bold">Profesional</div>
+                        <div class="display-5 fw-bold my-3">$29<span class="fs-4 text-muted">/mes</span></div>
+                        <ul class="list-unstyled lh-lg">
+                            <li><i class="bi bi-check-lg text-success me-2"></i> <strong>Ilimitados</strong> Documentos</li>
+                            <li><i class="bi bi-check-lg text-success me-2"></i> 5 Usuarios</li>
+                            <li><i class="bi bi-check-lg text-success me-2"></i> <strong>IA Predictiva</strong></li>
+                            <li><i class="bi bi-check-lg text-success me-2"></i> Alertas WhatsApp</li>
+                        </ul>
+                        <div class="mt-4">
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-primary w-100">Empezar Prueba</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="text-uppercase text-muted font-weight-bold">Empresarial</div>
+                        <div class="display-5 fw-bold my-3">Custom</div>
+                        <ul class="list-unstyled lh-lg">
+                            <li><i class="bi bi-check-lg text-success me-2"></i> Todo lo de Pro</li>
+                            <li><i class="bi bi-check-lg text-success me-2"></i> Usuarios Ilimitados</li>
+                            <li><i class="bi bi-check-lg text-success me-2"></i> API Access</li>
+                            <li><i class="bi bi-check-lg text-success me-2"></i> Gestor de cuenta dedicado</li>
+                        </ul>
+                        <div class="mt-4">
+                            <a href="#" class="btn btn-outline-secondary w-100">Contactar Ventas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

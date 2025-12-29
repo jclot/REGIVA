@@ -8,11 +8,15 @@
     z-index: 1060 !important;
 }
 
-.litepicker .container__days .day-item {
-    font-size: 0.80rem;
-}
+    .litepicker .container__days .day-item {
+        font-size: 0.80rem;
+    }
 
-.litepicker .month-item-name, .litepicker .month-item-year {
-    font-size: 1.1rem !important;
-}
+    .litepicker .month-item-name, .litepicker .month-item-year {
+        font-size: 1.1rem !important;
+    }
 
+.full-bleed {
+    margin-left: calc(-1 * var(--tblr-page-padding));
+    margin-right: calc(-1 * var(--tblr-page-padding));
+}

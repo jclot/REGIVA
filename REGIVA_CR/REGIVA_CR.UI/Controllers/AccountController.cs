@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace REGIVA_CR.UI.Controllers; 
+namespace REGIVA_CR.UI.Controllers;
 public class AccountController : Controller
 {
     [HttpGet]
@@ -11,6 +11,18 @@ public class AccountController : Controller
 
     [HttpGet]
     public IActionResult Register()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult RegisterTenant()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult ForgotPassword()
     {
         return View();
     }

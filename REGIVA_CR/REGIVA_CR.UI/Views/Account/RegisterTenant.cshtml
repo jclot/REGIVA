@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Datos de Empresa - REGIVA</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="~/css/tabler.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <style>
+        :root { --tblr-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; }
+        body { font-feature-settings: "cv03", "cv04", "cv11"; }
+    </style>
+</head>
+<body class="d-flex flex-column theme-light">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="#" class="navbar-brand navbar-brand-autodark">
+                    <i class="bi bi-graph-up-arrow fs-2 me-2"></i> REGIVA
+                </a>
+            </div>
+            <form class="card card-md" asp-controller="Account" asp-action="RegisterTenant" method="post" autocomplete="off">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Paso 2: Datos de tu Negocio</h2>
+                    <p class="text-muted text-center mb-4">Configura tu entorno de facturación</p>
+
+                    <div class="mb-3">
+                        <label class="form-label required">Razón Social / Nombre del Negocio</label>
+                        <input type="text" name="BusinessName" class="form-control" placeholder="Ej: Inversiones ABC S.A." required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label required">Cédula Jurídica o Física</label>
+                        <input type="text" name="LegalId" class="form-control" placeholder="Ej: 3-101-123456" required>
+                        <div class="form-text text-muted">Debe coincidir con el registro en Hacienda.</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label required">Teléfono</label>
+                                <input type="tel" name="Phone" class="form-control" placeholder="8888-8888" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label required">Act. Econ. (Cód.)</label>
+                                <input type="text" name="EconomicActivityCode" class="form-control" placeholder="Ej: 722003" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="SubscriptionPlan" value="basic" />
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary w-100">Finalizar y Crear Cuenta</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="text-center mt-3">
+                <a asp-action="Register" class="text-muted">Volver al paso anterior</a>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/tabler.min.js" asp-append-version="true"></script>
+</body>
+</html>

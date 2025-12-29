@@ -73,6 +73,12 @@
                                     <span class="nav-link-title">Reportes</span>
                                 </a>
                             </li>
+                            <li class="nav-item @(currentController == "Landing" ? "active" : "")">
+                                <a class="nav-link" asp-controller="Landing" asp-action="Index">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-house-up"></i></span>
+                                    <span class="nav-link-title">Landing</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

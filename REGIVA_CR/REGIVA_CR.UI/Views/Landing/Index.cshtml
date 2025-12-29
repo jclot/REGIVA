@@ -1,0 +1,162 @@
+﻿@{
+    Layout = "_PublicLayout";
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="hero-section py-6 border-bottom">
+    <div class="container-xl text-center">
+        <h1 class="display-4 fw-bold mb-3">El CFO Autónomo para <span class="text-primary">PYMES en Costa Rica</span></h1>
+        <p class="lead text-muted mb-4" style="max-width: 700px; margin: 0 auto;">
+            Automatiza tu facturación electrónica v4.3, predice tu flujo de caja con IA y evita multas de Hacienda. 
+            Toma decisiones financieras sin ser contador.
+        </p>
+        <div class="d-flex justify-content-center gap-3 mb-5">
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-5">
+                <i class="bi bi-rocket-takeoff me-2"></i> Prueba Gratis 14 días
+            </a>
+            <a href="#demo" class="btn btn-ghost-secondary btn-lg">
+                <i class="bi bi-play-circle me-2"></i> Ver cómo funciona
+            </a>
+        </div>
+        <div class="text-muted small">
+            <i class="bi bi-check-circle-fill text-green me-1"></i> Sin tarjeta de crédito
+            <span class="mx-2">•</span>
+            <i class="bi bi-check-circle-fill text-green me-1"></i> Integración oficial Hacienda
+            <span class="mx-2">•</span>
+            <i class="bi bi-people-fill text-blue me-1"></i> +500 Empresas confían
+        </div>
+    </div>
+</div>
+
+<div class="py-6">
+    <div class="container-xl">
+        <div class="row row-cards text-center">
+            <div class="col-md-4">
+                <div class="card card-body border-0 shadow-none">
+                    <div class="mb-3">
+                        <span class="avatar avatar-lg bg-red-lt rounded-circle"><i class="bi bi-eye-slash fs-2"></i></span>
+                    </div>
+                    <h3>Ceguera Financiera</h3>
+                    <p class="text-muted">¿No sabes cuánto ganarás el próximo mes? Nuestra IA analiza tus patrones para predecir ingresos.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-body border-0 shadow-none">
+                    <div class="mb-3">
+                        <span class="avatar avatar-lg bg-yellow-lt rounded-circle"><i class="bi bi-file-earmark-x fs-2"></i></span>
+                    </div>
+                    <h3>Multas de Hacienda</h3>
+                    <p class="text-muted">Evita errores en el ATV. Validamos automáticamente cada factura electrónica y el IVA.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-body border-0 shadow-none">
+                    <div class="mb-3">
+                        <span class="avatar avatar-lg bg-blue-lt rounded-circle"><i class="bi bi-clock-history fs-2"></i></span>
+                    </div>
+                    <h3>Pérdida de Tiempo</h3>
+                    <p class="text-muted">Deja de usar Excel. Automatiza el envío de facturas y cobros recurrentes por WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-6" id="demo">
+    <div class="container-xl">
+        <div class="text-center mb-5">
+            <h2 class="mb-2">Tu negocio en piloto automático</h2>
+            <p class="text-muted">Así se ve tener el control total.</p>
+        </div>
+        
+        <div class="card shadow-lg border-0" style="overflow: hidden;">
+            <div class="card-header bg-dark text-white py-2">
+                <div class="d-flex gap-2">
+                    <span class="badge bg-danger rounded-circle p-1"></span>
+                    <span class="badge bg-warning rounded-circle p-1"></span>
+                    <span class="badge bg-success rounded-circle p-1"></span>
+                </div>
+                <div class="ms-auto text-muted small">app.cfoautonomo.cr/dashboard</div>
+            </div>
+            <div class="card-body bg-muted-lt">
+                <div class="row row-cards">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card card-sm">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-auto"><span class="bg-primary text-white avatar"><i class="bi bi-currency-dollar"></i></span></div>
+                                    <div class="col">
+                                        <div class="font-weight-medium">Ingresos Hoy</div>
+                                        <div class="text-muted">₡ 125,000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card card-sm">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-auto"><span class="bg-green text-white avatar"><i class="bi bi-check-lg"></i></span></div>
+                                    <div class="col">
+                                        <div class="font-weight-medium">Hacienda</div>
+                                        <div class="text-success">Aceptado</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                         <div class="card">
+                             <div class="card-body p-4 text-center text-muted">
+                                 <i class="bi bi-bar-chart-line display-6 d-block mb-2"></i>
+                                 Gráfico de proyección de flujo de caja generado por IA...
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-6">
+    <div class="container-xl">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="bi bi-shop me-2"></i> Restaurantes</h3>
+                        <p>Facturación rápida en caja y control de inventario básico integrado.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="bi bi-wrench-adjustable me-2"></i> Talleres</h3>
+                        <p>Envía proformas por WhatsApp y conviértelas en factura con un clic.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"><i class="bi bi-briefcase me-2"></i> Profesionales</h3>
+                        <p>Abogados y doctores: Facturación recurrente automática mes a mes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-primary text-white text-center full-bleed">
+    <div class="container-xl py-6">
+        <h2 class="mb-3">¿Listo para ordenar tus finanzas?</h2>
+        <a asp-controller="Account" asp-action="Register"
+           class="btn btn-light btn-lg">
+            Crear Cuenta Gratis
+        </a>
+    </div>
+</div>
