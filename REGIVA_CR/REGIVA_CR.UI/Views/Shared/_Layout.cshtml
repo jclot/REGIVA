@@ -27,17 +27,24 @@
                 <div class="navbar-nav flex-row order-md-last">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown">
-                            <span class="avatar avatar-sm" style="background-image: url(https://ui-avatars.com/api/?name=Admin+User&background=0ca678&color=fff)"></span>
+                            @{
+                                var fullName = User.FindFirst("FullName")?.Value ?? "Usuario";
+                                var email = User.Identity?.Name ?? "usuario@email.com";
+                                var initials = string.Join("", fullName.Split(' ').Take(2).Select(s => s[0]));
+                            }
+        
+                            <span class="avatar avatar-sm bg-blue-lt">@initials</span>
+        
                             <div class="d-none d-xl-block ps-2">
-                                <div>Administrador</div>
-                                <div class="mt-1 small text-muted">admin@ejemplo.com</div>
+                                <div>@fullName</div>
+                                <div class="mt-1 small text-muted">@email</div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                             <a asp-controller="Profile" asp-action="Index" class="dropdown-item">Perfil</a>
                             <a asp-controller="Profile" asp-action="Settings" class="dropdown-item">Configuración</a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#modal-logout">Cerrar sesión</a>
+                            <a asp-controller="Account" asp-action="Logout" class="dropdown-item text-danger">Cerrar sesión</a>
                         </div>
                     </div>
                 </div>

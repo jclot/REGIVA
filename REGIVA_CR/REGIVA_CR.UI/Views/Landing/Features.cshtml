@@ -3,61 +3,139 @@
     ViewData["Title"] = "Características";
 }
 
-
-<div class="py-5">
+<div class="py-6 bg-light">
     <div class="container-xl">
-        <div class="text-center mb-5">
-            <h1 class="mb-2">Objetivos claros</h1>
-            <p class="text-muted">Todo automaticamente desde tu casa.</p>
+        <div class="text-center mb-6" style="max-width: 700px; margin: 0 auto;">
+            <span class="badge bg-blue-lt mb-3 text-uppercase">Potencia Total</span>
+            <h1 class="display-4 fw-bold mb-3">Todo lo que necesitas</h1>
+            <p class="lead text-muted">
+                Una plataforma integral que combina el cumplimiento legal de Hacienda con la potencia de la Inteligencia Artificial.
+            </p>
         </div>
-        <div class="row row-cards">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="bg-blue text-white avatar me-3"><i class="bi bi-receipt"></i></span>
-                            <h3 class="m-0">Facturación Electrónica v4.4</h3>
-                        </div>
-                        <p class="text-muted">Cumplimiento total con la normativa vigente de Costa Rica. Generación de XML, envío automático a Hacienda y recepción de respuesta en segundos.</p>
-                    </div>
-                </div>
+
+        <div class="mb-6">
+            <div class="d-flex align-items-center justify-content-center mb-4">
+                <span class="avatar bg-blue-lt rounded me-2"><i class="bi bi-receipt"></i></span>
+                <h3 class="m-0 text-uppercase ls-2 text-muted small fw-bold">Facturación & Cumplimiento</h3>
             </div>
             
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="bg-purple text-white avatar me-3"><i class="bi bi-cpu"></i></span>
-                            <h3 class="m-0">IA Predictiva</h3>
+            <div class="row row-cards">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="bi bi-patch-check-fill text-blue fs-1"></i>
+                            </div>
+                            <h3 class="card-title">Facturación v4.3</h3>
+                            <p class="text-muted">Conexión directa con la DGT. Generación, firma y envío de XMLs en segundos con validación automática.</p>
                         </div>
-                        <p class="text-muted">Algoritmos que analizan tu historial de facturación para proyectar tus flujos de caja a 30, 60 y 90 días con un 85% de precisión.</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="bg-green text-white avatar me-3"><i class="bi bi-whatsapp"></i></span>
-                            <h3 class="m-0">Alertas WhatsApp</h3>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="bi bi-inbox-fill text-green fs-1"></i>
+                            </div>
+                            <h3 class="card-title">Recepción de Gastos</h3>
+                            <p class="text-muted">Reenvía los correos de tus proveedores a tu buzón cfoautonomo.cr y procesamos el gasto.</p>
                         </div>
-                        <p class="text-muted">Notificaciones automáticas a tus clientes cuando una factura vence, y alertas para ti cuando Hacienda rechaza un documento.</p>
                     </div>
                 </div>
-            </div>
-
-             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="bg-yellow text-white avatar me-3"><i class="bi bi-bank"></i></span>
-                            <h3 class="m-0">Scoring Crediticio</h3>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="bi bi-search text-orange fs-1"></i>
+                            </div>
+                            <h3 class="card-title">Buscador Cabys</h3>
+                            <p class="text-muted">No te aprendas códigos. Nuestro buscador semántico encuentra el código Cabys y el IVA correcto por ti.</p>
                         </div>
-                        <p class="text-muted">Analiza el comportamiento de pago de tus clientes antes de ofrecer crédito. Un semáforo de riesgo simple integrado en tu CRM.</p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="mb-6">
+            <div class="d-flex align-items-center justify-content-center mb-4">
+                <span class="avatar bg-purple-lt rounded me-2"><i class="bi bi-robot"></i></span>
+                <h3 class="m-0 text-uppercase ls-2 text-muted small fw-bold">Inteligencia Artificial</h3>
+            </div>
+
+            <div class="row row-cards">
+                <div class="col-md-6">
+                    <div class="card h-100 border-primary-lt border-2 shadow-sm hover-shadow transition-all">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="bg-purple text-white avatar me-3"><i class="bi bi-graph-up-arrow"></i></span>
+                                <h3 class="card-title m-0">Predicción de Flujo de Caja</h3>
+                            </div>
+                            <p class="text-muted flex-grow-1">
+                                Algoritmos entrenados con tus datos históricos para proyectar tu liquidez a 90 días. Anticipa si tendrás efectivo para el pago de impuestos o aguinaldos.
+                            </p>
+                            <div class="mt-3">
+                                <span class="badge bg-purple-lt">Exclusivo Plan Pro</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-success-lt border-2 shadow-sm hover-shadow transition-all">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="bg-teal text-white avatar me-3"><i class="bi bi-whatsapp"></i></span>
+                                <h3 class="card-title m-0">Cobranza Automática</h3>
+                            </div>
+                            <p class="text-muted flex-grow-1">
+                                El sistema envía mensajes amigables por WhatsApp a tus clientes antes y después del vencimiento de sus facturas. Reduce la morosidad un 40%.
+                            </p>
+                            <div class="mt-3">
+                                <span class="badge bg-teal-lt">Exclusivo Plan Pro</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <div class="d-flex align-items-center justify-content-center mb-4">
+                <span class="avatar bg-yellow-lt rounded me-2"><i class="bi bi-tools"></i></span>
+                <h3 class="m-0 text-uppercase ls-2 text-muted small fw-bold">Herramientas Extra</h3>
+            </div>
+            
+            <div class="row row-cards">
+                <div class="col-md-4">
+                    <div class="card card-body border-0 shadow-none bg-white">
+                        <h4 class="mb-2"><i class="bi bi-bank text-yellow me-2"></i> Scoring de Clientes</h4>
+                        <p class="text-muted small mb-0">Semáforo de riesgo crediticio basado en historial de pagos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-body border-0 shadow-none bg-white">
+                        <h4 class="mb-2"><i class="bi bi-people text-cyan me-2"></i> Portal de Clientes</h4>
+                        <p class="text-muted small mb-0">Tus clientes pueden descargar sus facturas y ver estados.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-body border-0 shadow-none bg-white">
+                        <h4 class="mb-2"><i class="bi bi-calculator text-pink me-2"></i> Proyección de Renta</h4>
+                        <p class="text-muted small mb-0">Calculamos tu impuesto de renta en tiempo real mes a mes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
+
+<style>
+    .ls-2 { letter-spacing: 2px; }
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+</style>

@@ -1,0 +1,125 @@
+﻿@{
+    Layout = "_PublicLayout";
+    ViewData["Title"] = "Contacto";
+}
+
+<div class="bg-light py-6 border-bottom">
+    <div class="container-xl text-center">
+        <span class="badge bg-green-lt mb-3 text-uppercase border border-green-lt px-3 py-2">
+            <i class="bi bi-chat-text-fill me-2"></i> Hablemos
+        </span>
+        <h1 class="display-4 fw-bold mb-3">Estamos aquí para ayudarte</h1>
+        <p class="lead text-muted mb-0" style="max-width: 600px; margin: 0 auto;">
+            ¿Tienes dudas sobre el plan Enterprise, quieres una demo o necesitas asistencia técnica? Escríbenos.
+        </p>
+    </div>
+</div>
+
+<div class="py-6 bg-white position-relative overflow-hidden">
+    <div class="position-absolute top-0 end-0 w-100 h-100 opacity-10" 
+         style="background: radial-gradient(circle at top right, var(--tblr-primary) 0%, transparent 40%); pointer-events: none;"></div>
+
+    <div class="container-xl position-relative z-index-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card border-0 shadow-lg overflow-hidden rounded-3 hover-shadow transition-all">
+                    <div class="row g-0">
+                        
+                        <div class="col-lg-7 p-5 bg-white">
+                            <h3 class="mb-4 fw-bold text-dark">Envíanos un mensaje</h3>
+                            <form>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small text-uppercase text-muted">Nombre</label>
+                                        <input type="text" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="Juan Pérez">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small text-uppercase text-muted">Correo</label>
+                                        <input type="email" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="juan@empresa.com">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold small text-uppercase text-muted">Asunto</label>
+                                        <select class="form-select form-select-lg bg-light border-0 ps-3">
+                                            <option>Quiero una demo comercial</option>
+                                            <option>Soporte Técnico / Ayuda</option>
+                                            <option>Facturación y Pagos</option>
+                                            <option>Soy Contador (Alianzas)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold small text-uppercase text-muted">Mensaje</label>
+                                        <textarea class="form-control form-control-lg bg-light border-0 ps-3" rows="5" placeholder="Cuéntanos más sobre tu consulta..."></textarea>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm">
+                                            <i class="bi bi-send-fill me-2"></i> Enviar Mensaje
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="col-lg-5 text-white p-5 d-flex flex-column justify-content-between position-relative" 
+                             style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                            
+                            <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" 
+                                 style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+                            
+                            <div class="position-relative z-index-1">
+                                <h3 class="mb-5 fw-bold">Información de Contacto</h3>
+                                <ul class="list-unstyled space-y-4">
+                                    <li class="d-flex align-items-start">
+                                        <span class="avatar bg-white/10 text-white rounded-circle me-3"><i class="bi bi-geo-alt-fill"></i></span>
+                                        <div>
+                                            <strong class="d-block mb-1">Oficinas Centrales</strong>
+                                            <span class="text-white-50 small">San Pedro, San José<br>Costa Rica, 11501</span>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex align-items-start">
+                                        <span class="avatar bg-white/10 text-white rounded-circle me-3"><i class="bi bi-envelope-fill"></i></span>
+                                        <div>
+                                            <strong class="d-block mb-1">Correo General</strong>
+                                            <a href="mailto:hola@cfoautonomo.cr" class="text-white-50 text-decoration-none small hover-white">hola@cfoautonomo.cr</a>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex align-items-start">
+                                        <span class="avatar bg-white/10 text-white rounded-circle me-3"><i class="bi bi-whatsapp"></i></span>
+                                        <div>
+                                            <strong class="d-block mb-1">Ventas WhatsApp</strong>
+                                            <a href="#" class="text-white-50 text-decoration-none small hover-white">+506 8888-8888</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mt-5 position-relative z-index-1">
+                                <span class="d-block small text-uppercase text-white-50 fw-bold mb-3">Síguenos</span>
+                                <div class="d-flex gap-3">
+                                    <a href="#" class="btn btn-icon btn-ghost-light rounded-circle"><i class="bi bi-facebook fs-4"></i></a>
+                                    <a href="#" class="btn btn-icon btn-ghost-light rounded-circle"><i class="bi bi-instagram fs-4"></i></a>
+                                    <a href="#" class="btn btn-icon btn-ghost-light rounded-circle"><i class="bi bi-linkedin fs-4"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-6 bg-light border-top">
+    <div class="container-xl text-center">
+        <h3 class="mb-3">¿Buscas respuestas rápidas?</h3>
+        <p class="text-muted mb-4">Consulta nuestra documentación antes de escribirnos.</p>
+        <a asp-action="Docs" class="btn btn-outline-primary">Ir al Centro de Ayuda</a>
+    </div>
+</div>
+
+<style>
+    .bg-white\/10 { background-color: rgba(255, 255, 255, 0.1); }
+    .hover-white:hover { color: white !important; }
+    .space-y-4 > li { margin-bottom: 2rem; }
+    .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
+    .transition-all { transition: all 0.3s ease; }
+</style>

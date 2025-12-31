@@ -12,4 +12,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\REGIVA_CR.AD\REGIVA_CR.AD.csproj" />
+    <ProjectReference Include="..\REGIVA_CR.LN\REGIVA_CR.LN.csproj" />
+  </ItemGroup>
+
 </Project>

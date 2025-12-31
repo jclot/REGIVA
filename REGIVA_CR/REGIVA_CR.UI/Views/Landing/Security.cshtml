@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "_PublicLayout";
+    ViewData["Title"] = "Seguridad y Privacidad";
+}
+
+<div class="py-6 bg-light border-bottom">
+    <div class="container-xl text-center">
+        <span class="badge bg-teal-lt mb-3 text-uppercase border border-teal-lt px-3 py-2">
+            <i class="bi bi-shield-lock-fill me-2"></i> Seguridad Bancaria
+        </span>
+        <h1 class="display-4 fw-bold mb-3">Tus datos financieros, blindados.</h1>
+        <p class="lead text-muted mb-0" style="max-width: 700px; margin: 0 auto;">
+            La seguridad no es una característica opcional, es la base de nuestra arquitectura. Utilizamos los mismos estándares de encriptación que los bancos internacionales.
+        </p>
+    </div>
+</div>
+
+<div class="py-6 bg-white">
+    <div class="container-xl">
+        <div class="row row-cards">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-shadow transition-all p-4 text-center">
+                    <div class="avatar avatar-xl bg-teal-lt rounded-circle mb-4 mx-auto">
+                        <i class="bi bi-file-lock2-fill fs-1"></i>
+                    </div>
+                    <h3 class="mb-3">Encriptación AES-256</h3>
+                    <p class="text-muted">Todos tus datos sensibles (contraseñas, llaves criptográficas, montos) se almacenan encriptados en reposo. Nadie, ni siquiera nuestros ingenieros, puede leerlos.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-shadow transition-all p-4 text-center">
+                    <div class="avatar avatar-xl bg-blue-lt rounded-circle mb-4 mx-auto">
+                        <i class="bi bi-cloud-check-fill fs-1"></i>
+                    </div>
+                    <h3 class="mb-3">Backups Diarios</h3>
+                    <p class="text-muted">Realizamos copias de seguridad automáticas de toda la base de datos cada 24 horas y las almacenamos en servidores geográficamente redundantes.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-shadow transition-all p-4 text-center">
+                    <div class="avatar avatar-xl bg-purple-lt rounded-circle mb-4 mx-auto">
+                        <i class="bi bi-eye-slash-fill fs-1"></i>
+                    </div>
+                    <h3 class="mb-3">Privacidad Total</h3>
+                    <p class="text-muted">Tu información financiera es tuya. Nunca vendemos ni compartimos tus datos con terceros para publicidad o mercadeo. Tus datos son sagrados.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-6 bg-light border-top">
+    <div class="container-xl">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2 mb-5 mb-lg-0 text-center">
+                <div class="position-relative">
+                    <div class="position-absolute top-50 start-50 translate-middle bg-primary opacity-10 rounded-circle" style="width: 300px; height: 300px; filter: blur(50px);"></div>
+                    <img src="https://preview.tabler.io/static/illustrations/undraw_secure_login_pdn4.svg" class="img-fluid position-relative z-index-1" alt="Seguridad" style="max-height: 300px;">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <h2 class="display-5 fw-bold mb-4">Infraestructura de Clase Mundial</h2>
+                <p class="text-muted mb-4">Hospedamos nuestra plataforma en proveedores de nube certificados (AWS/Azure) que cumplen con ISO 27001.</p>
+                
+                <ul class="list-unstyled space-y-3">
+                    <li class="d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-success mt-1 me-3 fs-4"></i>
+                        <div>
+                            <strong class="d-block text-dark">Protección DDoS</strong>
+                            <span class="text-muted">Monitoreo 24/7 contra ataques de denegación de servicio.</span>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-success mt-1 me-3 fs-4"></i>
+                        <div>
+                            <strong class="d-block text-dark">SSL/TLS Siempre Activo</strong>
+                            <span class="text-muted">Toda la comunicación viaja encriptada (el candado verde del navegador).</span>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-success mt-1 me-3 fs-4"></i>
+                        <div>
+                            <strong class="d-block text-dark">Aislamiento de Datos (Multi-Tenant)</strong>
+                            <span class="text-muted">Arquitectura lógica que asegura que los datos de una empresa nunca se mezclen con los de otra.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-gradient text-white text-center full-bleed py-6 position-relative overflow-hidden">
+    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;"></div>
+    <div class="container-xl position-relative z-index-1">
+        <h2 class="mb-3 display-6 fw-bold">¿Tienes preguntas técnicas?</h2>
+        <p class="text-white-75 mb-4">Nuestro oficial de seguridad puede responder tus dudas sobre cumplimiento.</p>
+        <a asp-action="Contact" class="btn btn-outline-light px-4 border-2 fw-bold hover-scale">Contactar Seguridad</a>
+    </div>
+</div>
+
+<style>
+    .space-y-3 > li { margin-bottom: 1.5rem; }
+    .cta-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+    .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
+    .transition-all { transition: all 0.3s ease; }
+    .hover-scale:hover { transform: scale(1.05); transition: 0.2s; }
+</style>

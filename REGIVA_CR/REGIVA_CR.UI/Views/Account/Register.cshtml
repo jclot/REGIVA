@@ -1,4 +1,7 @@
-﻿@{
+﻿@using REGIVA_CR.AB.ModelosParaUI.Auth
+@model UserRegisterDto
+
+@{
     Layout = null;
 }
 
@@ -7,72 +10,104 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Crear Cuenta - REGIVA</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="~/css/tabler.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/tabler.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <style>
-        :root { --tblr-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; }
-        body { font-feature-settings: "cv03", "cv04", "cv11"; }
+        :root { --tblr-font-sans-serif: 'Inter', sans-serif; }
+        .btn-back-home {
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        .btn-back-home:hover {
+            color: var(--tblr-primary);
+            text-decoration: none;
+            transform: translateX(-5px);
+        }
     </style>
 </head>
 <body class="d-flex flex-column theme-light">
     <div class="page page-center">
         <div class="container container-tight py-4">
-            <div class="text-center mb-4">
-                <a href="#" class="navbar-brand navbar-brand-autodark">
-                    <i class="bi bi-graph-up-arrow fs-2 me-2"></i> REGIVA
+            
+            <div class="mb-4">
+                <a asp-controller="Landing" asp-action="Index" class="btn-back-home d-inline-flex align-items-center text-decoration-none">
+                    <i class="bi bi-arrow-left me-2 fs-3"></i> 
+                    <span>Volver al inicio</span>
                 </a>
             </div>
-            <form class="card card-md" asp-controller="Account" asp-action="RegisterTenant" method="get" autocomplete="off">
+
+            <div class="text-center mb-4">
+                <a href="#" class="navbar-brand navbar-brand-autodark">REGIVA</a>
+            </div>
+            
+            <form class="card card-md shadow-sm border-0" asp-controller="Account" asp-action="RegisterUser" method="post" autocomplete="off">
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Paso 1: Datos Personales</h2>
-                    <p class="text-muted text-center mb-4">Crea tu usuario administrador</p>
+                    
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label required">Nombre</label>
-                                <input type="text" name="FirstName" class="form-control" placeholder="Julián" required>
+                                <label asp-for="FirstName" class="form-label required"></label>
+                                <input asp-for="FirstName" class="form-control" placeholder="Julián" />
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label required">Apellidos</label>
-                                <input type="text" name="LastName" class="form-control" placeholder="Clot Córdoba" required>
+                                <label asp-for="LastName" class="form-label required"></label>
+                                <input asp-for="LastName" class="form-control" placeholder="Clot" />
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label required">Correo Electrónico</label>
-                        <input type="email" name="Email" class="form-control" placeholder="julian@empresa.com" required>
-                        <div class="form-text text-muted">Este será tu usuario para iniciar sesión.</div>
+                        <label asp-for="Email" class="form-label required"></label>
+                        <input asp-for="Email" class="form-control" placeholder="julian@empresa.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label required">Contraseña</label>
+                        <label asp-for="Phone" class="form-label required"></label>
+                        <input asp-for="Phone" class="form-control" placeholder="88888888" />
+                        <span asp-validation-for="Phone" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label required"></label>
                         <div class="input-group input-group-flat">
-                            <input type="password" name="Password" class="form-control" placeholder="••••••••" autocomplete="new-password" required>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" autocomplete="new-password" />
                             <span class="input-group-text">
-                                <a href="#" class="link-secondary" title="Mostrar contraseña" data-bs-toggle="tooltip">
-                                    <i class="bi bi-eye"></i>
-                                </a>
+                                <a href="#" class="link-secondary" title="Mostrar contraseña" onclick="togglePass('Password'); return false;">👁</a>
                             </span>
                         </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
                     
                     <div class="mb-3">
-                        <label class="form-label required">Confirmar Contraseña</label>
-                        <input type="password" name="ConfirmPassword" class="form-control" placeholder="••••••••" required>
+                        <label asp-for="ConfirmPassword" class="form-label required"></label>
+                        <div class="input-group input-group-flat">
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="••••••••" autocomplete="new-password" />
+                            <span class="input-group-text">
+                                <a href="#" class="link-secondary" title="Mostrar contraseña" onclick="togglePass('ConfirmPassword'); return false;">👁</a>
+                            </span>
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-check">
-                            <input type="checkbox" class="form-check-input" required />
-                            <span class="form-check-label">Acepto los <a href="#" tabindex="-1">Términos y condiciones</a>.</span>
+                            <input asp-for="TermsAccepted" class="form-check-input" />
+                            <span class="form-check-label">
+                                Acepto los <a href="#" tabindex="-1">Términos y condiciones</a>.
+                            </span>
                         </label>
+                        <span asp-validation-for="TermsAccepted" class="text-danger small d-block"></span>
                     </div>
 
                     <div class="form-footer">
@@ -81,10 +116,22 @@
                 </div>
             </form>
             <div class="text-center text-muted mt-3">
-                ¿Ya tienes cuenta? <a asp-controller="Account" asp-action="Login" tabindex="-1">Inicia Sesión</a>
+                ¿Ya tienes cuenta? <a asp-action="Login" class="fw-bold text-primary">Inicia Sesión</a>
             </div>
         </div>
     </div>
-    <script src="~/js/tabler.min.js" asp-append-version="true"></script>
+    <script src="~/js/tabler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    
+    <script>
+        function togglePass(fieldName) {
+            var input = document.querySelector('input[name="' + fieldName + '"]');
+            if (input) {
+                input.type = input.type === "password" ? "text" : "password";
+            }
+        }
+    </script>
 </body>
 </html>

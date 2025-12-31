@@ -6,6 +6,10 @@ namespace REGIVA_CR.UI.Controllers
     {
         public IActionResult Index()
         {
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -23,6 +27,10 @@ namespace REGIVA_CR.UI.Controllers
         {
             return View();
         }
+
+        public IActionResult Contact() => View();
+        public IActionResult Status() => View();
+        public IActionResult Security() => View();
 
         public IActionResult Terms() => View();
         public IActionResult Privacy() => View();

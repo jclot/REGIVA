@@ -1,4 +1,7 @@
-﻿@{
+﻿@using REGIVA_CR.AB.ModelosParaUI.Auth
+@model LoginDto
+
+@{
     Layout = null;
 }
 
@@ -7,25 +10,52 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Iniciar Sesión - REGIVA</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="~/css/tabler.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/tabler.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <style>
-        :root { --tblr-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; }
-        body { font-feature-settings: "cv03", "cv04", "cv11"; }
+        :root { --tblr-font-sans-serif: 'Inter', sans-serif; }
+        
+        .btn-back-home {
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        .btn-back-home:hover {
+            color: var(--tblr-primary);
+            text-decoration: none;
+            transform: translateX(-5px);
+        }
+
+        .forgot-pass-link {
+            color: #6c757d; 
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+        .forgot-pass-link:hover {
+            color: var(--tblr-primary);
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="d-flex flex-column theme-light">
     <div class="page page-center">
         <div class="container container-tight py-4">
-            <div class="text-center mb-4">
-                <a href="#" class="navbar-brand navbar-brand-autodark">
-                    <i class="bi bi-graph-up-arrow fs-2 me-2"></i> REGIVA
+            
+            <div class="mb-4">
+                <a asp-controller="Landing" asp-action="Index" class="btn-back-home d-inline-flex align-items-center text-decoration-none">
+                    <i class="bi bi-arrow-left me-2 fs-3"></i> 
+                    <span>Volver al inicio</span>
                 </a>
             </div>
-            <div class="card card-md">
+
+            <div class="text-center mb-4">
+                <a href="#" class="navbar-brand navbar-brand-autodark">REGIVA</a>
+            </div>
+            <div class="card card-md shadow-sm border-0"> 
                 <div class="card-body">
                     <h2 class="h2 text-center mb-4">Bienvenido de nuevo</h2>
                     
@@ -39,30 +69,32 @@
                         }
 
                         <div class="mb-3">
-                            <label class="form-label required">Correo Electrónico</label>
-                            <input type="email" name="Email" class="form-control" placeholder="usuario@empresa.com" required>
+                            <label asp-for="Email" class="form-label required"></label>
+                            <input asp-for="Email" class="form-control" placeholder="usuario@empresa.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
                         </div>
                         
                         <div class="mb-2">
-                            <label class="form-label required">
+                            <label asp-for="Password" class="form-label required">
                                 Contraseña
                                 <span class="form-label-description">
-                                    <a asp-action="ForgotPassword">¿Olvidaste tu contraseña?</a>
+                                    <a asp-action="ForgotPassword" class="forgot-pass-link" title="Recuperar acceso">
+                                        <i class="bi bi-key me-1"></i> ¿Olvidaste tu contraseña?
+                                    </a>
                                 </span>
                             </label>
                             <div class="input-group input-group-flat">
-                                <input type="password" name="Password" class="form-control" placeholder="••••••••" autocomplete="off" required>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" autocomplete="off" />
                                 <span class="input-group-text">
-                                    <a href="#" class="link-secondary" title="Mostrar contraseña" data-bs-toggle="tooltip">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
+                                    <a href="#" class="link-secondary" onclick="togglePass()">👁</a>
                                 </span>
                             </div>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
                         
                         <div class="mb-2">
                             <label class="form-check">
-                                <input type="checkbox" name="RememberMe" class="form-check-input" />
+                                <input asp-for="RememberMe" class="form-check-input" />
                                 <span class="form-check-label">Recordarme en este dispositivo</span>
                             </label>
                         </div>
@@ -74,25 +106,19 @@
                 </div>
             </div>
             <div class="text-center text-muted mt-3">
-                ¿No tienes cuenta? <a asp-controller="Account" asp-action="Register">Regístrate gratis</a>
+                ¿No tienes cuenta? <a asp-action="Register" class="fw-bold text-primary text-decoration-none">Regístrate gratis</a>
             </div>
         </div>
     </div>
-    <script src="~/js/tabler.min.js" asp-append-version="true"></script>
+    <script src="~/js/tabler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
     <script>
-        // Script simple para mostrar/ocultar contraseña (Tabler style)
-        document.addEventListener("DOMContentLoaded", function () {
-            var togglePassword = document.querySelector('.input-group-text a');
-            var passwordInput = document.querySelector('input[name="Password"]');
-            
-            if(togglePassword && passwordInput){
-                togglePassword.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
-                });
-            }
-        });
+        function togglePass() {
+            var x = document.querySelector('input[name="Password"]');
+            x.type = x.type === "password" ? "text" : "password";
+        }
     </script>
 </body>
 </html>

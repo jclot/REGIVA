@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "_PublicLayout";
+    ViewData["Title"] = "Estado del Sistema";
+}
+
+<div class="py-6 bg-light border-bottom">
+    <div class="container-xl text-center">
+        <div class="d-inline-flex align-items-center bg-white px-5 py-3 rounded-pill shadow-sm mb-4 border border-success-lt">
+            <span class="position-relative d-flex me-3">
+                <span class="status-dot status-dot-animated bg-success" style="width: 16px; height: 16px;"></span>
+            </span>
+            <span class="fw-bold text-success fs-3">Todos los sistemas operativos</span>
+        </div>
+        
+        <h1 class="fw-bold mb-2">Estado de la Plataforma</h1>
+        <p class="text-muted">Última actualización: @DateTime.Now.ToString("dd MMM yyyy, HH:mm")</p>
+    </div>
+</div>
+
+<div class="py-6 bg-white">
+    <div class="container-xl" style="max-width: 800px;">
+        
+        <div class="card mb-5 border-0 shadow-sm overflow-hidden">
+            <div class="card-header bg-light border-bottom">
+                <h3 class="card-title m-0 fw-bold"><i class="bi bi-cpu me-2"></i> Plataforma CFO Autónomo</h3>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item d-flex align-items-center justify-content-between py-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <span class="bg-blue-lt avatar rounded me-3"><i class="bi bi-globe"></i></span>
+                        <div>
+                            <span class="fw-bold d-block text-dark">Sitio Web & Dashboard</span>
+                            <small class="text-muted">Acceso clientes</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-green-lt text-uppercase px-3">Operativo</span>
+                </div>
+                <div class="list-group-item d-flex align-items-center justify-content-between py-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <span class="bg-purple-lt avatar rounded me-3"><i class="bi bi-robot"></i></span>
+                        <div>
+                            <span class="fw-bold d-block text-dark">Motor de IA Predictiva</span>
+                            <small class="text-muted">Procesamiento de datos</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-green-lt text-uppercase px-3">Operativo</span>
+                </div>
+                <div class="list-group-item d-flex align-items-center justify-content-between py-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <span class="bg-orange-lt avatar rounded me-3"><i class="bi bi-database"></i></span>
+                        <div>
+                            <span class="fw-bold d-block text-dark">Base de Datos</span>
+                            <small class="text-muted">Latencia y disponibilidad</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-green-lt text-uppercase px-3">Operativo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-5 border-0 shadow-sm overflow-hidden">
+            <div class="card-header bg-light border-bottom">
+                <h3 class="card-title m-0 fw-bold"><i class="bi bi-diagram-3 me-2"></i> Integraciones Externas</h3>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item d-flex align-items-center justify-content-between py-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <span class="bg-dark-lt avatar rounded me-3"><i class="bi bi-building"></i></span>
+                        <div>
+                            <span class="fw-bold d-block text-dark">Ministerio de Hacienda (ATV)</span>
+                            <small class="text-muted">Recepción de XMLs (Responsabilidad de la DGT)</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-green-lt text-uppercase px-3">Operativo</span>
+                </div>
+                <div class="list-group-item d-flex align-items-center justify-content-between py-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <span class="bg-green-lt avatar rounded me-3"><i class="bi bi-whatsapp"></i></span>
+                        <div>
+                            <span class="fw-bold d-block text-dark">WhatsApp API (Meta)</span>
+                            <small class="text-muted">Envío de notificaciones</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-green-lt text-uppercase px-3">Operativo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <h4 class="mb-3 text-muted">Historial de Incidentes</h4>
+            <div class="card card-body bg-light border-0 shadow-inner">
+                <div class="text-muted small">
+                    <i class="bi bi-check-circle-fill text-success me-1"></i> No se han reportado incidentes en los últimos 30 días.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="bg-dark text-white text-center py-5 full-bleed">
+    <div class="container-xl">
+        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+            <span class="fw-medium"><i class="bi bi-envelope me-2"></i> ¿Quieres recibir alertas de caídas de Hacienda?</span>
+            <a href="#" class="btn btn-primary btn-sm rounded-pill px-4">Suscribirse a Alertas</a>
+        </div>
+    </div>
+</div>
