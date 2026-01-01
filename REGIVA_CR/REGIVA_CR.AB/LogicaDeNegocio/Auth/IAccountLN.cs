@@ -13,5 +13,13 @@ namespace REGIVA_CR.AB.LogicaDeNegocio.Auth
         Task<UserSessionDto?> LoginAsync(LoginDto data);
         Task ValidateUserAvailabilityAsync(string email, string phone);
         Task ValidateTenantAvailabilityAsync(string legalId);
+
+        Task SendPasswordResetAsync(string email, string resetLinkBaseUrl);
+        Task<bool> ResetPasswordAsync(string token, string email, string newPassword);
+        Task<UserRecoveryDto?> GetUserForResetAsync(string token);
+
+        Task SendVerificationEmailAsync(string email, string verificationLinkBaseUrl);
+        Task<bool> ConfirmEmailAsync(string email, string code);
+        Task<bool> IsEmailVerifiedAsync(string email);
     }
 }

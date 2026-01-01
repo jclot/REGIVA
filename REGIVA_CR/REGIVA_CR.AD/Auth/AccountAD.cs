@@ -128,7 +128,7 @@ namespace REGIVA_CR.AD.Auth
 
         public async Task UpdateUserLoginStatsAsync(int userId, int failedAttempts, DateTime? lockedUntil)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            UserEntity? user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
 
             if (user != null)
             {
@@ -137,6 +137,80 @@ namespace REGIVA_CR.AD.Auth
 
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task SavePasswordResetTokenAsync(string email, string token)
+        {
+            UserEntity? user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user != null)
+            {
+                user.ResetToken = token;
+                user.ResetTokenExpires = DateTime.UtcNow.AddMinutes(10);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<UserRecoveryDto?> GetUserByResetTokenAsync(string token)
+        {
+            return await _context.Users
+                .Where(u => u.ResetToken == token && u.ResetTokenExpires > DateTime.UtcNow)
+                .Select(u => new UserRecoveryDto
+                {
+                    UserId = u.UserId,
+                    Email = u.Email!,
+                    ExpiresAt = u.ResetTokenExpires
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task UpdatePasswordAsync(int userId, string newPasswordHash)
+        {
+            UserEntity? user = await _context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                user.PasswordHash = newPasswordHash;
+                user.ResetToken = null;
+                user.ResetTokenExpires = null;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task SetVerificationCodeAsync(string email, string code)
+        {
+            UserEntity? user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user != null)
+            {
+                user.VerificationCode = code;
+                user.VerificationCodeExpires = DateTime.UtcNow.AddMinutes(15);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> VerifyEmailAsync(string email, string code)
+        {
+            UserEntity? user = await _context.Users.FirstOrDefaultAsync(u =>
+                u.Email == email &&
+                u.VerificationCode == code &&
+                u.VerificationCodeExpires > DateTime.UtcNow);
+
+            if (user != null)
+            {
+                user.IsEmailVerified = true;
+                user.VerificationCode = null;
+                user.VerificationCodeExpires = null;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> IsEmailVerifiedAsync(string email)
+        {
+            return await _context.Users
+                .Where(u => u.Email == email)
+                .Select(u => u.IsEmailVerified)
+                .FirstOrDefaultAsync();
         }
     }
 }

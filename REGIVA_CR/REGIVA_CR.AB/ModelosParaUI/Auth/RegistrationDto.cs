@@ -118,4 +118,43 @@ namespace REGIVA_CR.AB.ModelosParaUI.Auth
         public int FailedLoginAttempts { get; set; }
         public DateTime? LockedUntil { get; set; }
     }
+
+    public class UserRecoveryDto
+    {
+        public int UserId { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public DateTime? ExpiresAt { get; set; }
+    }
+
+    public class ResetPasswordDto
+    {
+        [Required]
+        public string Token { get; set; } = string.Empty;
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Display(Name = "Nueva Contraseña")]
+        [Required(ErrorMessage = "La contraseña es obligatoria.")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Mínimo 8 caracteres.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Debe tener mayúscula, minúscula y número.")]
+        public string? Password { get; set; }
+
+        [Display(Name = "Confirmar Contraseña")]
+        [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
+        public string? ConfirmPassword { get; set; }
+        public DateTime TokenExpiration { get; set; }
+    }
+
+    public class VerifyEmailDto
+    {
+        [Required]
+        public string Email { get; set; } = string.Empty;
+
+        [Display(Name = "Código de Verificación")]
+        [Required(ErrorMessage = "Ingresa el código de 6 dígitos.")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "El código debe ser de 6 dígitos.")]
+        public string Code { get; set; } = string.Empty;
+    }
 }

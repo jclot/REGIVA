@@ -22,6 +22,11 @@ namespace REGIVA_CR.AD.Entidades
         [Column("failed_login_attempts")] public int FailedLoginAttempts { get; set; } = 0;
         [Column("locked_until")] public DateTime? LockedUntil { get; set; }
         [Column("created_at")] public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        [Column("reset_token")][MaxLength(100)] public string? ResetToken { get; set; }
+        [Column("reset_token_expires")] public DateTime? ResetTokenExpires { get; set; }
+        [Column("is_email_verified")] public bool IsEmailVerified { get; set; } = false;
+        [Column("verification_code")][MaxLength(6)] public string? VerificationCode { get; set; }
+        [Column("verification_code_expires")] public DateTime? VerificationCodeExpires { get; set; }
 
     }
 

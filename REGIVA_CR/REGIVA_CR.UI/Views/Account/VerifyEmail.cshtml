@@ -1,0 +1,85 @@
+﻿@using REGIVA_CR.AB.ModelosParaUI.Auth
+@model VerifyEmailDto
+@{ Layout = null; }
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Verificar Correo - REGIVA</title>
+    <link href="~/css/tabler.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <style>
+        :root { --tblr-font-sans-serif: 'Inter', sans-serif; }
+        .letter-spacing-input { letter-spacing: 0.5em; font-weight: bold; text-align: center; font-size: 1.2rem; }
+    </style>
+</head>
+<body class="d-flex flex-column theme-light">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="#" class="navbar-brand navbar-brand-autodark">REGIVA</a>
+            </div>
+            
+            <form class="card card-md shadow-sm border-0" asp-action="VerifyEmail" method="post" autocomplete="off">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="avatar avatar-lg bg-blue-lt rounded-circle mb-3">
+                            <i class="bi bi-envelope-check fs-1"></i>
+                        </div>
+                        <h2 class="card-title">Verifica tu correo</h2>
+                        <p class="text-muted">
+                            Hemos enviado un código de 6 dígitos y un enlace mágico a:
+                            <br/><strong class="text-dark">@Model.Email</strong>
+                        </p>
+                    </div>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+                    @if (TempData["InfoMessage"] != null)
+                    {
+                        <div class="alert alert-info">@TempData["InfoMessage"]</div>
+                    }
+
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <input type="hidden" asp-for="Email" />
+
+                    <div class="mb-3">
+                        <label class="form-label text-center">Código de Verificación</label>
+                        <input asp-for="Code" type="text" class="form-control letter-spacing-input" placeholder="000000" maxlength="6" inputmode="numeric" />
+                        <span asp-validation-for="Code" class="text-danger small text-center d-block mt-1"></span>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary w-100">Verificar Cuenta</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="text-center text-muted mt-3">
+                ¿No recibiste el correo?
+                <form asp-action="ResendVerification" method="post" class="d-inline">
+                    <input type="hidden" name="email" value="@Model.Email" />
+                    <button type="submit" class="btn btn-link p-0 align-baseline">Reenviar código</button>
+                </form>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a asp-action="Login" class="text-muted text-decoration-none small">
+                    <i class="bi bi-arrow-left me-1"></i> Volver al inicio de sesión
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/tabler.min.js"></script>
+</body>
+</html>

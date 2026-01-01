@@ -19,6 +19,14 @@ namespace REGIVA_CR.AB.AccesoADatos.Auth
 
         Task<UserSecurityDto?> GetUserSecurityInfoAsync(string email);
         Task UpdateUserLoginStatsAsync(int userId, int failedAttempts, DateTime? lockoutEnd);
+
+        Task SavePasswordResetTokenAsync(string email, string token);
+        Task<UserRecoveryDto?> GetUserByResetTokenAsync(string token);
+        Task UpdatePasswordAsync(int userId, string newPasswordHash);
+
+        Task SetVerificationCodeAsync(string email, string code);
+        Task<bool> VerifyEmailAsync(string email, string code);
+        Task<bool> IsEmailVerifiedAsync(string email);
     }
 }
 
