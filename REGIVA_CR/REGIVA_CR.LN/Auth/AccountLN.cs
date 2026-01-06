@@ -192,5 +192,34 @@ namespace REGIVA_CR.LN.Auth
         {
             return await _accountAD.IsEmailVerifiedAsync(email);
         }
+
+        public async Task<UserProfileDto?> GetUserProfileAsync(int userId)
+        {
+            return await _accountAD.GetUserProfileAsync(userId);
+        }
+
+        public async Task<UpdateProfileDto?> GetUserForEditAsync(int userId)
+        {
+            return await _accountAD.GetUserForEditAsync(userId);
+        }
+
+        public async Task UpdateProfileAsync(UpdateProfileDto model)
+        {
+            if (!string.IsNullOrEmpty(model.NewPassword))
+            {
+                if (string.IsNullOrEmpty(model.CurrentPassword))
+                {
+                    throw new Exception("Debes ingresar tu contraseña actual para cambiarla.");
+                }
+
+                bool isValid = await _accountAD.ValidateCurrentPasswordAsync(model.UserId, model.CurrentPassword);
+                if (!isValid)
+                {
+                    throw new Exception("La contraseña actual es incorrecta.");
+                }
+            }
+
+            await _accountAD.UpdateUserProfileAsync(model);
+        }
     }
 }

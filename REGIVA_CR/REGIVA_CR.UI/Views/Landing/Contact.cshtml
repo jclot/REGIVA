@@ -1,11 +1,14 @@
-﻿@{
+﻿@using REGIVA_CR.AB.ModelosParaUI.Auth
+@model ContactDto
+
+@{
     Layout = "_PublicLayout";
     ViewData["Title"] = "Contacto";
 }
 
 <div class="bg-light py-6 border-bottom">
     <div class="container-xl text-center">
-        <span class="badge bg-green-lt mb-3 text-uppercase border border-green-lt px-3 py-2">
+        <span class="badge bg-teal-lt mb-3 text-uppercase border border-teal-lt px-3 py-2">
             <i class="bi bi-chat-text-fill me-2"></i> Hablemos
         </span>
         <h1 class="display-4 fw-bold mb-3">Estamos aquí para ayudarte</h1>
@@ -27,28 +30,50 @@
                         
                         <div class="col-lg-7 p-5 bg-white">
                             <h3 class="mb-4 fw-bold text-dark">Envíanos un mensaje</h3>
-                            <form>
+                            
+                            @if (TempData["SuccessMessage"] != null)
+                            {
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+
+                            <form asp-action="Contact" method="post">
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label class="form-label fw-bold small text-uppercase text-muted">Nombre</label>
-                                        <input type="text" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="Juan Pérez">
+                                        <label asp-for="Name" class="form-label fw-bold small text-uppercase text-muted"></label>
+                                        <input asp-for="Name" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="Juan Pérez">
+                                        <span asp-validation-for="Name" class="text-danger small"></span>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label fw-bold small text-uppercase text-muted">Correo</label>
-                                        <input type="email" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="juan@empresa.com">
+                                        <label asp-for="Email" class="form-label fw-bold small text-uppercase text-muted"></label>
+                                        <input asp-for="Email" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="juan@empresa.com">
+                                        <span asp-validation-for="Email" class="text-danger small"></span>
                                     </div>
-                                    <div class="col-12">
-                                        <label class="form-label fw-bold small text-uppercase text-muted">Asunto</label>
-                                        <select class="form-select form-select-lg bg-light border-0 ps-3">
-                                            <option>Quiero una demo comercial</option>
-                                            <option>Soporte Técnico / Ayuda</option>
-                                            <option>Facturación y Pagos</option>
-                                            <option>Soy Contador (Alianzas)</option>
+                                    <div class="col-md-6">
+                                        <label asp-for="Subject" class="form-label fw-bold small text-uppercase text-muted"></label>
+                                        <select asp-for="Subject" class="form-select form-select-lg bg-light border-0 ps-3">
+                                            <option value="">Selecciona una opción...</option>
+                                            <option value="Quiero una demo comercial">Quiero una demo comercial</option>
+                                            <option value="Soporte Técnico / Ayuda">Soporte Técnico / Ayuda</option>
+                                            <option value="Facturación y Pagos">Facturación y Pagos</option>
+                                            <option value="Soy Contador (Alianzas)">Soy Contador (Alianzas)</option>
+                                            <option value="Otro">Otro tema</option>
                                         </select>
+                                        <span asp-validation-for="Subject" class="text-danger small"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Phone" class="form-label fw-bold small text-uppercase text-muted"></label>
+                                        <input asp-for="Phone" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="88888888">
+                                        <span asp-validation-for="Phone" class="text-danger small"></span>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label fw-bold small text-uppercase text-muted">Mensaje</label>
-                                        <textarea class="form-control form-control-lg bg-light border-0 ps-3" rows="5" placeholder="Cuéntanos más sobre tu consulta..."></textarea>
+                                        <label asp-for="Message" class="form-label fw-bold small text-uppercase text-muted"></label>
+                                        <textarea asp-for="Message" class="form-control form-control-lg bg-light border-0 ps-3" rows="5" placeholder="Cuéntanos más sobre tu consulta..."></textarea>
+                                        <span asp-validation-for="Message" class="text-danger small"></span>
                                     </div>
                                     <div class="col-12 mt-4">
                                         <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm">
@@ -79,7 +104,7 @@
                                         <span class="avatar bg-white/10 text-white rounded-circle me-3"><i class="bi bi-envelope-fill"></i></span>
                                         <div>
                                             <strong class="d-block mb-1">Correo General</strong>
-                                            <a href="mailto:hola@cfoautonomo.cr" class="text-white-50 text-decoration-none small hover-white">hola@cfoautonomo.cr</a>
+                                            <a href="mailto:hola@regiva.cr" class="text-white-50 text-decoration-none small hover-white">hola@regiva.cr</a>
                                         </div>
                                     </li>
                                     <li class="d-flex align-items-start">
@@ -123,3 +148,9 @@
     .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
     .transition-all { transition: all 0.3s ease; }
 </style>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

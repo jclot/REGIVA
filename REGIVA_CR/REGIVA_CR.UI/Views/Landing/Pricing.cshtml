@@ -3,129 +3,287 @@
     ViewData["Title"] = "Planes y Precios";
 }
 
-<div class="py-6 bg-light">
+<div class="bg-light py-6 border-bottom">
     <div class="container-xl">
         <div class="text-center mb-6" style="max-width: 700px; margin: 0 auto;">
-            <span class="badge bg-green-lt mb-3 text-uppercase">Precios Claros</span>
-            <h1 class="display-4 fw-bold mb-3">Invierte en tranquilidad</h1>
-            <p class="lead text-muted">
-                Elige el plan que se adapte al tamaño de tu facturación. Puedes cambiar o cancelar en cualquier momento sin penalizaciones.
+            
+            <span class="badge bg-green-lt mb-3 text-uppercase">
+                Inversión Inteligente
+            </span>
+            
+            <h1 class="display-4 fw-bold mb-3">Precios transparentes</h1>
+            
+            <p class="lead text-muted mb-4">
+                Empieza gratis y escala a medida que tu negocio crece. Sin contratos forzosos ni letras pequeñas.
             </p>
             
             <div class="d-flex justify-content-center align-items-center mt-4">
-                <span class="fw-bold me-3">Mensual</span>
-                <div class="form-check form-switch m-0">
-                    <input class="form-check-input" type="checkbox" role="switch" id="billingSwitch">
+                <span class="fw-bold text-muted me-3">Mensual</span>
+                <div class="form-check form-switch mb-0">
+                    <input class="form-check-input" type="checkbox" role="switch" checked style="width: 3rem; height: 1.5rem; cursor: pointer;">
                 </div>
-                <span class="text-muted ms-3">Anual <span class="badge bg-green-lt ms-1">-20%</span></span>
+                <span class="fw-bold text-dark ms-3">Anual <span class="badge bg-green-lt ms-1 text-green">-20%</span></span>
             </div>
         </div>
-        
-        <div class="row row-cards align-items-center justify-content-center">
+
+        <div class="row row-cards justify-content-center align-items-stretch stagger-animation">
             
-            <div class="col-md-6 col-lg-4">
-                <div class="card border-0 shadow-sm hover-shadow transition-all h-100">
-                    <div class="card-body p-5 text-center">
-                        <div class="text-uppercase text-muted fw-bold mb-2">Emprendedor</div>
-                        <div class="display-5 fw-bold text-dark mb-4">Gratis</div>
-                        <p class="text-muted mb-4">Ideal para profesionales independientes que emiten pocas facturas.</p>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
+                    <div class="position-absolute top-0 end-0 mt-n4 me-n4">
+                        <div class="deco-circle bg-secondary-lt opacity-25"></div>
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column position-relative">
+                        <div class="avatar avatar-md bg-white border shadow-sm rounded-circle mb-3 text-secondary floating-icon">
+                            <i class="bi bi-bicycle fs-2"></i>
+                        </div>
+                        <div class="text-muted text-uppercase fw-bold small mb-2 ls-1">Inicial</div>
+                        <div class="d-flex align-items-baseline mb-4">
+                            <span class="h1 mb-0 fw-bold">Gratis</span>
+                        </div>
+                        <p class="text-muted mb-4 small">Para emprendedores que inician.</p>
                         
-                        <ul class="list-unstyled space-y-3 text-start mb-5 px-3">
-                            <li><i class="bi bi-check-circle-fill text-green me-2"></i> <strong>20</strong> Documentos/mes</li>
-                            <li><i class="bi bi-check-circle-fill text-green me-2"></i> 1 Usuario</li>
-                            <li><i class="bi bi-check-circle-fill text-green me-2"></i> Reportes Básicos</li>
-                            <li class="text-muted opacity-50"><i class="bi bi-dash-circle me-2"></i> Sin IA Predictiva</li>
-                            <li class="text-muted opacity-50"><i class="bi bi-dash-circle me-2"></i> Sin Alertas WhatsApp</li>
+                        <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small">
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-secondary me-2"></i> <strong>50 Docs</strong>/mes</li>
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-secondary me-2"></i> 1 Usuario</li>
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-secondary me-2"></i> Recepción XML</li>
+                            <li class="d-flex text-muted opacity-50 text-decoration-line-through"><i class="bi bi-x-circle me-2"></i> Inteligencia Artificial</li>
                         </ul>
                         
-                        <a asp-controller="Account" asp-action="Register" asp-route-restart="true" class="btn btn-outline-secondary w-100 btn-lg">
-                            Crear cuenta gratis
+                        <a asp-controller="Account" asp-action="Register" asp-route-plan="free" asp-route-restart="true" class="btn btn-outline-secondary w-100 btn-pill">
+                            Crear cuenta
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-4">
-                <div class="card border-primary shadow-lg position-relative transform-hover h-100" style="z-index: 10;">
-                    <div class="ribbon ribbon-top bg-primary shadow-sm"><i class="bi bi-star-fill"></i></div>
-                    <div class="card-body p-5 text-center">
-                        <div class="text-uppercase text-primary fw-bold mb-2">Pymes en Crecimiento</div>
-                        <div class="display-4 fw-bold text-dark mb-0">$29</div>
-                        <div class="text-muted small mb-4">USD / mes</div>
-                        <p class="text-muted mb-4">Para empresas que quieren automatizar y predecir su futuro.</p>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
+                    <div class="position-absolute bottom-0 start-0 mb-n5 ms-n5">
+                        <div class="deco-blob bg-blue-lt opacity-20"></div>
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column position-relative">
+                        <div class="avatar avatar-md bg-blue-lt text-blue rounded-circle mb-3 floating-icon">
+                            <i class="bi bi-rocket-takeoff-fill fs-2"></i>
+                        </div>
+                        <div class="text-blue text-uppercase fw-bold small mb-2 ls-1">Estándar</div>
+                        <div class="d-flex align-items-baseline mb-4">
+                            <span class="h1 mb-0 fw-bold">$12</span><span class="text-muted ms-1">/mes</span>
+                        </div>
+                        <p class="text-muted mb-4 small">Para PYMES en crecimiento.</p>
                         
-                        <ul class="list-unstyled space-y-3 text-start mb-5 px-3">
-                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i> <strong>Ilimitados</strong> Documentos</li>
-                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i> 5 Usuarios</li>
-                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i> <strong>IA Predictiva Avanzada</strong></li>
-                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Envío Automático WhatsApp</li>
-                            <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Recepción de Gastos (XML)</li>
+                        <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small">
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-blue me-2"></i> <strong>Ilimitados</strong></li>
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-blue me-2"></i> 2 Usuarios</li>
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-blue me-2"></i> Logo propio</li>
+                            <li class="d-flex text-muted opacity-50 text-decoration-line-through"><i class="bi bi-x-circle me-2"></i> Inteligencia Artificial</li>
                         </ul>
                         
-                        <a asp-controller="Account" asp-action="Register" asp-route-restart="true" class="btn btn-primary w-100 btn-lg">
-                            Empezar Prueba de 14 días
+                        <a asp-controller="Account" asp-action="Register" asp-route-plan="standard" asp-route-restart="true" class="btn btn-primary w-100 bg-blue border-blue btn-pill">
+                            Prueba 14 días
                         </a>
-                        <div class="text-muted small mt-2">No requiere tarjeta de crédito</div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-4">
-                <div class="card border-0 shadow-sm hover-shadow transition-all h-100">
-                    <div class="card-body p-5 text-center">
-                        <div class="text-uppercase text-muted fw-bold mb-2">Corporativo</div>
-                        <div class="display-5 fw-bold text-dark mb-4">Custom</div>
-                        <p class="text-muted mb-4">Para grandes volúmenes y necesidades específicas de integración.</p>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-lg hover-lift position-relative scale-105-hover overflow-hidden">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary-lt-10"></div>
+                    
+                    <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-2">
+                        <span class="badge bg-orange text-white shadow-sm pulse-animation">POPULAR</span>
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column position-relative z-index-1">
+                        <div class="avatar avatar-md bg-gradient-primary text-white rounded-circle mb-3 floating-icon shadow-sm">
+                            <i class="bi bi-stars fs-2"></i>
+                        </div>
                         
-                        <ul class="list-unstyled space-y-3 text-start mb-5 px-3">
-                            <li><i class="bi bi-check-circle-fill text-green me-2"></i> Todo lo de Profesional</li>
-                            <li><i class="bi bi-check-circle-fill text-green me-2"></i> <strong>Usuarios Ilimitados</strong></li>
-                            <li><i class="bi bi-check-circle-fill text-green me-2"></i> API Access & Webhooks</li>
-                            <li><i class="bi bi-check-circle-fill text-green me-2"></i> Soporte Prioritario 24/7</li>
-                            <li><i class="bi bi-check-circle-fill text-green me-2"></i> Contrato SLA Garantizado</li>
+                        <div class="text-primary text-uppercase fw-bold small mb-2 ls-1">CFO Virtual</div>
+                        <div class="d-flex align-items-baseline mb-4">
+                            <span class="h1 mb-0 fw-bold text-primary">$29</span><span class="text-muted ms-1">/mes</span>
+                        </div>
+                        <p class="text-dark opacity-75 mb-4 small">Toma el control con IA predictiva.</p>
+                        
+                        <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small">
+                            <li class="d-flex fw-bold text-dark"><i class="bi bi-check-circle-fill text-primary me-2"></i> Todo Estándar</li>
+                            <li class="d-flex"><i class="bi bi-magic text-purple me-2"></i> <span class="text-purple fw-bold">Predicción IA</span></li>
+                            <li class="d-flex"><i class="bi bi-graph-up-arrow text-purple me-2"></i> Score Clientes</li>
+                            <li class="d-flex"><i class="bi bi-whatsapp text-green me-2"></i> Cobros WhatsApp</li>
                         </ul>
                         
-                        <a href="#" class="btn btn-outline-primary w-100 btn-lg">
+                        <a asp-controller="Account" asp-action="Register" asp-route-plan="pro" asp-route-restart="true" class="btn btn-primary w-100 btn-pill shadow-primary-lg">
+                            Prueba PRO Gratis
+                        </a>
+                        <div class="text-center mt-2">
+                            <small class="text-muted" style="font-size: 0.7rem;">Sin tarjeta de crédito</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm bg-dark text-white hover-lift overflow-hidden">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" 
+                         style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+                    <div class="card-body p-4 d-flex flex-column position-relative z-index-1">
+                        <div class="avatar avatar-md bg-white text-dark rounded-circle mb-3 floating-icon">
+                            <i class="bi bi-buildings-fill fs-2"></i>
+                        </div>
+                        <div class="text-white-50 text-uppercase fw-bold small mb-2 ls-1">Enterprise</div>
+                        <div class="d-flex align-items-baseline mb-4">
+                            <span class="h1 mb-0 fw-bold text-white">A medida</span>
+                        </div>
+                        <p class="text-white-50 mb-4 small">Para grandes volúmenes.</p>
+                        
+                        <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small text-white-75">
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-success me-2"></i> Usuarios Ilimitados</li>
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-success me-2"></i> Acceso API</li>
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-success me-2"></i> Multi-Empresa</li>
+                            <li class="d-flex"><i class="bi bi-check-circle-fill text-success me-2"></i> Soporte 24/7</li>
+                        </ul>
+                        
+                        <a asp-controller="Landing" asp-action="Contact" class="btn btn-light w-100 btn-pill fw-bold text-dark">
                             Contactar Ventas
                         </a>
                     </div>
                 </div>
             </div>
+
         </div>
-        
-        <div class="row mt-6 pt-5 border-top justify-content-center text-center">
-            <div class="col-md-8">
-                <h3 class="mb-4">¿Tienes dudas sobre la facturación?</h3>
-                <div class="row text-start g-4">
-                    <div class="col-md-6">
-                        <h4 class="fw-bold"><i class="bi bi-shield-check text-success me-2"></i> ¿Incluye firma digital?</h4>
-                        <p class="text-muted small">Sí, firmamos tus comprobantes en la nube automáticamente. No necesitas comprar tarjeta inteligente ni lectores USB.</p>
+    </div>
+</div>
+
+<div class="py-6 bg-light container-xl border-top">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">Preguntas Frecuentes</h2>
+                <p class="text-muted">Resolvemos tus dudas antes de que empieces.</p>
+            </div>
+            
+            <div class="accordion accordion-custom" id="faqAccordion">
+                
+                <div class="card mb-3 border-0 shadow-sm">
+                    <div class="card-header border-0 bg-white p-0" id="headingOne">
+                        <button class="accordion-button p-4 shadow-none bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <span class="fw-bold text-dark fs-3 me-3">01.</span>
+                            <span class="fw-bold fs-3 text-dark">¿Qué pasa cuando terminan mis 14 días?</span>
+                        </button>
                     </div>
-                    <div class="col-md-6">
-                        <h4 class="fw-bold"><i class="bi bi-arrow-repeat text-blue me-2"></i> ¿Puedo cambiar de plan?</h4>
-                        <p class="text-muted small">Cuando quieras. Si tu negocio crece, subes de plan. Si bajas el ritmo, puedes volver al plan gratis el mes siguiente.</p>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                        <div class="card-body pt-0 pb-4 px-4 text-muted">
+                            <div class="ps-5 ms-1">
+                                Tus datos siguen seguros. Si decides no continuar con el plan de pago, tu cuenta pasará automáticamente al plan gratuito (con límite de 50 documentos) para que puedas seguir operando sin interrupciones.
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div class="card mb-3 border-0 shadow-sm">
+                    <div class="card-header border-0 bg-white p-0" id="headingTwo">
+                        <button class="accordion-button collapsed p-4 shadow-none bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <span class="fw-bold text-dark fs-3 me-3">02.</span>
+                            <span class="fw-bold fs-3 text-dark">¿El precio incluye el IVA?</span>
+                        </button>
+                    </div>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                        <div class="card-body pt-0 pb-4 px-4 text-muted">
+                            <div class="ps-5 ms-1">
+                                Los precios mostrados son netos. Al momento de la facturación se agregará el 13% de IVA correspondiente a servicios digitales en Costa Rica, el cual podrás utilizar como crédito fiscal.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3 border-0 shadow-sm">
+                    <div class="card-header border-0 bg-white p-0" id="headingThree">
+                        <button class="accordion-button collapsed p-4 shadow-none bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <span class="fw-bold text-dark fs-3 me-3">03.</span>
+                            <span class="fw-bold fs-3 text-dark">¿Puedo cambiar de plan?</span>
+                        </button>
+                    </div>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                        <div class="card-body pt-0 pb-4 px-4 text-muted">
+                            <div class="ps-5 ms-1">
+                                Sí, en cualquier momento. Los upgrades se cobran prorrateados y los downgrades aplican al siguiente mes.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-5">
+                <a asp-action="Docs" class="btn btn-outline-primary">Ir al Centro de Ayuda</a>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-    .space-y-3 > li {
-        margin-bottom: 0.75rem;
-        font-size: 0.95rem;
+    /* Utilidades */
+    .space-y-2 > li { margin-bottom: 0.5rem; }
+    .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
+    .transition-all { transition: all 0.3s ease; }
+    .btn-pill { border-radius: 50rem; }
+    .ls-1 { letter-spacing: 1px; }
+    .opacity-10 { opacity: 0.1; }
+    .opacity-20 { opacity: 0.2; }
+    .opacity-25 { opacity: 0.25; }
+    
+    /* Branding */
+    .text-purple { color: #6f42c1 !important; }
+    .bg-primary-lt-10 { background-color: rgba(32, 107, 196, 0.04); }
+    .bg-gradient-primary { background: linear-gradient(135deg, var(--tblr-primary) 0%, #a55eea 100%); }
+    .shadow-primary-lg { box-shadow: 0 10px 25px -5px rgba(32, 107, 196, 0.4), 0 8px 10px -6px rgba(32, 107, 196, 0.1); }
+
+    /* Switch */
+    .form-check-input:checked { background-color: var(--tblr-green); border-color: var(--tblr-green); }
+
+    /* --- ANIMACIONES CORREGIDAS (Con @@ para escapar en Razor) --- */
+    
+    .stagger-animation > div {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
     }
-    /* Efectos compartidos con Features para simetría */
-    .hover-shadow:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    .stagger-animation > div:nth-child(1) { animation-delay: 0.1s; }
+    .stagger-animation > div:nth-child(2) { animation-delay: 0.2s; }
+    .stagger-animation > div:nth-child(3) { animation-delay: 0.3s; }
+    .stagger-animation > div:nth-child(4) { animation-delay: 0.4s; }
+
+    @@keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
-    .transform-hover:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important;
+
+    .hover-lift { transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important; }
+
+    .floating-icon { animation: float 3s ease-in-out infinite; }
+    @@keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0px); }
     }
-    .transition-all {
-        transition: all 0.3s ease;
+
+    .pulse-animation { animation: pulse 2s infinite; }
+    @@keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(255, 165, 0, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
     }
+
+    /* Formas decorativas */
+    .deco-circle { width: 150px; height: 150px; border-radius: 50%; }
+    .deco-blob { width: 200px; height: 200px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+
+    /* FAQ (Igual al Landing) */
+    .accordion-custom .accordion-button { background-color: white; }
+    .accordion-custom .accordion-button:not(.collapsed) { color: var(--tblr-dark); background-color: white; box-shadow: none; }
+    .accordion-custom .accordion-button:focus { box-shadow: none; border-color: rgba(0,0,0,.125); }
+    .accordion-custom .accordion-button::after { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23206bc4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e"); transform: scale(.8); }
 </style>

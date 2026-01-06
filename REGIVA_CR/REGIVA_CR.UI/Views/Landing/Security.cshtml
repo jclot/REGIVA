@@ -49,42 +49,73 @@
     </div>
 </div>
 
-<div class="py-6 bg-light border-top">
+<div class="py-6 bg-light border-top overflow-hidden">
     <div class="container-xl">
         <div class="row align-items-center">
-            <div class="col-lg-6 order-lg-2 mb-5 mb-lg-0 text-center">
-                <div class="position-relative">
-                    <div class="position-absolute top-50 start-50 translate-middle bg-primary opacity-10 rounded-circle" style="width: 300px; height: 300px; filter: blur(50px);"></div>
-                    <img src="https://preview.tabler.io/static/illustrations/undraw_secure_login_pdn4.svg" class="img-fluid position-relative z-index-1" alt="Seguridad" style="max-height: 300px;">
+            
+            <div class="col-lg-6 order-lg-2 mb-6 mb-lg-0">
+                <div class="reactor-container d-flex justify-content-center align-items-center mx-auto">
+                    
+                    <div class="orbit-ring ring-outer"></div>
+                    
+                    <div class="orbit-ring ring-middle"></div>
+                    
+                    <div class="orbit-ring ring-inner"></div>
+                    
+                    <div class="reactor-core bg-white shadow-lg rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-shield-lock-fill text-gradient-primary" style="font-size: 4rem;"></i>
+                    </div>
+
+                    <div class="badge-satellite pos-1 bg-white shadow-sm border px-3 py-1 rounded-pill">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i> DDoS
+                    </div>
+                    <div class="badge-satellite pos-2 bg-white shadow-sm border px-3 py-1 rounded-pill">
+                        <i class="bi bi-lock-fill text-warning me-1"></i> SSL
+                    </div>
+                    <div class="badge-satellite pos-3 bg-white shadow-sm border px-3 py-1 rounded-pill">
+                        <i class="bi bi-hdd-fill text-azure me-1"></i> AWS
+                    </div>
+
                 </div>
             </div>
+
             <div class="col-lg-6 order-lg-1">
-                <h2 class="display-5 fw-bold mb-4">Infraestructura de Clase Mundial</h2>
-                <p class="text-muted mb-4">Hospedamos nuestra plataforma en proveedores de nube certificados (AWS/Azure) que cumplen con ISO 27001.</p>
+                <h2 class="display-5 fw-bold mb-4">Defensa en Profundidad</h2>
+                <p class="text-muted mb-4 fs-3">
+                    No confiamos en una sola cerradura. Nuestra arquitectura de seguridad opera en múltiples capas simultáneas para garantizar la integridad de tu negocio.
+                </p>
                 
-                <ul class="list-unstyled space-y-3">
-                    <li class="d-flex align-items-start">
-                        <i class="bi bi-check-circle-fill text-success mt-1 me-3 fs-4"></i>
-                        <div>
-                            <strong class="d-block text-dark">Protección DDoS</strong>
-                            <span class="text-muted">Monitoreo 24/7 contra ataques de denegación de servicio.</span>
+                <div class="vstack gap-3">
+                    <div class="d-flex p-3 bg-white rounded border shadow-sm transition-all hover-shadow">
+                        <div class="me-3">
+                            <span class="avatar bg-green-lt"><i class="bi bi-shield-check"></i></span>
                         </div>
-                    </li>
-                    <li class="d-flex align-items-start">
-                        <i class="bi bi-check-circle-fill text-success mt-1 me-3 fs-4"></i>
                         <div>
-                            <strong class="d-block text-dark">SSL/TLS Siempre Activo</strong>
-                            <span class="text-muted">Toda la comunicación viaja encriptada (el candado verde del navegador).</span>
+                            <h4 class="m-0 fw-bold">Capa 1: Perímetro</h4>
+                            <p class="text-muted small m-0">Firewall de Aplicaciones Web (WAF) que bloquea ataques antes de que lleguen.</p>
                         </div>
-                    </li>
-                    <li class="d-flex align-items-start">
-                        <i class="bi bi-check-circle-fill text-success mt-1 me-3 fs-4"></i>
+                    </div>
+
+                    <div class="d-flex p-3 bg-white rounded border shadow-sm transition-all hover-shadow">
+                        <div class="me-3">
+                            <span class="avatar bg-blue-lt"><i class="bi bi-lock"></i></span>
+                        </div>
                         <div>
-                            <strong class="d-block text-dark">Aislamiento de Datos (Multi-Tenant)</strong>
-                            <span class="text-muted">Arquitectura lógica que asegura que los datos de una empresa nunca se mezclen con los de otra.</span>
+                            <h4 class="m-0 fw-bold">Capa 2: Tránsito</h4>
+                            <p class="text-muted small m-0">Certificados de grado bancario. Nadie puede interceptar tus facturas.</p>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+
+                    <div class="d-flex p-3 bg-white rounded border shadow-sm transition-all hover-shadow">
+                        <div class="me-3">
+                            <span class="avatar bg-purple-lt"><i class="bi bi-database"></i></span>
+                        </div>
+                        <div>
+                            <h4 class="m-0 fw-bold">Capa 3: Datos</h4>
+                            <p class="text-muted small m-0">Tus datos viven en una base de datos aislada lógicamente de otros clientes.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -100,9 +131,97 @@
 </div>
 
 <style>
-    .space-y-3 > li { margin-bottom: 1.5rem; }
-    .cta-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-    .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
+    /* Estilos Generales */
+    .hover-shadow:hover { transform: translateY(-3px); box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
     .transition-all { transition: all 0.3s ease; }
+    .cta-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
     .hover-scale:hover { transform: scale(1.05); transition: 0.2s; }
+    .text-gradient-primary {
+        background: linear-gradient(135deg, var(--tblr-primary) 0%, #a55eea 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* --- ANIMACIÓN: REACTOR DE SEGURIDAD --- */
+    
+    .reactor-container {
+        width: 400px;
+        height: 400px;
+        position: relative;
+    }
+
+    /* Núcleo Central */
+    .reactor-core {
+        width: 140px;
+        height: 140px;
+        z-index: 10;
+        position: relative;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* Anillos Orbitales */
+    .orbit-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 1px solid transparent;
+    }
+
+    /* Anillo 1: Grande, lento, discontinuo */
+    .ring-outer {
+        width: 380px;
+        height: 380px;
+        border-top: 2px solid var(--tblr-primary);
+        border-bottom: 2px solid var(--tblr-primary);
+        opacity: 0.3;
+        animation: spin-right 12s linear infinite;
+    }
+
+    /* Anillo 2: Medio, velocidad media, color secundario */
+    .ring-middle {
+        width: 280px;
+        height: 280px;
+        border-left: 2px solid var(--tblr-green);
+        border-right: 2px solid var(--tblr-green);
+        opacity: 0.5;
+        animation: spin-left 8s linear infinite;
+    }
+
+    /* Anillo 3: Pequeño, rápido, brillante */
+    .ring-inner {
+        width: 180px;
+        height: 180px;
+        border-top: 4px solid var(--tblr-purple);
+        opacity: 0.8;
+        animation: spin-right 4s linear infinite;
+    }
+
+    /* Etiquetas Satélite (Flotando estáticas sobre los anillos) */
+    .badge-satellite {
+        position: absolute;
+        z-index: 5;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #555;
+    }
+    .pos-1 { top: 15%; right: 15%; animation: float-1 4s ease-in-out infinite; }
+    .pos-2 { bottom: 20%; left: 10%; animation: float-2 5s ease-in-out infinite; }
+    .pos-3 { top: 10%; left: 30%; animation: float-3 4.5s ease-in-out infinite; }
+
+    /* Keyframes de Rotación (Escapados con @@ para Razor) */
+    @@keyframes spin-right {
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    @@keyframes spin-left {
+        100% { transform: translate(-50%, -50%) rotate(-360deg); }
+    }
+
+    /* Keyframes de Flotación suave para las etiquetas */
+    @@keyframes float-1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @@keyframes float-2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+    @@keyframes float-3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
 </style>

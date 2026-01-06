@@ -1,0 +1,110 @@
+﻿@model List<REGIVA_CR.AB.ModelosParaUI.Blog.BlogDto>
+@{ Layout = "_Layout"; ViewData["Title"] = "Gestión de Blogs"; }
+
+<div class="page-header">
+    <div class="container-xl d-flex justify-content-between">
+        <h2 class="page-title">Mis Artículos de Blog</h2>
+        <a asp-action="Form" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i> Nuevo Post</a>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th class="w-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="fw-bold">@item.Title</div>
+                                    <div class="text-muted small text-truncate" style="max-width: 300px;">@item.Summary</div>
+                                </td>
+                                <td>
+                                    @if(item.IsPublished) { <span class="badge bg-green-lt">Publicado</span> }
+                                    else { <span class="badge bg-yellow-lt">Borrador</span> }
+                                </td>
+                                <td>@item.CreatedAt.ToShortDateString()</td>
+                                <td class="text-end">
+                                    <div class="btn-list flex-nowrap">
+                                        <a asp-action="Form" asp-route-id="@item.Id" class="btn btn-sm btn-ghost-primary">Editar</a>
+                                        
+                                        <button type="button" class="btn btn-sm btn-ghost-danger" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#modal-delete-blog"
+                                                data-blog-id="@item.Id"
+                                                data-blog-title="@item.Title">
+                                            Borrar
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-delete-blog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div> <div class="modal-body text-center py-4">
+                <i class="bi bi-exclamation-triangle text-danger display-1 mb-2"></i>
+                
+                <h3>¿Estás seguro?</h3>
+                <div class="text-muted">
+                    Vas a eliminar el blog: <br>
+                    <strong id="blogTitleToDelete">...</strong>.<br>
+                    Esta acción no se puede deshacer.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col">
+                            <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                Cancelar
+                            </a>
+                        </div>
+                        <div class="col">
+                            <form asp-action="Delete" method="post">
+                                <input type="hidden" name="id" id="blogIdInput" value="" />
+                                <button type="submit" class="btn btn-danger w-100">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('modal-delete-blog')
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget
+            var blogId = button.getAttribute('data-blog-id')
+            var blogTitle = button.getAttribute('data-blog-title')
+            var titleSpan = deleteModal.querySelector('#blogTitleToDelete')
+            var inputId = deleteModal.querySelector('#blogIdInput')
+            
+            titleSpan.textContent = blogTitle
+            inputId.value = blogId
+        })
+    </script>
+}

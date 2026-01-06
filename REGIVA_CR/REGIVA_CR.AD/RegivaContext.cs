@@ -14,5 +14,6 @@ namespace REGIVA_CR.AD
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<TenantEntity> Tenants { get; set; }
         public DbSet<TenantUserEntity> TenantUsers { get; set; }
+        public DbSet<BlogEntity> Blogs { get; set; }
     }
 }

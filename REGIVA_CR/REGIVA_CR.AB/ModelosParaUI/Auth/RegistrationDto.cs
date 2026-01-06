@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using REGIVA_CR.AB.Attributes;
@@ -156,5 +157,75 @@ namespace REGIVA_CR.AB.ModelosParaUI.Auth
         [Required(ErrorMessage = "Ingresa el código de 6 dígitos.")]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "El código debe ser de 6 dígitos.")]
         public string Code { get; set; } = string.Empty;
+    }
+
+    public class ContactDto
+    {
+        [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "Por favor dinos tu nombre.")]
+        public string Name { get; set; } = string.Empty;
+
+        [Display(Name = "Correo Electrónico")]
+        [Required(ErrorMessage = "Necesitamos tu correo para responderte.")]
+        [EmailAddress(ErrorMessage = "Correo inválido.")]
+        public string Email { get; set; } = string.Empty;
+
+        [Display(Name = "Teléfono Celular")]
+        [Required(ErrorMessage = "El teléfono es obligatorio.")]
+        [RegularExpression(@"^[0-9]{8}$", ErrorMessage = "El teléfono debe tener 8 dígitos numéricos (Ej: 88888888).")]
+        public string Phone { get; set; } = string.Empty;
+
+        [Display(Name = "Asunto")]
+        [Required(ErrorMessage = "Selecciona un asunto.")]
+        public string Subject { get; set; } = string.Empty;
+
+        [Display(Name = "Mensaje")]
+        [Required(ErrorMessage = "El mensaje no puede estar vacío.")]
+        [StringLength(2000, ErrorMessage = "El mensaje es muy largo.")]
+        public string Message { get; set; } = string.Empty;
+    }
+
+    public class UserProfileDto
+    {
+        public int UserId { get; set; }
+        public string FullName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+        public DateTime MemberSince { get; set; }
+
+        public string BusinessName { get; set; } = string.Empty;
+        public string LegalId { get; set; } = string.Empty;
+        public string EconomicActivity { get; set; } = string.Empty;
+        public string Plan { get; set; } = string.Empty;
+    }
+
+    public class UpdateProfileDto
+    {
+        public int UserId { get; set; }
+
+        [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "El nombre es obligatorio.")]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Display(Name = "Apellidos")]
+        [Required(ErrorMessage = "El apellido es obligatorio.")]
+        public string LastName { get; set; } = string.Empty;
+
+        [Display(Name = "Teléfono")]
+        [RegularExpression(@"^[0-9]{8}$", ErrorMessage = "El teléfono debe tener 8 dígitos.")]
+        public string? Phone { get; set; }
+
+        [Display(Name = "Contraseña Actual")]
+        public string? CurrentPassword { get; set; }
+
+        [Display(Name = "Nueva Contraseña")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Mínimo 8 caracteres.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Debe tener mayúscula, minúscula y número.")]
+        public string? NewPassword { get; set; }
+
+        [Display(Name = "Confirmar Nueva Contraseña")]
+        [Compare("NewPassword", ErrorMessage = "Las contraseñas no coinciden.")]
+        public string? ConfirmNewPassword { get; set; }
     }
 }

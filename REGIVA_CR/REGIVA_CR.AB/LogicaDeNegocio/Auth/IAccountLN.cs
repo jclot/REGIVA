@@ -21,5 +21,9 @@ namespace REGIVA_CR.AB.LogicaDeNegocio.Auth
         Task SendVerificationEmailAsync(string email, string verificationLinkBaseUrl);
         Task<bool> ConfirmEmailAsync(string email, string code);
         Task<bool> IsEmailVerifiedAsync(string email);
+
+        Task<UserProfileDto?> GetUserProfileAsync(int userId);
+        Task UpdateProfileAsync(UpdateProfileDto model);
+        Task<UpdateProfileDto?> GetUserForEditAsync(int userId);
     }
 }

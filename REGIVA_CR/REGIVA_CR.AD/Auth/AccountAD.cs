@@ -212,5 +212,72 @@ namespace REGIVA_CR.AD.Auth
                 .Select(u => u.IsEmailVerified)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<UserProfileDto?> GetUserProfileAsync(int userId)
+        {
+            IQueryable<UserProfileDto> query = from u in _context.Users
+                                               join tu in _context.TenantUsers on u.UserId equals tu.UserId
+                                               join t in _context.Tenants on tu.TenantId equals t.TenantId
+                                               where u.UserId == userId
+                                               select new UserProfileDto
+                                               {
+                                                   UserId = u.UserId,
+                                                   FullName = $"{u.FirstName} {u.LastName}",
+                                                   Email = u.Email ?? "",
+                                                   Phone = u.Phone ?? "No registrado",
+                                                   Role = tu.RoleInTenant ?? "User",
+                                                   MemberSince = u.CreatedAt,
+
+                                                   BusinessName = t.BusinessName ?? "Sin empresa",
+                                                   LegalId = t.LegalId ?? "",
+                                                   EconomicActivity = t.EconomicActivityCode ?? "N/A",
+                                                   Plan = t.SubscriptionPlan ?? "Free"
+                                               };
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<UpdateProfileDto?> GetUserForEditAsync(int userId)
+        {
+            return await _context.Users
+                .Where(u => u.UserId == userId)
+                .Select(u => new UpdateProfileDto
+                {
+                    UserId = u.UserId,
+                    FirstName = u.FirstName ?? "",
+                    LastName = u.LastName ?? "",
+                    Phone = u.Phone
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> ValidateCurrentPasswordAsync(int userId, string currentPassword)
+        {
+            string? hash = await _context.Users
+                .Where(u => u.UserId == userId)
+                .Select(u => u.PasswordHash)
+                .FirstOrDefaultAsync();
+
+            if (hash == null) return false;
+            return BCrypt.Net.BCrypt.Verify(currentPassword, hash);
+        }
+
+        public async Task UpdateUserProfileAsync(UpdateProfileDto model)
+        {
+            UserEntity? user = await _context.Users.FindAsync(model.UserId);
+            if (user != null)
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Phone = model.Phone;
+
+                if (!string.IsNullOrEmpty(model.NewPassword))
+                {
+                    user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

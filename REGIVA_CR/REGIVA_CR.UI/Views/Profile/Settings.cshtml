@@ -1,36 +1,101 @@
-﻿@{
+﻿@model REGIVA_CR.AB.ModelosParaUI.Auth.UpdateProfileDto
+
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Configuración";
 }
 
 <div class="page-header">
     <div class="container-xl">
-        <h2 class="page-title">Configuración</h2>
+        <h2 class="page-title">Configuración de Cuenta</h2>
     </div>
 </div>
+
 <div class="page-body">
     <div class="container-xl">
-        <div class="row row-cards">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Seguridad y Cuenta</h3>
+        <div class="row row-cards justify-content-center">
+            <div class="col-lg-8">
+                
+                @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
+                {
+                    <div class="alert alert-danger">
+                        @Html.ValidationSummary(true)
                     </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Nombre</label>
-                            <input type="text" class="form-control" value="Administrador Principal">
+                }
+
+                <form asp-action="Settings" method="post">
+                    <input type="hidden" asp-for="UserId" />
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3 class="card-title">Información Personal</h3>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" placeholder="Dejar vacío para mantener">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="FirstName" class="form-label required">Nombre</label>
+                                    <input asp-for="FirstName" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="LastName" class="form-label required">Apellidos</label>
+                                    <input asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label asp-for="Phone" class="form-label">Teléfono</label>
+                                <input asp-for="Phone" class="form-control" placeholder="88888888" />
+                                <span asp-validation-for="Phone" class="text-danger small"></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-footer text-end">
-                        <button class="btn btn-primary">Guardar Cambios</button>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h3 class="card-title text-muted">Seguridad (Opcional)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info bg-blue-lt mb-3 text-dark border-0">
+                                <i class="bi bi-info-circle me-2"></i> Llenar solo si deseas cambiar tu contraseña.
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="CurrentPassword" class="form-label">Contraseña Actual</label>
+                                <input asp-for="CurrentPassword" type="password" class="form-control" placeholder="Necesaria para guardar cambios de clave" />
+                                <span asp-validation-for="CurrentPassword" class="text-danger small"></span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="NewPassword" class="form-label">Nueva Contraseña</label>
+                                    <input asp-for="NewPassword" type="password" class="form-control" />
+                                    <span asp-validation-for="NewPassword" class="text-danger small"></span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="ConfirmNewPassword" class="form-label">Confirmar Nueva</label>
+                                    <input asp-for="ConfirmNewPassword" type="password" class="form-control" />
+                                    <span asp-validation-for="ConfirmNewPassword" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-action="Index" class="btn btn-ghost-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-save me-2"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+}

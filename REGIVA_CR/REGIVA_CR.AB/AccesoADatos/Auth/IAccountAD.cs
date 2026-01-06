@@ -27,6 +27,11 @@ namespace REGIVA_CR.AB.AccesoADatos.Auth
         Task SetVerificationCodeAsync(string email, string code);
         Task<bool> VerifyEmailAsync(string email, string code);
         Task<bool> IsEmailVerifiedAsync(string email);
+
+        Task<UserProfileDto?> GetUserProfileAsync(int userId);
+        Task UpdateUserProfileAsync(UpdateProfileDto model);
+        Task<bool> ValidateCurrentPasswordAsync(int userId, string currentPassword);
+        Task<UpdateProfileDto?> GetUserForEditAsync(int userId); 
     }
 }
 

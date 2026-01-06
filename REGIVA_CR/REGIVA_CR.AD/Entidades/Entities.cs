@@ -54,4 +54,18 @@ namespace REGIVA_CR.AD.Entidades
         [Column("role_in_tenant")] public string? RoleInTenant { get; set; }
         [Column("is_active")] public bool IsActive { get; set; } = true;
     }
+
+    [Table("blogs")]
+    public class BlogEntity
+    {
+        [Key, Column("blog_id")] public int BlogId { get; set; }
+        [Column("title")][MaxLength(200)] public string Title { get; set; } = string.Empty;
+        [Column("slug")][MaxLength(250)] public string Slug { get; set; } = string.Empty; 
+        [Column("summary")][MaxLength(500)] public string Summary { get; set; } = string.Empty;
+        [Column("content_html")] public string ContentHtml { get; set; } = string.Empty; 
+        [Column("author_name")][MaxLength(100)] public string AuthorName { get; set; } = string.Empty;
+        [Column("is_published")] public bool IsPublished { get; set; } = false;
+        [Column("created_at")] public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        [Column("updated_at")] public DateTime? UpdatedAt { get; set; }
+    }
 }

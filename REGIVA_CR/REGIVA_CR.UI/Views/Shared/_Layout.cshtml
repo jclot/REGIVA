@@ -32,9 +32,9 @@
                                 var email = User.Identity?.Name ?? "usuario@email.com";
                                 var initials = string.Join("", fullName.Split(' ').Take(2).Select(s => s[0]));
                             }
-        
+       
                             <span class="avatar avatar-sm bg-blue-lt">@initials</span>
-        
+       
                             <div class="d-none d-xl-block ps-2">
                                 <div>@fullName</div>
                                 <div class="mt-1 small text-muted">@email</div>
@@ -44,7 +44,7 @@
                             <a asp-controller="Profile" asp-action="Index" class="dropdown-item">Perfil</a>
                             <a asp-controller="Profile" asp-action="Settings" class="dropdown-item">Configuración</a>
                             <div class="dropdown-divider"></div>
-                            <a asp-controller="Account" asp-action="Logout" class="dropdown-item text-danger">Cerrar sesión</a>
+                            <a href="#" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#modal-logout">Cerrar sesión</a>
                         </div>
                     </div>
                 </div>
@@ -86,6 +86,20 @@
                                     <span class="nav-link-title">Landing</span>
                                 </a>
                             </li>
+                            @using System.Security.Claims
+                            @{
+                                var userEmailCheck = User.FindFirst(ClaimTypes.Name)?.Value;
+                            }
+
+                            @if (userEmailCheck == "juliclot123@gmail.com") 
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-primary fw-bold" asp-controller="AdminBlog" asp-action="Index">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-pen-fill"></i></span>
+                                        <span class="nav-link-title">Mis Blogs</span>
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -106,13 +120,28 @@
     <div class="modal modal-blur fade" id="modal-logout" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-title">¿Cerrar sesión?</div>
-                    <div>Tendrás que volver a ingresar tus datos.</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-status bg-danger"></div>
+                <div class="modal-body text-center py-4">
+                    <i class="bi bi-box-arrow-right text-danger display-1 mb-2"></i>
+                    <h3>¿Cerrar sesión?</h3>
+                    <div class="text-muted">Tendrás que volver a ingresar tus datos para acceder.</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancelar</button>
-                    <a asp-controller="Account" asp-action="Login" class="btn btn-danger">Salir</a>
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col">
+                                <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                    Cancelar
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger w-100">
+                                    Salir
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

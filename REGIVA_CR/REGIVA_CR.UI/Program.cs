@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using REGIVA_CR.AB.AccesoADatos.Auth;
+using REGIVA_CR.AB.AccesoADatos.Blog;
 using REGIVA_CR.AB.LogicaDeNegocio.Auth;
+using REGIVA_CR.AB.LogicaDeNegocio.Blog;
 using REGIVA_CR.AB.Services;
 using REGIVA_CR.AD;
 using REGIVA_CR.AD.Auth;
+using REGIVA_CR.AD.Blog;
 using REGIVA_CR.LN.Auth;
+using REGIVA_CR.LN.Blog;
 using REGIVA_CR.LN.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -18,6 +22,9 @@ builder.Services.AddDbContext<RegivaContext>(options =>
 builder.Services.AddScoped<IAccountAD, AccountAD>();
 builder.Services.AddScoped<IAccountLN, AccountLN>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IDocsService, DocsService>();
+builder.Services.AddScoped<IBlogAD, BlogAD>(); 
+builder.Services.AddScoped<IBlogLN, BlogLN>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
