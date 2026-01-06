@@ -31,13 +31,13 @@
                         <div class="col-lg-7 p-5 bg-white">
                             <h3 class="mb-4 fw-bold text-dark">Envíanos un mensaje</h3>
                             
-                            @if (TempData["SuccessMessage"] != null)
+                            @* @if (TempData["SuccessMessage"] != null)
                             {
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                            }
+                            } *@
 
                             <form asp-action="Contact" method="post">
                                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>

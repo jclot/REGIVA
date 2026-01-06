@@ -172,6 +172,39 @@
         </div>
     </header>
 
+    @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
+{
+    <div class="container-xl pt-4">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible shadow-sm mb-4" role="alert">
+                <div class="d-flex">
+                    <div><i class="bi bi-check-circle me-2"></i></div>
+                    <div>
+                        <h4 class="alert-title">@(TempData["AlertTitle"] ?? "¡Recibido!")</h4>
+                        <div class="text-secondary">@TempData["SuccessMessage"]</div>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible shadow-sm mb-4" role="alert">
+                <div class="d-flex">
+                    <div><i class="bi bi-exclamation-triangle me-2"></i></div>
+                    <div>
+                        <h4 class="alert-title">@(TempData["AlertTitle"] ?? "Algo salió mal")</h4>
+                        <div class="text-secondary">@TempData["ErrorMessage"]</div>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+    </div>
+}
+
     <main class="flex-fill w-100">
         @RenderBody()
     </main>
