@@ -198,6 +198,8 @@ namespace REGIVA_CR.AB.ModelosParaUI.Auth
         public string LegalId { get; set; } = string.Empty;
         public string EconomicActivity { get; set; } = string.Empty;
         public string Plan { get; set; } = string.Empty;
+
+        public List<UserActivityDto> RecentActivities { get; set; } = new List<UserActivityDto>();
     }
 
     public class UpdateProfileDto
@@ -227,5 +229,37 @@ namespace REGIVA_CR.AB.ModelosParaUI.Auth
         [Display(Name = "Confirmar Nueva Contraseña")]
         [Compare("NewPassword", ErrorMessage = "Las contraseñas no coinciden.")]
         public string? ConfirmNewPassword { get; set; }
+    }
+
+    public class AcceptInviteDto
+    {
+        [Required]
+        public string Token { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
+
+        [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "El nombre es obligatorio")]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Display(Name = "Apellidos")]
+        [Required(ErrorMessage = "El apellido es obligatorio")]
+        public string LastName { get; set; } = string.Empty;
+
+        [Display(Name = "Teléfono")]
+        [Required(ErrorMessage = "El teléfono es obligatorio")]
+        [RegularExpression(@"^[0-9]{8}$", ErrorMessage = "El teléfono debe tener 8 dígitos numéricos.")]
+        public string Phone { get; set; } = string.Empty;
+
+        [Display(Name = "Contraseña")]
+        [Required(ErrorMessage = "La contraseña es obligatoria")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Mínimo 8 caracteres")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Debe tener mayúscula, minúscula y número.")]
+        public string Password { get; set; } = string.Empty;
+
+        [Display(Name = "Confirmar Contraseña")]
+        [Required(ErrorMessage = "Tienes que confirmar la contraseña primero.")]
+        [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
+        public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

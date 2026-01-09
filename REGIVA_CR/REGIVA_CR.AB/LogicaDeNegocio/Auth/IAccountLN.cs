@@ -1,9 +1,10 @@
-﻿using System;
+﻿using REGIVA_CR.AB.ModelosParaUI.Auth;
+using REGIVA_CR.AB.ModelosParaUI.Organization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using REGIVA_CR.AB.ModelosParaUI.Auth;
 
 namespace REGIVA_CR.AB.LogicaDeNegocio.Auth
 {
@@ -25,5 +26,15 @@ namespace REGIVA_CR.AB.LogicaDeNegocio.Auth
         Task<UserProfileDto?> GetUserProfileAsync(int userId);
         Task UpdateProfileAsync(UpdateProfileDto model);
         Task<UpdateProfileDto?> GetUserForEditAsync(int userId);
+
+        Task LogActivityAsync(int userId, int? tenantId, string type, string description, string? ipAddress);
+        Task<List<UserActivityDto>> GetUserActivityLogsAsync(int userId, int v);
+
+        Task DeleteAccountAsync(int userId, string password);
+
+        Task<OrganizationViewModel> GetOrganizationDataAsync(int tenantId);
+        Task InviteUserAsync(int tenantId, CreateInviteDto model, string inviteUrlFormat);
+        Task<AcceptInviteDto> ValidateInviteTokenAsync(string token);
+        Task CompleteInviteAsync(AcceptInviteDto model);
     }
 }

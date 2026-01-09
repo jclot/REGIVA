@@ -7,95 +7,253 @@
 
 <div class="page-header">
     <div class="container-xl">
-        <h2 class="page-title">Configuración de Cuenta</h2>
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="page-title">Configuración de Cuenta</h2>
+                <div class="text-muted mt-1">Administra tu información personal y seguridad.</div>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="page-body">
     <div class="container-xl">
-        <div class="row row-cards justify-content-center">
-            <div class="col-lg-8">
-                
-                @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
-                {
-                    <div class="alert alert-danger">
-                        @Html.ValidationSummary(true)
-                    </div>
-                }
 
-                <form asp-action="Settings" method="post">
-                    <input type="hidden" asp-for="UserId" />
+        <form asp-action="Settings" method="post" autocomplete="off">
+            <input type="hidden" asp-for="UserId" />
+
+            <div class="row row-cards align-items-stretch">
+
+                <div class="col-lg-8 d-flex flex-column">
 
                     <div class="card mb-3">
                         <div class="card-header">
-                            <h3 class="card-title">Información Personal</h3>
+                            <h3 class="card-title">
+                                <i class="bi bi-person-badge me-2"></i> Información Personal
+                            </h3>
                         </div>
                         <div class="card-body">
+
+                            @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
+                            {
+                                <div class="alert alert-danger">
+                                    @Html.ValidationSummary(true)
+                                </div>
+                            }
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label asp-for="FirstName" class="form-label required">Nombre</label>
-                                    <input asp-for="FirstName" class="form-control" />
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon"><i class="bi bi-person"></i></span>
+                                        <input asp-for="FirstName" class="form-control" placeholder="Tu nombre" />
+                                    </div>
                                     <span asp-validation-for="FirstName" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label asp-for="LastName" class="form-label required">Apellidos</label>
-                                    <input asp-for="LastName" class="form-control" />
+                                    <input asp-for="LastName" class="form-control" placeholder="Tus apellidos" />
                                     <span asp-validation-for="LastName" class="text-danger small"></span>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label asp-for="Phone" class="form-label">Teléfono</label>
-                                <input asp-for="Phone" class="form-control" placeholder="88888888" />
+                                <div class="input-icon">
+                                    <span class="input-icon-addon"><i class="bi bi-telephone"></i></span>
+                                    <input asp-for="Phone" class="form-control" placeholder="88888888" />
+                                </div>
                                 <span asp-validation-for="Phone" class="text-danger small"></span>
+                                <small class="form-hint">Solo números, sin espacios ni guiones.</small>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card flex-fill">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="bi bi-bell me-2"></i> Preferencias y Notificaciones
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Canales de Comunicación</label>
+                                        <label class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                            <span class="form-check-label">Recibir alertas de seguridad por correo (Obligatorio)</span>
+                                        </label>
+                                        <label class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                            <span class="form-check-label">Recibir resumen semanal de facturación</span>
+                                        </label>
+                                        <label class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox">
+                                            <span class="form-check-label">Notificaciones de facturas por WhatsApp</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hr-text">Zona Regional</div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Idioma</label>
+                                    <select class="form-select">
+                                        <option value="es" selected>Español (Costa Rica)</option>
+                                        <option value="en">English (US)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Zona Horaria</label>
+                                    <select class="form-select" disabled>
+                                        <option value="UTC-6" selected>(UTC-06:00) América Central</option>
+                                    </select>
+                                    <small class="form-hint">Fijado automáticamente por la región fiscal.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4 d-flex flex-column">
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="bi bi-shield-lock me-2"></i> Seguridad
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Cambiar Contraseña</label>
+                                <div class="alert alert-info bg-blue-lt small border-0 mb-3">
+                                    Deja estos campos vacíos si no deseas cambiar tu clave actual.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="CurrentPassword" class="form-label">Contraseña Actual</label>
+                                <input asp-for="CurrentPassword" type="password" class="form-control" placeholder="••••••••" />
+                                <span asp-validation-for="CurrentPassword" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="NewPassword" class="form-label">Nueva Contraseña</label>
+                                <input asp-for="NewPassword" type="password" class="form-control" placeholder="Nueva clave" />
+                                <div class="progress progress-sm mt-2" style="height: 3px;">
+                                    <div class="progress-bar bg-secondary" style="width: 0%" id="password-strength"></div>
+                                </div>
+                                <span asp-validation-for="NewPassword" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="ConfirmNewPassword" class="form-label">Confirmar Nueva</label>
+                                <input asp-for="ConfirmNewPassword" type="password" class="form-control" placeholder="Repetir nueva clave" />
+                                <span asp-validation-for="ConfirmNewPassword" class="text-danger small"></span>
                             </div>
                         </div>
                     </div>
 
                     <div class="card mb-3">
-                        <div class="card-header bg-light">
-                            <h3 class="card-title text-muted">Seguridad (Opcional)</h3>
-                        </div>
                         <div class="card-body">
-                            <div class="alert alert-info bg-blue-lt mb-3 text-dark border-0">
-                                <i class="bi bi-info-circle me-2"></i> Llenar solo si deseas cambiar tu contraseña.
-                            </div>
-
-                            <div class="mb-3">
-                                <label asp-for="CurrentPassword" class="form-label">Contraseña Actual</label>
-                                <input asp-for="CurrentPassword" type="password" class="form-control" placeholder="Necesaria para guardar cambios de clave" />
-                                <span asp-validation-for="CurrentPassword" class="text-danger small"></span>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label asp-for="NewPassword" class="form-label">Nueva Contraseña</label>
-                                    <input asp-for="NewPassword" type="password" class="form-control" />
-                                    <span asp-validation-for="NewPassword" class="text-danger small"></span>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label asp-for="ConfirmNewPassword" class="form-label">Confirmar Nueva</label>
-                                    <input asp-for="ConfirmNewPassword" type="password" class="form-control" />
-                                    <span asp-validation-for="ConfirmNewPassword" class="text-danger small"></span>
-                                </div>
-                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mb-2">
+                                <i class="bi bi-check-lg me-2"></i> Guardar Cambios
+                            </button>
+                            <a asp-action="Index" class="btn btn-ghost-secondary w-100">
+                                Cancelar
+                            </a>
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-end gap-2">
-                        <a asp-action="Index" class="btn btn-ghost-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-primary px-4">
-                            <i class="bi bi-save me-2"></i> Guardar Cambios
-                        </button>
+                    <div class="card card-active mt-auto">
+                        <div class="card-body">
+                            <h4 class="card-title text-danger">Zona de Peligro</h4>
+                            <p class="small text-muted mb-3">Si deseas eliminar tu cuenta permanentemente, contacta a soporte.</p>
+
+                            <button type="button" class="btn btn-outline-danger w-100 btn-sm" data-bs-toggle="modal" data-bs-target="#modal-danger">
+                                Solicitar eliminación
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+                <i class="bi bi-exclamation-triangle text-danger display-1 mb-2"></i>
+
+                <h3>¿Estás absolutamente seguro?</h3>
+                <div class="text-muted mb-3">
+                    Esta acción desactivará tu cuenta y cerrará tu sesión <strong>inmediatamente</strong>. <br /><br />
+                    Tus datos fiscales se conservarán internamente por motivos legales, pero perderás el acceso al sistema.
+                </div>
+
+                <form asp-action="DeleteAccount" method="post">
+                    <div class="mb-3 text-start">
+                        <label class="form-label required small">Ingresa tu contraseña para confirmar</label>
+                        <input type="password" name="password" class="form-control" placeholder="Tu contraseña actual" required autocomplete="off">
+                    </div>
+
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col">
+                                <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                    Cancelar
+                                </a>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-danger w-100">
+                                    Eliminar cuenta
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var newPassInput = document.querySelector('input[name="NewPassword"]');
+            var strengthBar = document.getElementById('password-strength');
+
+            if(newPassInput && strengthBar){
+                newPassInput.addEventListener('input', function() {
+                    var val = newPassInput.value;
+                    var score = 0;
+                    if(val.length > 5) score += 20;
+                    if(val.length > 8) score += 20;
+                    if(/[A-Z]/.test(val)) score += 20;
+                    if(/[0-9]/.test(val)) score += 20;
+                    if(/[^A-Za-z0-9]/.test(val)) score += 20;
+
+                    strengthBar.style.width = score + "%";
+
+                    if(score < 40) strengthBar.className = "progress-bar bg-danger";
+                    else if(score < 80) strengthBar.className = "progress-bar bg-warning";
+                    else strengthBar.className = "progress-bar bg-success";
+                });
+            }
+        });
+    </script>
 }

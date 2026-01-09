@@ -1,12 +1,13 @@
-﻿using System.Security.Claims;
-using System.Text.Json;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using REGIVA_CR.AB.Exceptions;
 using REGIVA_CR.AB.LogicaDeNegocio.Auth;
 using REGIVA_CR.AB.ModelosParaUI.Auth;
 using REGIVA_CR.UI.Extensions;
+using System.Security.Claims;
+using System.Text.Json;
 
 namespace REGIVA_CR.UI.Controllers
 {
@@ -70,6 +71,9 @@ namespace REGIVA_CR.UI.Controllers
                         authProperties.ExpiresUtc = DateTime.UtcNow.AddDays(30);
                     }
 
+                    string ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0";
+                    await _accountLN.LogActivityAsync(user.UserId, user.TenantId, "Inicio de Sesión", "Acceso exitoso al sistema.", ipAddress);
+
                     await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity),
@@ -104,6 +108,30 @@ namespace REGIVA_CR.UI.Controllers
 
         public async Task<IActionResult> Logout()
         {
+            string? userIdStr = User.FindFirst("UserId")?.Value;
+            string? tenantIdStr = User.FindFirst("TenantId")?.Value;
+            string ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0";
+
+            if (int.TryParse(userIdStr, out int userId))
+            {
+                try
+                {
+                    int? tenantId = int.TryParse(tenantIdStr, out int tId) ? tId : null;
+
+                    await _accountLN.LogActivityAsync(
+                        userId,
+                        tenantId,
+                        "Cierre de Sesión",
+                        "El usuario cerró sesión manualmente.",
+                        ipAddress
+                    );
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning("Error no crítico al registrar logout: {Message}", ex.Message);
+                }
+            }
+
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             _logger.LogInformation("Usuario cerró sesión.");
             return RedirectToAction("Login");
@@ -267,14 +295,38 @@ namespace REGIVA_CR.UI.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordDto model)
         {
             if (!ModelState.IsValid) return View(model);
-            bool result = await _accountLN.ResetPasswordAsync(model.Token, model.Email, model.Password!);
-            if (result)
+
+            try
             {
-                ViewData["SuccessMessage"] = "Contraseña actualizada correctamente.";
-                return View("Login");
+                string ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "0.0.0.0";
+                UserRecoveryDto? userRecovery = await _accountLN.GetUserForResetAsync(model.Token);
+                bool result = await _accountLN.ResetPasswordAsync(model.Token, model.Email, model.Password!);
+
+                if (result)
+                {
+                    if (userRecovery != null)
+                    {
+                        await _accountLN.LogActivityAsync(
+                            userRecovery.UserId,
+                            null,
+                            "Contraseña Restaurada",
+                            "El usuario recuperó su acceso mediante el enlace de correo.",
+                            ipAddress
+                        );
+                    }
+
+                    ViewData["SuccessMessage"] = "Contraseña actualizada correctamente. Inicia sesión.";
+                    return View("Login");
+                }
+
+                ViewData["ErrorMessage"] = "El enlace ha expirado o no es válido.";
+                return View(model);
             }
-            ViewData["ErrorMessage"] = "El enlace ha expirado o no es válido.";
-            return View(model);
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -357,6 +409,54 @@ namespace REGIVA_CR.UI.Controllers
             TempData["VerificationEmail"] = email;
             TempData["SuccessMessage"] = "Nuevo código enviado.";
             return RedirectToAction("VerifyEmail");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> AcceptInvite(string token)
+        {
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            }
+
+            if (string.IsNullOrEmpty(token)) return RedirectToAction("Login");
+
+            try
+            {
+                AcceptInviteDto model = await _accountLN.ValidateInviteTokenAsync(token);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        // [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AcceptInvite(AcceptInviteDto model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            try
+            {
+                await _accountLN.CompleteInviteAsync(model);
+                TempData["SuccessMessage"] = "Cuenta creada correctamente. Ya puedes iniciar sesión.";
+                return RedirectToAction("Login");
+            }
+            catch (DuplicateInfoException ex)
+            {
+                ModelState.AddModelError(ex.FieldName, ex.Message);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(model);
+            }
         }
     }
 }

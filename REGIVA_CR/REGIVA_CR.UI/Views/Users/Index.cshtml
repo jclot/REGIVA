@@ -1,56 +1,265 @@
-﻿@{
+﻿@model REGIVA_CR.AB.ModelosParaUI.Organization.OrganizationViewModel
+
+@{
     Layout = "_Layout";
-    ViewData["Title"] = "Usuarios";
+    ViewData["Title"] = "Gestión de Usuarios";
 }
 
 <div class="page-header d-print-none">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
             <div class="col">
-                <h2 class="page-title">Gestión de Usuarios</h2>
+                <div class="page-pretitle">Organización</div>
+                <h2 class="page-title">
+                    Equipo: @Model.BusinessName
+                </h2>
             </div>
-            <div class="col-auto ms-auto">
-                <a href="#" class="btn btn-primary"><i class="bi bi-person-plus-fill me-1"></i>Agregar</a>
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <button type="button" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-invite">
+                        <i class="bi bi-plus-lg me-2"></i> Invitar Usuario
+                    </button>
+                    <button type="button" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-invite">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="page-body">
     <div class="container-xl">
-        <div class="card">
+        
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3 class="card-title">Miembros del Equipo</h3>
+                <div class="card-actions">
+                    <div class="input-icon">
+                        <span class="input-icon-addon"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Buscar usuario...">
+                    </div>
+                </div>
+            </div>
+            
             <div class="table-responsive">
-                <table class="table table-vcenter card-table">
+                <table class="table table-vcenter card-table table-striped">
                     <thead>
                         <tr>
                             <th>Usuario</th>
                             <th>Rol</th>
                             <th>Estado</th>
+                            <th>Miembro Desde</th>
                             <th class="w-1"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="d-flex py-1 align-items-center">
-                                    <span class="avatar me-2" style="background-image: url(https://ui-avatars.com/api/?name=Juan+Perez&background=d6336c&color=fff)"></span>
-                                    <div class="flex-fill">
-                                        <div class="font-weight-medium">Juan Pérez</div>
-                                        <div class="text-muted"><a href="#" class="text-reset">juan@demo.com</a></div>
+                        @if (!Model.Members.Any())
+                        {
+                            <tr>
+                                <td colspan="5">
+                                    <div class="empty">
+                                        <div class="empty-icon"><i class="bi bi-people"></i></div>
+                                        <p class="empty-title">No hay usuarios en este equipo</p>
+                                        <p class="empty-subtitle text-muted">
+                                            Empieza invitando a tus colaboradores o contador.
+                                        </p>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="text-muted">Administrador</td>
-                            <td><span class="badge bg-green-lt">Activo</span></td>
-                            <td>
-                                <div class="btn-list flex-nowrap">
-                                    <a href="#" class="btn btn-ghost-secondary btn-icon"><i class="bi bi-pencil"></i></a>
-                                    <a href="#" class="btn btn-ghost-danger btn-icon"><i class="bi bi-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var member in Model.Members)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex py-1 align-items-center">
+                                            <span class="avatar me-2" style="background-image: url('https://ui-avatars.com/api/?name=@Uri.EscapeDataString(member.FullName)&background=random&color=fff&size=64&bold=true')"></span>
+                                            <div class="flex-fill">
+                                                <div class="font-weight-medium">@member.FullName</div>
+                                                <div class="text-muted"><a href="mailto:@member.Email" class="text-reset">@member.Email</a></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @{
+                                            string roleBadge = member.Role switch {
+                                                "owner" => "bg-purple-lt",
+                                                "admin" => "bg-blue-lt",
+                                                "accountant" => "bg-orange-lt",
+                                                _ => "bg-azure-lt"
+                                            };
+                                            string roleName = member.Role switch {
+                                                "owner" => "Dueño",
+                                                "admin" => "Admin",
+                                                "accountant" => "Contador",
+                                                _ => "Vendedor"
+                                            };
+                                        }
+                                        <span class="badge @roleBadge">@roleName</span>
+                                    </td>
+                                    <td>
+                                        @if (member.IsActive)
+                                        {
+                                            <span class="status status-green">
+                                                <span class="status-dot status-dot-animated"></span> Activo
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status status-red">
+                                                <span class="status-dot"></span> Inactivo
+                                            </span>
+                                        }
+                                    </td>
+                                    <td class="text-muted">
+                                        --/--/----
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                                Acciones
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="bi bi-pencil me-2 text-muted"></i> Editar Rol
+                                                </a>
+                                                @if(member.Role != "owner")
+                                                {
+                                                    <a class="dropdown-item text-danger" href="#">
+                                                        <i class="bi bi-trash me-2"></i> Eliminar
+                                                    </a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
+
+        @if (Model.PendingInvites.Any())
+        {
+            <div class="card mt-4">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title text-muted">Invitaciones Pendientes</h3>
+                        <p class="card-subtitle">Usuarios que aún no han aceptado el correo de invitación.</p>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-vcenter card-table">
+                        <thead>
+                            <tr>
+                                <th>Correo Electrónico</th>
+                                <th>Rol Asignado</th>
+                                <th>Enviado Hace</th>
+                                <th class="w-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model.PendingInvites)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="status-dot status-dot-animated status-yellow me-2"></span>
+                                            @i.Email
+                                        </div>
+                                    </td>
+                                    <td class="text-muted text-uppercase">@i.Role</td>
+                                    <td class="text-muted">
+                                        @{
+                                            var timeSpan = DateTime.UtcNow - i.SentAt;
+                                            string timeAgo = timeSpan.TotalHours < 24 
+                                                ? $"{Math.Ceiling(timeSpan.TotalHours)} horas" 
+                                                : $"{Math.Ceiling(timeSpan.TotalDays)} días";
+                                        }
+                                        @timeAgo
+                                    </td>
+                                    <td>
+                                        <div class="btn-list flex-nowrap">
+                                            <button class="btn btn-ghost-secondary btn-sm" title="Reenviar correo">
+                                                <i class="bi bi-send"></i>
+                                            </button>
+                                            <button class="btn btn-ghost-danger btn-sm" title="Cancelar invitación">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
     </div>
 </div>
+
+<div class="modal modal-blur fade" id="modal-invite" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Invitar nuevo usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form asp-controller="Users" asp-action="Invite" method="post" id="formInviteUser">
+                <div class="modal-body">
+                    <div class="row mb-3 align-items-end">
+                        <div class="col">
+                            <label class="form-label required">Correo Electrónico</label>
+                            <input asp-for="NewInvite.Email" class="form-control" placeholder="nombre@empresa.com" required>
+                            <span asp-validation-for="NewInvite.Email" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required">Rol en la empresa</label>
+                        <select asp-for="NewInvite.Role" class="form-select">
+                            <option value="user" selected>Vendedor (Facturación básica)</option>
+                            <option value="accountant">Contador (Ver reportes y XML)</option>
+                            <option value="admin">Administrador (Control total)</option>
+                        </select>
+                        <div class="form-hint text-muted mt-2">
+                            <small>
+                                <i class="bi bi-info-circle me-1"></i>
+                                <strong>Vendedor:</strong> Solo puede facturar. <br>
+                                <strong>Contador:</strong> Acceso a reportes financieros. <br>
+                                <strong>Admin:</strong> Gestión de usuarios y configuración.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary ms-auto" id="btnSubmitInvite">
+                        <i class="bi bi-send me-2"></i> Enviar Invitación
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.getElementById("formInviteUser");
+            var btn = document.getElementById("btnSubmitInvite");
+            
+            if(form && btn) {
+                form.addEventListener("submit", function(e) {
+                    if (form.checkValidity()) {
+                        btn.disabled = true;
+                        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Enviando...';
+                    }
+                });
+            }
+        });
+    </script>
+}

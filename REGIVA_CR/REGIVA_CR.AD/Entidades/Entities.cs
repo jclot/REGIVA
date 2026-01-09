@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace REGIVA_CR.AD.Entidades
         [Column("role")][MaxLength(30)] public string Role { get; set; } = "user";
         [Column("failed_login_attempts")] public int FailedLoginAttempts { get; set; } = 0;
         [Column("locked_until")] public DateTime? LockedUntil { get; set; }
+        [Column("deleted_at")] public DateTime? DeletedAt { get; set; }
         [Column("created_at")] public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         [Column("reset_token")][MaxLength(100)] public string? ResetToken { get; set; }
         [Column("reset_token_expires")] public DateTime? ResetTokenExpires { get; set; }
@@ -60,12 +62,60 @@ namespace REGIVA_CR.AD.Entidades
     {
         [Key, Column("blog_id")] public int BlogId { get; set; }
         [Column("title")][MaxLength(200)] public string Title { get; set; } = string.Empty;
-        [Column("slug")][MaxLength(250)] public string Slug { get; set; } = string.Empty; 
+        [Column("slug")][MaxLength(250)] public string Slug { get; set; } = string.Empty;
         [Column("summary")][MaxLength(500)] public string Summary { get; set; } = string.Empty;
-        [Column("content_html")] public string ContentHtml { get; set; } = string.Empty; 
+        [Column("content_html")] public string ContentHtml { get; set; } = string.Empty;
         [Column("author_name")][MaxLength(100)] public string AuthorName { get; set; } = string.Empty;
         [Column("is_published")] public bool IsPublished { get; set; } = false;
         [Column("created_at")] public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         [Column("updated_at")] public DateTime? UpdatedAt { get; set; }
     }
+
+    [Table("activity_logs")]
+    public class ActivityLogEntity
+    {
+        [Key, Column("log_id")] public long LogId { get; set; }
+        [Column("tenant_id")] public int? TenantId { get; set; }
+        [Column("user_id")] public int? UserId { get; set; }
+        [Column("activity_type")][MaxLength(50)] public string ActivityType { get; set; } = string.Empty;
+        [Column("action_description")] public string? ActionDescription { get; set; }
+        [Column("created_at")] public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        [Column("entity_type")] public string? EntityType { get; set; }
+        [Column("entity_id")] public string? EntityId { get; set; }
+        [Column("status")] public string Status { get; set; } = "success";
+
+        [Column("ip_address", TypeName = "inet")]
+        public IPAddress? IpAddress { get; set; }
+    }
+
+    [Table("password_history")]
+    public class PasswordHistoryEntity
+    {
+        [Key, Column("history_id")]
+        public long HistoryId { get; set; }
+
+        [Column("user_id")]
+        public int UserId { get; set; }
+
+        [Column("password_hash")]
+        [MaxLength(255)]
+        public string PasswordHash { get; set; } = string.Empty;
+
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
+
+    [Table("user_invitations")]
+    public class UserInvitationEntity
+    {
+        [Key, Column("invitation_id")] public long InvitationId { get; set; }
+        [Column("tenant_id")] public int TenantId { get; set; }
+        [Column("email")] public string Email { get; set; } = string.Empty;
+        [Column("role_to_assign")] public string RoleToAssign { get; set; } = "user";
+        [Column("token")] public string Token { get; set; } = string.Empty;
+        [Column("expires_at")] public DateTime ExpiresAt { get; set; }
+        [Column("status")] public string Status { get; set; } = "pending";
+        [Column("created_at")] public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
+
 }

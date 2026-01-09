@@ -1,0 +1,103 @@
+﻿@model REGIVA_CR.AB.ModelosParaUI.Auth.AcceptInviteDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unirse a REGIVA</title>
+    <link href="~/css/tabler.min.css" rel="stylesheet" />
+    <style>
+        .field-validation-error { color: #d63939; font-size: 0.85rem; margin-top: 0.25rem; display: block; }
+        .input-validation-error { border-color: #d63939; }
+    </style>
+</head>
+<body class="d-flex flex-column theme-light">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="#" class="navbar-brand navbar-brand-autodark">REGIVA</a>
+            </div>
+            
+            <form class="card card-md" asp-action="AcceptInvite" method="post" autocomplete="off">
+                @Html.AntiForgeryToken()
+
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Bienvenido al equipo</h2>
+                    <p class="text-muted text-center mb-3">Configura tu acceso para continuar.</p>
+
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                    <input type="hidden" asp-for="Token" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" readonly style="background-color: #f0f2f5; cursor: not-allowed;" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label required">Nombre</label>
+                            <input asp-for="FirstName" class="form-control" placeholder="Juan" />
+                            <span asp-validation-for="FirstName"></span>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label required">Apellido</label>
+                            <input asp-for="LastName" class="form-control" placeholder="Pérez" />
+                            <span asp-validation-for="LastName"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label required">Teléfono Celular</label>
+                        <input asp-for="Phone" class="form-control" placeholder="88888888" />
+                        <span asp-validation-for="Phone"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label required">Contraseña</label>
+                        <div class="input-group input-group-flat">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" autocomplete="new-password" />
+                            <span class="input-group-text">
+                                <a href="#" class="link-secondary" title="Mostrar contraseña" onclick="togglePass('Password'); return false;">👁</a>
+                            </span>
+                        </div>
+                        <span asp-validation-for="Password"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label required">Confirmar</label>
+                        <div class="input-group input-group-flat">
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="••••••••" />
+                            <span class="input-group-text">
+                                <a href="#" class="link-secondary" title="Mostrar contraseña" onclick="togglePass('ConfirmPassword'); return false;">👁</a>
+                            </span>
+                        </div>
+                        <span asp-validation-for="ConfirmPassword"></span>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary w-100">Crear Cuenta y Entrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        function togglePass(fieldName) {
+            var input = document.querySelector('input[name="' + fieldName + '"]');
+            if (input) {
+                input.type = input.type === "password" ? "text" : "password";
+            }
+        }
+    </script>
+</body>
+</html>

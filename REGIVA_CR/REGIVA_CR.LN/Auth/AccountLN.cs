@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BCrypt.Net;
+﻿using BCrypt.Net;
 using REGIVA_CR.AB.AccesoADatos.Auth;
 using REGIVA_CR.AB.Exceptions;
 using REGIVA_CR.AB.LogicaDeNegocio.Auth;
 using REGIVA_CR.AB.ModelosParaUI.Auth;
+using REGIVA_CR.AB.ModelosParaUI.Organization;
 using REGIVA_CR.AB.Services;
 using REGIVA_CR.LN.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace REGIVA_CR.LN.Auth
 {
@@ -141,6 +142,12 @@ namespace REGIVA_CR.LN.Auth
 
             if (user == null || user.Email != email) return false;
 
+            bool usedBefore = await _accountAD.IsPasswordInHistoryAsync(user.UserId, newPassword, 5);
+            if (usedBefore)
+            {
+                throw new Exception("No puedes reutilizar ninguna de tus últimas 5 contraseñas.");
+            }
+
             string newHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
             await _accountAD.UpdatePasswordAsync(user.UserId, newHash);
 
@@ -212,14 +219,115 @@ namespace REGIVA_CR.LN.Auth
                     throw new Exception("Debes ingresar tu contraseña actual para cambiarla.");
                 }
 
-                bool isValid = await _accountAD.ValidateCurrentPasswordAsync(model.UserId, model.CurrentPassword);
-                if (!isValid)
+                bool isCurrentCorrect = await _accountAD.ValidateCurrentPasswordAsync(model.UserId, model.CurrentPassword);
+                if (!isCurrentCorrect)
                 {
                     throw new Exception("La contraseña actual es incorrecta.");
+                }
+
+                if (model.NewPassword == model.CurrentPassword)
+                {
+                    throw new Exception("La nueva contraseña no puede ser igual a la actual.");
+                }
+
+                bool usedBefore = await _accountAD.IsPasswordInHistoryAsync(model.UserId, model.NewPassword, 5);
+                if (usedBefore)
+                {
+                    throw new Exception("No puedes reutilizar ninguna de tus últimas 5 contraseñas.");
                 }
             }
 
             await _accountAD.UpdateUserProfileAsync(model);
+        }
+
+        public async Task LogActivityAsync(int userId, int? tenantId, string type, string description, string? ipAddress)
+        {
+            await _accountAD.LogActivityAsync(userId, tenantId, type, description, ipAddress);
+        }
+
+        public async Task<List<UserActivityDto>> GetUserActivityLogsAsync(int userId, int v)
+        {
+            return await _accountAD.GetActivityLogsAsync(userId, v);
+        }
+
+        public async Task DeleteAccountAsync(int userId, string password)
+        {
+            bool isPasswordValid = await _accountAD.ValidateCurrentPasswordAsync(userId, password);
+            if (!isPasswordValid)
+            {
+                throw new Exception("La contraseña ingresada es incorrecta.");
+            }
+            await _accountAD.SoftDeleteUserAsync(userId);
+        }
+
+        public async Task<OrganizationViewModel> GetOrganizationDataAsync(int tenantId)
+        {
+            return await _accountAD.GetOrganizationDetailsAsync(tenantId);
+        }
+
+        public async Task InviteUserAsync(int tenantId, CreateInviteDto model, string inviteUrlFormat)
+        {
+            if (await _accountAD.UserExistsAsync(model.Email))
+            {
+                throw new Exception("El usuario ya está registrado en el sistema.");
+            }
+
+            string token = Guid.NewGuid().ToString();
+
+            InvitationDto inviteDto = new InvitationDto
+            {
+                TenantId = tenantId,
+                Email = model.Email.Trim().ToLower(),
+                Role = model.Role,
+                Token = token,
+                ExpiresAt = DateTime.UtcNow.AddDays(7)
+            };
+
+            await _accountAD.SaveInvitationAsync(inviteDto);
+
+            string link = string.Format(inviteUrlFormat, token);
+            string body = $@"
+                <div style='font-family:sans-serif; padding:20px; color:#333;'>
+                    <h2>Invitación a REGIVA</h2>
+                    <p>Has sido invitado a unirte a un equipo de trabajo.</p>
+                    <p><strong>Rol asignado:</strong> {model.Role}</p>
+                    <br>
+                    <a href='{link}' style='padding:12px 24px; background-color:#206bc4; color:white; text-decoration:none; border-radius:4px; font-weight:bold;'>Aceptar Invitación</a>
+                    <br><br>
+                    <p><small>Si no esperabas este correo, puedes ignorarlo.</small></p>
+                </div>";
+
+            await _emailService.SendEmailAsync(model.Email, "Invitación a REGIVA", body);
+        }
+
+        public async Task<AcceptInviteDto> ValidateInviteTokenAsync(string token)
+        {
+            InvitationDto? invite = await _accountAD.GetInvitationByTokenAsync(token);
+            if (invite == null) throw new Exception("La invitación no existe o ha expirado.");
+
+            return new AcceptInviteDto
+            {
+                Token = token,
+                Email = invite.Email
+            };
+        }
+
+        public async Task CompleteInviteAsync(AcceptInviteDto model)
+        {
+            InvitationDto? invite = await _accountAD.GetInvitationByTokenAsync(model.Token);
+            if (invite == null) throw new Exception("La invitación no es válida o ha expirado.");
+
+            if (await _accountAD.PhoneExistsAsync(model.Phone))
+            {
+                throw new DuplicateInfoException("Phone", "El teléfono ya está registrado por otro usuario.");
+            }
+
+            string hash = BCrypt.Net.BCrypt.HashPassword(model.Password);
+            int userId = await _accountAD.CreateUserFromInviteAsync(model, hash);
+
+            await _accountAD.LinkUserToTenantAsync(userId, invite.TenantId, invite.Role);
+
+            await _accountAD.MarkInvitationAsAcceptedAsync(model.Token);
         }
     }
 }

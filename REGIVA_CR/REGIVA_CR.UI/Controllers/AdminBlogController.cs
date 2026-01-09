@@ -1,8 +1,10 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using REGIVA_CR.AB.LogicaDeNegocio.Auth;
 using REGIVA_CR.AB.LogicaDeNegocio.Blog;
 using REGIVA_CR.AB.ModelosParaUI.Blog;
+using REGIVA_CR.LN.Auth;
+using System.Security.Claims;
 
 namespace REGIVA_CR.UI.Controllers
 {
@@ -10,11 +12,13 @@ namespace REGIVA_CR.UI.Controllers
     public class AdminBlogController : Controller
     {
         private readonly IBlogLN _blogLN;
-        private const string ALLOWED_EMAIL = "juliclot123@gmail.com"; 
+        private const string ALLOWED_EMAIL = "juliclot123@gmail.com";
+        private readonly IAccountLN _accountLN;
 
-        public AdminBlogController(IBlogLN blogLN)
+        public AdminBlogController(IBlogLN blogLN, IAccountLN accountLN)
         {
             _blogLN = blogLN;
+            _accountLN = accountLN;
         }
 
         private bool IsAuthorized()
@@ -25,7 +29,7 @@ namespace REGIVA_CR.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (!IsAuthorized()) return RedirectToAction("Index", "Home"); 
+            if (!IsAuthorized()) return RedirectToAction("Index", "Home");
 
             List<BlogDto> blogs = await _blogLN.GetAllAsync(includeDrafts: true);
             return View(blogs);
@@ -52,7 +56,15 @@ namespace REGIVA_CR.UI.Controllers
             if (!IsAuthorized()) return Unauthorized();
             if (!ModelState.IsValid) return View("Form", model);
 
-            await _blogLN.SaveAsync(model, "Julián Clot");
+
+            string authorName = User.FindFirst("FullName")?.Value ?? "REGIVA";
+
+            await _blogLN.SaveAsync(model, authorName);
+            int userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+            string accion = model.Id == 0 ? "Blog Creado" : "Blog Editado";
+            string? ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            await _accountLN.LogActivityAsync(userId, null, accion, $"Artículo: {model.Title}", ipAddress);
+
             return RedirectToAction("Index");
         }
 
@@ -60,7 +72,15 @@ namespace REGIVA_CR.UI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             if (!IsAuthorized()) return Unauthorized();
+
+            BlogDto? blog = await _blogLN.GetByIdAsync(id);
+            string titulo = blog?.Title ?? "Desconocido";
+
             await _blogLN.DeleteAsync(id);
+            int userId = int.Parse(User.FindFirst("UserId")?.Value ?? "0");
+            string? ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            await _accountLN.LogActivityAsync(userId, null, "Blog Eliminado", $"ID: {id}", ipAddress);
+
             return RedirectToAction("Index");
         }
     }

@@ -81,29 +81,37 @@
                     <div class="card-header">
                         <h3 class="card-title">Actividad Reciente</h3>
                         <div class="card-actions">
-                            <a href="#" class="btn btn-sm btn-ghost-secondary">Ver todo</a>
+                            <a href="#" class="btn btn-sm btn-ghost-secondary" data-bs-toggle="modal" data-bs-target="#modal-activity-log">
+                                <i class="bi bi-list-ul me-1"></i> Ver historial completo
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">
-                        <ul class="steps steps-vertical">
-                            <li class="step-item">
-                                <div class="h4 m-0">Inicio de sesión exitoso</div>
-                                <div class="text-muted">Acceso desde dispositivo actual.</div>
-                                <span class="badge bg-green-lt mt-2">Hace un momento</span>
-                            </li>
-                            
-                            <li class="step-item">
-                                <div class="h4 m-0">Perfil actualizado</div>
-                                <div class="text-muted">Se detectó una actualización en la información de contacto.</div>
-                                <span class="badge bg-blue-lt mt-2">@Model.MemberSince.AddDays(1).ToString("dd MMM HH:mm")</span>
-                            </li>
-
-                            <li class="step-item">
-                                <div class="h4 m-0">Cuenta creada</div>
-                                <div class="text-muted">Bienvenido a la plataforma CFO Autónomo.</div>
-                                <span class="badge bg-secondary-lt mt-2">@Model.MemberSince.ToString("dd MMM yyyy")</span>
-                            </li>
-                        </ul>
+                        @if (Model.RecentActivities != null && Model.RecentActivities.Any())
+                        {
+                            <ul class="steps steps-vertical">
+                                @foreach (var log in Model.RecentActivities.Take(7))
+                                {
+                                    <li class="step-item">
+                                        <div class="h4 m-0">@log.Type</div>
+                                        <div class="text-muted text-truncate">@log.Description</div>
+                                        <span class="badge @log.ColorClass mt-2">
+                                            @log.Timestamp.ToLocalTime().ToString("dd MMM yyyy - HH:mm")
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <div class="empty">
+                                <div class="empty-icon"><i class="bi bi-activity"></i></div>
+                                <p class="empty-title">Sin actividad registrada</p>
+                                <p class="empty-subtitle text-muted">
+                                    Tus acciones recientes aparecerán aquí.
+                                </p>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -111,3 +119,104 @@
         </div>
     </div>
 </div>
+
+<div class="modal modal-blur fade" id="modal-activity-log" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Historial de Actividad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="activityTable" class="table table-vcenter card-table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Fecha y Hora</th>
+                                <th>Acción</th>
+                                <th>Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var tableInitialized = false;
+            var myModal = document.getElementById('modal-activity-log');
+
+            myModal.addEventListener('shown.bs.modal', function () {
+                if (!tableInitialized) {
+                    $('#activityTable').DataTable({
+                        "processing": true,
+                        "serverSide": false,
+                        "ajax": {
+                            "url": "@Url.Action("GetActivityLog", "Profile")",
+                            "type": "GET",
+                            "datatype": "json"
+                        },
+                        "columns": [
+                            { 
+                                "data": "timestamp", 
+                                "width": "25%",
+                                "render": function(data) {
+                                    if(!data) return "";
+                                    
+                                    if (!data.endsWith("Z")) {
+                                        data += "Z";
+                                    }
+                                    
+                                    var date = new Date(data);
+                                    
+                                    return date.toLocaleString('es-CR', {
+                                        year: 'numeric', month: '2-digit', day: '2-digit',
+                                        hour: '2-digit', minute: '2-digit', hour12: true
+                                    });
+                                }
+                            },
+                            { 
+                                "data": "type",
+                                "width": "20%",
+                                "render": function(data) {
+                                    if(!data) return "";
+                                    var colorClass = "bg-blue-lt";
+                                    var t = data.toLowerCase();
+                                    
+                                    if (t.includes("login") || t.includes("sesión")) colorClass = "bg-green-lt";
+                                    else if (t.includes("crear") || t.includes("nuevo")) colorClass = "bg-azure-lt";
+                                    else if (t.includes("eliminar") || t.includes("borrar")) colorClass = "bg-red-lt";
+                                    else if (t.includes("restaurada") || t.includes("seguridad")) colorClass = "bg-orange-lt";
+                                    
+                                    return `<span class="badge ${colorClass}">${data}</span>`;
+                                }
+                            },
+                            { "data": "description", "width": "55%" }
+                        ],
+                        "order": [[0, "desc"]], 
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+                        },
+                        "pageLength": 10,
+                        "responsive": true,
+                        "width": "100%"
+                    });
+                    tableInitialized = true;
+                }
+            });
+        });
+    </script>
+}

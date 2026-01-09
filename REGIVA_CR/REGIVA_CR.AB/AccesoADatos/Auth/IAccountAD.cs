@@ -1,9 +1,10 @@
-﻿using System;
+﻿using REGIVA_CR.AB.ModelosParaUI.Auth;
+using REGIVA_CR.AB.ModelosParaUI.Organization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using REGIVA_CR.AB.ModelosParaUI.Auth;
 
 namespace REGIVA_CR.AB.AccesoADatos.Auth
 {
@@ -31,7 +32,23 @@ namespace REGIVA_CR.AB.AccesoADatos.Auth
         Task<UserProfileDto?> GetUserProfileAsync(int userId);
         Task UpdateUserProfileAsync(UpdateProfileDto model);
         Task<bool> ValidateCurrentPasswordAsync(int userId, string currentPassword);
-        Task<UpdateProfileDto?> GetUserForEditAsync(int userId); 
+        Task<UpdateProfileDto?> GetUserForEditAsync(int userId);
+
+        Task LogActivityAsync(int userId, int? tenantId, string type, string description, string? ipAddress);
+
+        Task SavePasswordToHistoryAsync(int userId, string passwordHash);
+        Task<bool> IsPasswordInHistoryAsync(int userId, string newPassword, int limit = 4);
+
+        Task<List<UserActivityDto>> GetActivityLogsAsync(int userId, int limit);
+
+        Task SoftDeleteUserAsync(int userId);
+
+        Task<OrganizationViewModel> GetOrganizationDetailsAsync(int tenantId);
+        Task SaveInvitationAsync(InvitationDto inviteDto);
+        Task<InvitationDto?> GetInvitationByTokenAsync(string token);
+        Task<int> CreateUserFromInviteAsync(AcceptInviteDto model, string passwordHash);
+        Task LinkUserToTenantAsync(int userId, int tenantId, string role);
+        Task MarkInvitationAsAcceptedAsync(string token);
     }
 }
 

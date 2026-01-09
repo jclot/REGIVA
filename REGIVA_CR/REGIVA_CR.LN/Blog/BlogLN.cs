@@ -36,11 +36,13 @@ namespace REGIVA_CR.LN.Blog
 
         public async Task SaveAsync(BlogDto model, string authorName)
         {
+
+            model.Author = authorName;
+
             if (model.Id == 0)
             {
                 model.Slug = GenerateSlug(model.Title);
                 model.CreatedAt = DateTime.Now;
-                model.Author = authorName;
                 await _blogAD.CreateBlogAsync(model);
             }
             else

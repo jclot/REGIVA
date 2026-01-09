@@ -6,28 +6,28 @@
 <div class="bg-light py-6 border-bottom">
     <div class="container-xl">
         <div class="text-center mb-6" style="max-width: 700px; margin: 0 auto;">
-            
+
             <span class="badge bg-green-lt mb-3 text-uppercase">
                 Inversión Inteligente
             </span>
-            
+
             <h1 class="display-4 fw-bold mb-3">Precios transparentes</h1>
-            
+
             <p class="lead text-muted mb-4">
                 Empieza gratis y escala a medida que tu negocio crece. Sin contratos forzosos ni letras pequeñas.
             </p>
-            
+
             <div class="d-flex justify-content-center align-items-center mt-4">
                 <span class="fw-bold text-muted me-3">Mensual</span>
                 <div class="form-check form-switch mb-0">
-                    <input class="form-check-input" type="checkbox" role="switch" checked style="width: 3rem; height: 1.5rem; cursor: pointer;">
+                    <input class="form-check-input" type="checkbox" role="switch" id="billingSwitch" checked style="width: 3rem; height: 1.5rem; cursor: pointer;">
                 </div>
                 <span class="fw-bold text-dark ms-3">Anual <span class="badge bg-green-lt ms-1 text-green">-20%</span></span>
             </div>
         </div>
 
         <div class="row row-cards justify-content-center align-items-stretch stagger-animation">
-            
+
             <div class="col-md-6 col-lg-3">
                 <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
                     <div class="position-absolute top-0 end-0 mt-n4 me-n4">
@@ -43,14 +43,14 @@
                             <span class="h1 mb-0 fw-bold">Gratis</span>
                         </div>
                         <p class="text-muted mb-4 small">Para emprendedores que inician.</p>
-                        
+
                         <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small">
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-secondary me-2"></i> <strong>50 Docs</strong>/mes</li>
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-secondary me-2"></i> 1 Usuario</li>
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-secondary me-2"></i> Recepción XML</li>
                             <li class="d-flex text-muted opacity-50 text-decoration-line-through"><i class="bi bi-x-circle me-2"></i> Inteligencia Artificial</li>
                         </ul>
-                        
+
                         <a asp-controller="Account" asp-action="Register" asp-route-plan="free" asp-route-restart="true" class="btn btn-outline-secondary w-100 btn-pill">
                             Crear cuenta
                         </a>
@@ -69,18 +69,21 @@
                             <i class="bi bi-rocket-takeoff-fill fs-2"></i>
                         </div>
                         <div class="text-blue text-uppercase fw-bold small mb-2 ls-1">Estándar</div>
+
                         <div class="d-flex align-items-baseline mb-4">
-                            <span class="h1 mb-0 fw-bold">$12</span><span class="text-muted ms-1">/mes</span>
+                            <span class="h1 mb-0 fw-bold price-text" id="price-standard" data-monthly="12" data-annual="115">$12</span>
+                            <span class="text-muted ms-1 billing-period">/mes</span>
                         </div>
+
                         <p class="text-muted mb-4 small">Para PYMES en crecimiento.</p>
-                        
+
                         <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small">
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-blue me-2"></i> <strong>Ilimitados</strong></li>
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-blue me-2"></i> 2 Usuarios</li>
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-blue me-2"></i> Logo propio</li>
                             <li class="d-flex text-muted opacity-50 text-decoration-line-through"><i class="bi bi-x-circle me-2"></i> Inteligencia Artificial</li>
                         </ul>
-                        
+
                         <a asp-controller="Account" asp-action="Register" asp-route-plan="standard" asp-route-restart="true" class="btn btn-primary w-100 bg-blue border-blue btn-pill">
                             Prueba 14 días
                         </a>
@@ -91,7 +94,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="card h-100 border-0 shadow-lg hover-lift position-relative scale-105-hover overflow-hidden">
                     <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary-lt-10"></div>
-                    
+
                     <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-2">
                         <span class="badge bg-orange text-white shadow-sm pulse-animation">POPULAR</span>
                     </div>
@@ -100,20 +103,23 @@
                         <div class="avatar avatar-md bg-gradient-primary text-white rounded-circle mb-3 floating-icon shadow-sm">
                             <i class="bi bi-stars fs-2"></i>
                         </div>
-                        
+
                         <div class="text-primary text-uppercase fw-bold small mb-2 ls-1">CFO Virtual</div>
+
                         <div class="d-flex align-items-baseline mb-4">
-                            <span class="h1 mb-0 fw-bold text-primary">$29</span><span class="text-muted ms-1">/mes</span>
+                            <span class="h1 mb-0 fw-bold text-primary price-text" id="price-pro" data-monthly="29" data-annual="279">$29</span>
+                            <span class="text-muted ms-1 billing-period">/mes</span>
                         </div>
+
                         <p class="text-dark opacity-75 mb-4 small">Toma el control con IA predictiva.</p>
-                        
+
                         <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small">
                             <li class="d-flex fw-bold text-dark"><i class="bi bi-check-circle-fill text-primary me-2"></i> Todo Estándar</li>
                             <li class="d-flex"><i class="bi bi-magic text-purple me-2"></i> <span class="text-purple fw-bold">Predicción IA</span></li>
                             <li class="d-flex"><i class="bi bi-graph-up-arrow text-purple me-2"></i> Score Clientes</li>
                             <li class="d-flex"><i class="bi bi-whatsapp text-green me-2"></i> Cobros WhatsApp</li>
                         </ul>
-                        
+
                         <a asp-controller="Account" asp-action="Register" asp-route-plan="pro" asp-route-restart="true" class="btn btn-primary w-100 btn-pill shadow-primary-lg">
                             Prueba PRO Gratis
                         </a>
@@ -126,7 +132,7 @@
 
             <div class="col-md-6 col-lg-3">
                 <div class="card h-100 border-0 shadow-sm bg-dark text-white hover-lift overflow-hidden">
-                    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" 
+                    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10"
                          style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
 
                     <div class="card-body p-4 d-flex flex-column position-relative z-index-1">
@@ -138,14 +144,14 @@
                             <span class="h1 mb-0 fw-bold text-white">A medida</span>
                         </div>
                         <p class="text-white-50 mb-4 small">Para grandes volúmenes.</p>
-                        
+
                         <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small text-white-75">
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-success me-2"></i> Usuarios Ilimitados</li>
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-success me-2"></i> Acceso API</li>
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-success me-2"></i> Multi-Empresa</li>
                             <li class="d-flex"><i class="bi bi-check-circle-fill text-success me-2"></i> Soporte 24/7</li>
                         </ul>
-                        
+
                         <a asp-controller="Landing" asp-action="Contact" class="btn btn-light w-100 btn-pill fw-bold text-dark">
                             Contactar Ventas
                         </a>
@@ -164,9 +170,9 @@
                 <h2 class="display-6 fw-bold">Preguntas Frecuentes</h2>
                 <p class="text-muted">Resolvemos tus dudas antes de que empieces.</p>
             </div>
-            
+
             <div class="accordion accordion-custom" id="faqAccordion">
-                
+
                 <div class="card mb-3 border-0 shadow-sm">
                     <div class="card-header border-0 bg-white p-0" id="headingOne">
                         <button class="accordion-button p-4 shadow-none bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -216,7 +222,7 @@
                 </div>
 
             </div>
-            
+
             <div class="text-center mt-5">
                 <a asp-action="Docs" class="btn btn-outline-primary">Ir al Centro de Ayuda</a>
             </div>
@@ -226,64 +232,227 @@
 
 <style>
     /* Utilidades */
-    .space-y-2 > li { margin-bottom: 0.5rem; }
-    .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
-    .transition-all { transition: all 0.3s ease; }
-    .btn-pill { border-radius: 50rem; }
-    .ls-1 { letter-spacing: 1px; }
-    .opacity-10 { opacity: 0.1; }
-    .opacity-20 { opacity: 0.2; }
-    .opacity-25 { opacity: 0.25; }
-    
+    .space-y-2 > li {
+        margin-bottom: 0.5rem;
+    }
+
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+
+    .btn-pill {
+        border-radius: 50rem;
+    }
+
+    .ls-1 {
+        letter-spacing: 1px;
+    }
+
+    .opacity-10 {
+        opacity: 0.1;
+    }
+
+    .opacity-20 {
+        opacity: 0.2;
+    }
+
+    .opacity-25 {
+        opacity: 0.25;
+    }
+
     /* Branding */
-    .text-purple { color: #6f42c1 !important; }
-    .bg-primary-lt-10 { background-color: rgba(32, 107, 196, 0.04); }
-    .bg-gradient-primary { background: linear-gradient(135deg, var(--tblr-primary) 0%, #a55eea 100%); }
-    .shadow-primary-lg { box-shadow: 0 10px 25px -5px rgba(32, 107, 196, 0.4), 0 8px 10px -6px rgba(32, 107, 196, 0.1); }
+    .text-purple {
+        color: #6f42c1 !important;
+    }
+
+    .bg-primary-lt-10 {
+        background-color: rgba(32, 107, 196, 0.04);
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, var(--tblr-primary) 0%, #a55eea 100%);
+    }
+
+    .shadow-primary-lg {
+        box-shadow: 0 10px 25px -5px rgba(32, 107, 196, 0.4), 0 8px 10px -6px rgba(32, 107, 196, 0.1);
+    }
 
     /* Switch */
-    .form-check-input:checked { background-color: var(--tblr-green); border-color: var(--tblr-green); }
+    .form-check-input:checked {
+        background-color: var(--tblr-green);
+        border-color: var(--tblr-green);
+    }
+
+    /* NUEVO CSS: Transición de Precios */
+    .price-text {
+        transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+        display: inline-block;
+    }
+
+    .price-change {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
 
     /* --- ANIMACIONES CORREGIDAS (Con @@ para escapar en Razor) --- */
-    
+
     .stagger-animation > div {
         opacity: 0;
         animation: fadeInUp 0.6s ease-out forwards;
     }
-    .stagger-animation > div:nth-child(1) { animation-delay: 0.1s; }
-    .stagger-animation > div:nth-child(2) { animation-delay: 0.2s; }
-    .stagger-animation > div:nth-child(3) { animation-delay: 0.3s; }
-    .stagger-animation > div:nth-child(4) { animation-delay: 0.4s; }
+
+        .stagger-animation > div:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .stagger-animation > div:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .stagger-animation > div:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .stagger-animation > div:nth-child(4) {
+            animation-delay: 0.4s;
+        }
 
     @@keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .hover-lift { transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; }
-    .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important; }
+    .hover-lift {
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    }
 
-    .floating-icon { animation: float 3s ease-in-out infinite; }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.15) !important;
+        }
+
+    .floating-icon {
+        animation: float 3s ease-in-out infinite;
+    }
+
     @@keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-5px); }
-        100% { transform: translateY(0px); }
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-5px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
     }
 
-    .pulse-animation { animation: pulse 2s infinite; }
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+
     @@keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7); }
-        70% { box-shadow: 0 0 0 10px rgba(255, 165, 0, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(255, 165, 0, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
+        }
     }
 
     /* Formas decorativas */
-    .deco-circle { width: 150px; height: 150px; border-radius: 50%; }
-    .deco-blob { width: 200px; height: 200px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+    .deco-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+    }
+
+    .deco-blob {
+        width: 200px;
+        height: 200px;
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    }
 
     /* FAQ (Igual al Landing) */
-    .accordion-custom .accordion-button { background-color: white; }
-    .accordion-custom .accordion-button:not(.collapsed) { color: var(--tblr-dark); background-color: white; box-shadow: none; }
-    .accordion-custom .accordion-button:focus { box-shadow: none; border-color: rgba(0,0,0,.125); }
-    .accordion-custom .accordion-button::after { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23206bc4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e"); transform: scale(.8); }
+    .accordion-custom .accordion-button {
+        background-color: white;
+    }
+
+        .accordion-custom .accordion-button:not(.collapsed) {
+            color: var(--tblr-dark);
+            background-color: white;
+            box-shadow: none;
+        }
+
+        .accordion-custom .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(0,0,0,.125);
+        }
+
+        .accordion-custom .accordion-button::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23206bc4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            transform: scale(.8);
+        }
 </style>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggle = document.getElementById('billingSwitch');
+            const priceStandard = document.getElementById('price-standard');
+            const pricePro = document.getElementById('price-pro');
+            const periods = document.querySelectorAll('.billing-period');
+
+            function updatePrices() {
+                const isAnnual = toggle.checked; // Si está marcado, es modo Anual
+
+                // 1. Animación de salida (Fade Out)
+                priceStandard.classList.add('price-change');
+                pricePro.classList.add('price-change');
+
+                setTimeout(() => {
+                    // 2. Cambio de valores
+                    if(isAnnual) {
+                        priceStandard.textContent = "$" + priceStandard.dataset.annual;
+                        pricePro.textContent = "$" + pricePro.dataset.annual;
+                        periods.forEach(p => p.textContent = "/año");
+                    } else {
+                        priceStandard.textContent = "$" + priceStandard.dataset.monthly;
+                        pricePro.textContent = "$" + pricePro.dataset.monthly;
+                        periods.forEach(p => p.textContent = "/mes");
+                    }
+
+                    // 3. Animación de entrada (Fade In)
+                    priceStandard.classList.remove('price-change');
+                    pricePro.classList.remove('price-change');
+                }, 200);
+            }
+
+            // Inicializar al cargar (Empezar en mensual)
+            toggle.checked = false;
+            updatePrices();
+
+            // Escuchar cambios
+            toggle.addEventListener('change', updatePrices);
+        });
+    </script>
+}
