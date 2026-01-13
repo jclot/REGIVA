@@ -404,7 +404,8 @@ namespace REGIVA_CR.AD.Auth
                                                      FullName = u.FirstName + " " + u.LastName,
                                                      Email = u.Email ?? "",
                                                      Role = tu.RoleInTenant ?? "user",
-                                                     IsActive = tu.IsActive
+                                                     IsActive = tu.IsActive,
+                                                     JoinedAt = tu.JoinedAt
                                                  }).ToListAsync();
 
             List<PendingInviteViewDto> pendingInvites = await _context.Invitations
@@ -526,7 +527,7 @@ namespace REGIVA_CR.AD.Auth
         public async Task LinkUserToTenantAsync(int userId, int tenantId, string role)
         {
             TenantUserEntity? existingLink = await _context.TenantUsers
-                .IgnoreQueryFilters() 
+                .IgnoreQueryFilters()
                 .FirstOrDefaultAsync(tu => tu.UserId == userId && tu.TenantId == tenantId);
 
             if (existingLink != null)
@@ -555,6 +556,18 @@ namespace REGIVA_CR.AD.Auth
             if (invite != null)
             {
                 invite.Status = "accepted";
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteInvitationAsync(int tenantId, string email)
+        {
+            UserInvitationEntity? invite = await _context.Invitations
+                .FirstOrDefaultAsync(i => i.TenantId == tenantId && i.Email == email && i.Status == "pending");
+
+            if (invite != null)
+            {
+                _context.Invitations.Remove(invite);
                 await _context.SaveChangesAsync();
             }
         }

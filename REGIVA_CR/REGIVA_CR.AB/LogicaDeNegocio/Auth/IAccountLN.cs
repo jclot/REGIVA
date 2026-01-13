@@ -36,5 +36,6 @@ namespace REGIVA_CR.AB.LogicaDeNegocio.Auth
         Task InviteUserAsync(int tenantId, CreateInviteDto model, string inviteUrlFormat);
         Task<AcceptInviteDto> ValidateInviteTokenAsync(string token);
         Task CompleteInviteAsync(AcceptInviteDto model);
+        Task CancelInvitationAsync(int tenantId, string email);
     }
 }

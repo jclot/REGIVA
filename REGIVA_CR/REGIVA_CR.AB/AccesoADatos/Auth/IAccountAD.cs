@@ -49,6 +49,7 @@ namespace REGIVA_CR.AB.AccesoADatos.Auth
         Task<int> CreateUserFromInviteAsync(AcceptInviteDto model, string passwordHash);
         Task LinkUserToTenantAsync(int userId, int tenantId, string role);
         Task MarkInvitationAsAcceptedAsync(string token);
+        Task DeleteInvitationAsync(int tenantId, string email);
     }
 }
 

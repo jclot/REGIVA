@@ -55,6 +55,7 @@ namespace REGIVA_CR.AD.Entidades
         [Column("user_id")] public int UserId { get; set; }
         [Column("role_in_tenant")] public string? RoleInTenant { get; set; }
         [Column("is_active")] public bool IsActive { get; set; } = true;
+        [Column("joined_at")] public DateTime JoinedAt { get; set; } = DateTime.UtcNow;
     }
 
     [Table("blogs")]

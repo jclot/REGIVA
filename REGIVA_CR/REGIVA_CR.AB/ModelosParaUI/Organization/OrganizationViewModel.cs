@@ -23,6 +23,7 @@ namespace REGIVA_CR.AB.ModelosParaUI.Organization
         public string Email { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
         public bool IsActive { get; set; }
+        public DateTime JoinedAt { get; set; }
     }
 
     public class PendingInviteViewDto

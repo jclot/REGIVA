@@ -1,8 +1,12 @@
-﻿@model REGIVA_CR.AB.ModelosParaUI.Organization.OrganizationViewModel
+﻿@using System.Security.Claims
+@model REGIVA_CR.AB.ModelosParaUI.Organization.OrganizationViewModel
 
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Gestión de Usuarios";
+
+    var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value ?? "user";
+    var currentUserId = User.FindFirst("UserId")?.Value;
 }
 
 <div class="page-header d-print-none">
@@ -14,16 +18,19 @@
                     Equipo: @Model.BusinessName
                 </h2>
             </div>
-            <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                    <button type="button" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-invite">
-                        <i class="bi bi-plus-lg me-2"></i> Invitar Usuario
-                    </button>
-                    <button type="button" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-invite">
-                        <i class="bi bi-plus-lg"></i>
-                    </button>
+            @if (currentUserRole == "owner" || currentUserRole == "admin")
+            {
+                <div class="col-auto ms-auto d-print-none">
+                    <div class="btn-list">
+                        <button type="button" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-invite">
+                            <i class="bi bi-plus-lg me-2"></i> Invitar Usuario
+                        </button>
+                        <button type="button" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-invite">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
@@ -72,12 +79,21 @@
                         {
                             foreach (var member in Model.Members)
                             {
+                                bool canEdit = false;
+                                bool isSelf = member.Email == User.FindFirst(ClaimTypes.Name)?.Value;
+
+                                if (currentUserRole == "owner" && !isSelf) canEdit = true;
+                                if (currentUserRole == "admin" && (member.Role != "owner" && member.Role != "admin") && !isSelf) canEdit = true;
+
                                 <tr>
                                     <td>
                                         <div class="d-flex py-1 align-items-center">
                                             <span class="avatar me-2" style="background-image: url('https://ui-avatars.com/api/?name=@Uri.EscapeDataString(member.FullName)&background=random&color=fff&size=64&bold=true')"></span>
                                             <div class="flex-fill">
-                                                <div class="font-weight-medium">@member.FullName</div>
+                                                <div class="font-weight-medium">
+                                                    @member.FullName
+                                                    @if(isSelf) { <span class="badge badge-sm bg-blue-lt ms-1">Tú</span> }
+                                                </div>
                                                 <div class="text-muted"><a href="mailto:@member.Email" class="text-reset">@member.Email</a></div>
                                             </div>
                                         </div>
@@ -109,30 +125,58 @@
                                         else
                                         {
                                             <span class="status status-red">
-                                                <span class="status-dot"></span> Inactivo
+                                                <span class="status-dot"></span> Suspendido
                                             </span>
                                         }
                                     </td>
                                     <td class="text-muted">
-                                        --/--/----
+                                        @member.JoinedAt.ToLocalTime().ToString("dd MMM yyyy")
                                     </td>
                                     <td>
-                                        <div class="dropdown">
-                                            <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                                Acciones
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">
-                                                    <i class="bi bi-pencil me-2 text-muted"></i> Editar Rol
-                                                </a>
-                                                @if(member.Role != "owner")
-                                                {
-                                                    <a class="dropdown-item text-danger" href="#">
-                                                        <i class="bi bi-trash me-2"></i> Eliminar
+                                        @if (canEdit)
+                                        {
+                                            <div class="dropdown">
+                                                <button class="btn dropdown-toggle align-text-top" 
+                                                        data-bs-toggle="dropdown" 
+                                                        data-bs-boundary="window" 
+                                                        data-bs-popper-config='{"strategy":"fixed"}'>
+                                                    Acciones
+                                                </button>
+                                                
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="bi bi-pencil me-2 text-muted"></i> Cambiar Rol
                                                     </a>
-                                                }
+
+                                                    @if (member.IsActive)
+                                                    {
+                                                        <a class="dropdown-item text-warning" href="#">
+                                                            <i class="bi bi-pause-circle me-2"></i> Suspender Acceso
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="dropdown-item text-success" href="#">
+                                                            <i class="bi bi-play-circle me-2"></i> Reactivar Acceso
+                                                        </a>
+                                                    }
+
+                                                    <div class="dropdown-divider"></div>
+
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="bi bi-activity me-2 text-muted"></i> Ver Actividad
+                                                    </a>
+
+                                                    <a class="dropdown-item text-danger" href="#">
+                                                        <i class="bi bi-trash me-2"></i> Eliminar del equipo
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted small fst-italic">Sin acciones</span>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -171,25 +215,54 @@
                                             @i.Email
                                         </div>
                                     </td>
-                                    <td class="text-muted text-uppercase">@i.Role</td>
+                                    <td class="text-muted text-uppercase">
+                                        @{
+                                            string roleBadge = i.Role switch {
+                                                "admin" => "bg-blue-lt",
+                                                "accountant" => "bg-orange-lt",
+                                                _ => "bg-azure-lt"
+                                            };
+                                            string roleName = i.Role switch {
+                                                "admin" => "Admin",
+                                                "accountant" => "Contador",
+                                                _ => "Vendedor"
+                                            };
+                                        }
+                                        <span class="badge @roleBadge">@roleName</span>
+                                    </td>
                                     <td class="text-muted">
                                         @{
                                             var timeSpan = DateTime.UtcNow - i.SentAt;
-                                            string timeAgo = timeSpan.TotalHours < 24 
-                                                ? $"{Math.Ceiling(timeSpan.TotalHours)} horas" 
-                                                : $"{Math.Ceiling(timeSpan.TotalDays)} días";
+                                            string timeAgo;
+
+                                            if (timeSpan.TotalMinutes < 1) timeAgo = "Hace un momento";
+                                            else if (timeSpan.TotalMinutes < 60) timeAgo = $"Hace {(int)timeSpan.TotalMinutes} minutos";
+                                            else if (timeSpan.TotalHours < 24) timeAgo = $"Hace {(int)timeSpan.TotalHours} horas";
+                                            else timeAgo = $"Hace {(int)timeSpan.TotalDays} días";
                                         }
                                         @timeAgo
                                     </td>
                                     <td>
-                                        <div class="btn-list flex-nowrap">
-                                            <button class="btn btn-ghost-secondary btn-sm" title="Reenviar correo">
-                                                <i class="bi bi-send"></i>
-                                            </button>
-                                            <button class="btn btn-ghost-danger btn-sm" title="Cancelar invitación">
-                                                <i class="bi bi-x-lg"></i>
-                                            </button>
-                                        </div>
+                                        @if (currentUserRole == "owner" || currentUserRole == "admin")
+                                        {
+                                            <div class="btn-list flex-nowrap">
+                                                <form asp-action="Invite" method="post" style="display:inline;">
+                                                    <input type="hidden" name="NewInvite.Email" value="@i.Email" />
+                                                    <input type="hidden" name="NewInvite.Role" value="@i.Role" />
+                                                    <button type="submit" class="btn btn-ghost-secondary btn-sm" title="Reenviar correo" data-bs-toggle="tooltip">
+                                                        <i class="bi bi-send"></i>
+                                                    </button>
+                                                </form>
+                                                
+                                                <button type="button" class="btn btn-ghost-danger btn-sm" 
+                                                        title="Cancelar invitación" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#modal-danger"
+                                                        onclick="setCancelEmail('@i.Email')">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </div>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -223,7 +296,10 @@
                         <select asp-for="NewInvite.Role" class="form-select">
                             <option value="user" selected>Vendedor (Facturación básica)</option>
                             <option value="accountant">Contador (Ver reportes y XML)</option>
-                            <option value="admin">Administrador (Control total)</option>
+                            @if(currentUserRole == "owner") 
+                            {
+                                <option value="admin">Administrador (Control total)</option>
+                            }
                         </select>
                         <div class="form-hint text-muted mt-2">
                             <small>
@@ -246,8 +322,50 @@
     </div>
 </div>
 
+<div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+                <i class="bi bi-exclamation-triangle text-danger display-1 mb-2"></i>
+                <h3>¿Estás seguro?</h3>
+                <div class="text-muted">
+                    Vas a cancelar la invitación enviada a <strong id="cancelEmailDisplay"></strong>. <br/>
+                    El enlace enviado por correo dejará de funcionar inmediatamente.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col">
+                            <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                Cancelar
+                            </a>
+                        </div>
+                        <div class="col">
+                            <form asp-action="CancelInvite" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="email" id="cancelEmailInput" />
+                                <button type="submit" class="btn btn-danger w-100">
+                                    Sí, cancelar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
+        function setCancelEmail(email) {
+            document.getElementById('cancelEmailInput').value = email;
+            document.getElementById('cancelEmailDisplay').textContent = email;
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             var form = document.getElementById("formInviteUser");
             var btn = document.getElementById("btnSubmitInvite");

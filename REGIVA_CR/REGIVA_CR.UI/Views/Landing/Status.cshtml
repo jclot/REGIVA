@@ -1,4 +1,6 @@
-﻿@{
+﻿@using REGIVA_CR.AB.ModelosParaUI.General
+@model SubscriberDto 
+@{
     Layout = "_PublicLayout";
     ViewData["Title"] = "Estado del Sistema";
 }
@@ -101,8 +103,96 @@
 <div class="bg-dark text-white text-center py-5 full-bleed">
     <div class="container-xl">
         <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
-            <span class="fw-medium"><i class="bi bi-envelope me-2"></i> ¿Quieres recibir alertas de caídas de Hacienda?</span>
-            <a href="#" class="btn btn-primary btn-sm rounded-pill px-4">Suscribirse a Alertas</a>
+            <span class="fw-medium"><i class="bi bi-envelope me-2"></i> ¿Quieres recibir alertas de caídas de Hacienda o Novedades?</span>
+            
+            <button type="button" class="btn btn-primary btn-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modal-subscribe">
+                Suscribirse a Alertas
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-subscribe" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Suscripción a Alertas REGIVA</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form asp-action="Subscribe" method="post">
+                @Html.AntiForgeryToken()
+                
+                <div class="modal-body">
+                    
+                    <div class="mb-3">
+                        <label class="form-label required">Nombre Completo</label>
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Tu nombre" required />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label required">Correo Electrónico</label>
+                        <div class="input-group input-group-flat">
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope"></i>
+                            </span>
+                            <input asp-for="Email" type="email" class="form-control ps-2" placeholder="ejemplo@correo.com" required />
+                        </div>
+                        <div class="form-text">Nunca compartiremos tu correo con terceros.</div>
+                    </div>
+
+                    <label class="form-label">¿Qué tipo de alertas deseas recibir?</label>
+                    <div class="form-selectgroup-boxes row mb-3">
+                        
+                        <div class="col-md-6">
+                            <label class="form-selectgroup-item">
+                                <input asp-for="SystemAlerts" type="checkbox" class="form-selectgroup-input" checked />
+                                <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                    <span class="me-3">
+                                        <span class="form-selectgroup-check"></span>
+                                    </span>
+                                    <span class="form-selectgroup-label-content">
+                                        <span class="form-selectgroup-title strong mb-1">
+                                            <i class="bi bi-exclamation-triangle me-1 text-orange"></i> Estado del Sistema
+                                        </span>
+                                        <span class="d-block text-muted">
+                                            Recibe avisos inmediatos sobre caídas de Hacienda (ATV) o mantenimiento de REGIVA.
+                                        </span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-selectgroup-item">
+                                <input asp-for="Newsletter" type="checkbox" class="form-selectgroup-input" />
+                                <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                    <span class="me-3">
+                                        <span class="form-selectgroup-check"></span>
+                                    </span>
+                                    <span class="form-selectgroup-label-content">
+                                        <span class="form-selectgroup-title strong mb-1">
+                                            <i class="bi bi-megaphone me-1 text-blue"></i> Novedades y Anuncios
+                                        </span>
+                                        <span class="d-block text-muted">
+                                            Entérate de nuevas funcionalidades, mejoras fiscales y noticias importantes.
+                                        </span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary ms-auto">
+                        <i class="bi bi-bell-fill me-2"></i> Suscribirme ahora
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -134,7 +134,8 @@ namespace REGIVA_CR.UI.Controllers
 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             _logger.LogInformation("Usuario cerró sesión.");
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Landing");
+            //return RedirectToAction("Login");
         }
 
         [HttpGet]

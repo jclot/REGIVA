@@ -85,7 +85,7 @@ namespace REGIVA_CR.AB.ModelosParaUI.Auth
     public class LoginDto
     {
         [Required(ErrorMessage = "Ingrese su correo.")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Formato de correo inválido.")]
         public string? Email { get; set; }
 
         [Required(ErrorMessage = "Ingrese su contraseña.")]

@@ -51,4 +51,24 @@ public class UsersController : Controller
 
         return RedirectToAction("Index");
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CancelInvite(string email)
+    {
+        int tenantId = int.Parse(User.FindFirst("TenantId")!.Value);
+
+        try
+        {
+            await _accountLN.CancelInvitationAsync(tenantId, email);
+            TempData["SuccessMessage"] = $"La invitación para {email} ha sido cancelada.";
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = "Error al cancelar la invitación: " + ex.Message;
+        }
+
+        return RedirectToAction("Index");
+    }
+
 }

@@ -329,5 +329,12 @@ namespace REGIVA_CR.LN.Auth
 
             await _accountAD.MarkInvitationAsAcceptedAsync(model.Token);
         }
+
+        public async Task CancelInvitationAsync(int tenantId, string email)
+        {
+            if (string.IsNullOrEmpty(email)) throw new ArgumentNullException("email");
+
+            await _accountAD.DeleteInvitationAsync(tenantId, email);
+        }
     }
 }

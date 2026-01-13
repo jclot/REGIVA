@@ -111,5 +111,14 @@ namespace REGIVA_CR.UI.Controllers
 
         public IActionResult Terms() => View();
         public IActionResult Privacy() => View();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Subscribe(SubscriberDto model)
+        {
+
+            TempData["SuccessMessage"] = "¡Suscripción exitosa! Te mantendremos informado.";
+            return RedirectToAction("Status");
+        }
     }
 }
