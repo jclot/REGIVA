@@ -33,6 +33,10 @@ namespace REGIVA_CR.AB.LogicaDeNegocio.Auth
         Task DeleteAccountAsync(int userId, string password);
 
         Task<OrganizationViewModel> GetOrganizationDataAsync(int tenantId);
+        Task<TeamMemberDto?> GetTeamMemberAsync(int tenantId, int userId);
+        Task UpdateTeamMemberRoleAsync(int tenantId, int userId, string role);
+        Task SetTeamMemberActiveAsync(int tenantId, int userId, bool isActive);
+        Task RemoveTeamMemberAsync(int tenantId, int userId);
         Task InviteUserAsync(int tenantId, CreateInviteDto model, string inviteUrlFormat);
         Task<AcceptInviteDto> ValidateInviteTokenAsync(string token);
         Task CompleteInviteAsync(AcceptInviteDto model);

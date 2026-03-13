@@ -19,6 +19,7 @@ namespace REGIVA_CR.AB.AccesoADatos.Auth
         Task<bool> TenantExistsAsync(string legalId);
 
         Task<UserSecurityDto?> GetUserSecurityInfoAsync(string email);
+        Task<bool> IsUserSuspendedAsync(string email);
         Task UpdateUserLoginStatsAsync(int userId, int failedAttempts, DateTime? lockoutEnd);
 
         Task SavePasswordResetTokenAsync(string email, string token);
@@ -44,6 +45,10 @@ namespace REGIVA_CR.AB.AccesoADatos.Auth
         Task SoftDeleteUserAsync(int userId);
 
         Task<OrganizationViewModel> GetOrganizationDetailsAsync(int tenantId);
+        Task<TeamMemberDto?> GetTeamMemberAsync(int tenantId, int userId);
+        Task UpdateTenantUserRoleAsync(int tenantId, int userId, string role);
+        Task SetTenantUserActiveAsync(int tenantId, int userId, bool isActive);
+        Task RemoveTenantUserAsync(int tenantId, int userId);
         Task SaveInvitationAsync(InvitationDto inviteDto);
         Task<InvitationDto?> GetInvitationByTokenAsync(string token);
         Task<int> CreateUserFromInviteAsync(AcceptInviteDto model, string passwordHash);
