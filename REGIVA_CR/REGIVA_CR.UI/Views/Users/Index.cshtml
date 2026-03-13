@@ -5,8 +5,8 @@
     Layout = "_Layout";
     ViewData["Title"] = "Gestión de Usuarios";
 
-    var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value ?? "user";
-    var currentUserId = User.FindFirst("UserId")?.Value;
+    var currentUserRole = (User.FindFirst(ClaimTypes.Role)?.Value ?? "user").ToLower();
+    int currentUserId = int.TryParse(User.FindFirst("UserId")?.Value, out var parsedUserId) ? parsedUserId : 0;
 }
 
 <div class="page-header d-print-none">
@@ -44,13 +44,13 @@
                 <div class="card-actions">
                     <div class="input-icon">
                         <span class="input-icon-addon"><i class="bi bi-search"></i></span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Buscar usuario...">
+                        <input type="text" id="userSearchInput" class="form-control form-control-sm" placeholder="Buscar usuario...">
                     </div>
                 </div>
             </div>
             
             <div class="table-responsive">
-                <table class="table table-vcenter card-table table-striped">
+                <table id="teamMembersTable" class="table table-vcenter card-table table-striped">
                     <thead>
                         <tr>
                             <th>Usuario</th>
@@ -80,12 +80,13 @@
                             foreach (var member in Model.Members)
                             {
                                 bool canEdit = false;
-                                bool isSelf = member.Email == User.FindFirst(ClaimTypes.Name)?.Value;
+                                string memberRole = (member.Role ?? "user").ToLower();
+                                bool isSelf = member.UserId == currentUserId;
 
-                                if (currentUserRole == "owner" && !isSelf) canEdit = true;
-                                if (currentUserRole == "admin" && (member.Role != "owner" && member.Role != "admin") && !isSelf) canEdit = true;
+                                if (currentUserRole == "owner" && !isSelf && memberRole != "owner") canEdit = true;
+                                if (currentUserRole == "admin" && (memberRole != "owner" && memberRole != "admin") && !isSelf) canEdit = true;
 
-                                <tr>
+                                <tr class="member-row">
                                     <td>
                                         <div class="d-flex py-1 align-items-center">
                                             <span class="avatar me-2" style="background-image: url('https://ui-avatars.com/api/?name=@Uri.EscapeDataString(member.FullName)&background=random&color=fff&size=64&bold=true')"></span>
@@ -100,13 +101,13 @@
                                     </td>
                                     <td>
                                         @{
-                                            string roleBadge = member.Role switch {
+                                            string roleBadge = memberRole switch {
                                                 "owner" => "bg-purple-lt",
                                                 "admin" => "bg-blue-lt",
                                                 "accountant" => "bg-orange-lt",
                                                 _ => "bg-azure-lt"
                                             };
-                                            string roleName = member.Role switch {
+                                            string roleName = memberRole switch {
                                                 "owner" => "Dueño",
                                                 "admin" => "Admin",
                                                 "accountant" => "Contador",
@@ -144,30 +145,35 @@
                                                 </button>
                                                 
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
+                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-change-role"
+                                                       data-user-id="@member.UserId" data-user-name="@member.FullName" data-user-role="@memberRole">
                                                         <i class="bi bi-pencil me-2 text-muted"></i> Cambiar Rol
                                                     </a>
 
                                                     @if (member.IsActive)
                                                     {
-                                                        <a class="dropdown-item text-warning" href="#">
+                                                        <a class="dropdown-item text-warning" href="#" data-bs-toggle="modal" data-bs-target="#modal-toggle-active"
+                                                           data-user-id="@member.UserId" data-user-name="@member.FullName" data-user-active="true">
                                                             <i class="bi bi-pause-circle me-2"></i> Suspender Acceso
                                                         </a>
                                                     }
                                                     else
                                                     {
-                                                        <a class="dropdown-item text-success" href="#">
+                                                        <a class="dropdown-item text-success" href="#" data-bs-toggle="modal" data-bs-target="#modal-toggle-active"
+                                                           data-user-id="@member.UserId" data-user-name="@member.FullName" data-user-active="false">
                                                             <i class="bi bi-play-circle me-2"></i> Reactivar Acceso
                                                         </a>
                                                     }
 
                                                     <div class="dropdown-divider"></div>
 
-                                                    <a class="dropdown-item" href="#">
+                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-activity-user"
+                                                       data-user-id="@member.UserId" data-user-name="@member.FullName">
                                                         <i class="bi bi-activity me-2 text-muted"></i> Ver Actividad
                                                     </a>
 
-                                                    <a class="dropdown-item text-danger" href="#">
+                                                    <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#modal-remove-user"
+                                                       data-user-id="@member.UserId" data-user-name="@member.FullName">
                                                         <i class="bi bi-trash me-2"></i> Eliminar del equipo
                                                     </a>
                                                 </div>
@@ -181,6 +187,15 @@
                                 </tr>
                             }
                         }
+                        <tr id="noSearchResultsRow" style="display:none;">
+                            <td colspan="5">
+                                <div class="empty">
+                                    <div class="empty-icon"><i class="bi bi-search"></i></div>
+                                    <p class="empty-title">Sin resultados</p>
+                                    <p class="empty-subtitle text-muted">No encontramos usuarios con ese criterio.</p>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -359,11 +374,233 @@
     </div>
 </div>
 
+<div class="modal modal-blur fade" id="modal-change-role" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cambiar rol</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="ChangeRole" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="hidden" name="userId" id="changeRoleUserId" />
+                    <div class="mb-2 text-muted">
+                        Usuario: <strong id="changeRoleUserName"></strong>
+                    </div>
+                    <label class="form-label">Nuevo rol</label>
+                    <select name="newRole" id="changeRoleSelect" class="form-select">
+                        <option value="user">Vendedor (Facturación básica)</option>
+                        <option value="accountant">Contador (Reportes y XML)</option>
+                        @if (currentUserRole == "owner")
+                        {
+                            <option value="admin">Administrador (Control total)</option>
+                        }
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary ms-auto">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-toggle-active" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status" id="toggleActiveStatus"></div>
+            <form asp-action="SetMemberActive" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="userId" id="toggleActiveUserId" />
+                <input type="hidden" name="isActive" id="toggleActiveIsActive" />
+                <div class="modal-body text-center py-4">
+                    <i class="bi display-1 mb-2" id="toggleActiveIcon"></i>
+                    <h3 id="toggleActiveTitle"></h3>
+                    <div class="text-muted" id="toggleActiveMessage"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn w-100" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn w-100" id="toggleActiveConfirm"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-remove-user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <form asp-action="RemoveMember" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="userId" id="removeUserId" />
+                <div class="modal-body text-center py-4">
+                    <i class="bi bi-trash text-danger display-1 mb-2"></i>
+                    <h3>¿Eliminar del equipo?</h3>
+                    <div class="text-muted">
+                        Vas a eliminar a <strong id="removeUserName"></strong> del equipo.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn w-100" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-danger w-100">Sí, eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-activity-user" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Actividad de <span id="activityUserName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="activityLoading" class="text-center text-muted py-4">Cargando actividad...</div>
+                <div id="activityEmpty" class="empty" style="display:none;">
+                    <div class="empty-icon"><i class="bi bi-activity"></i></div>
+                    <p class="empty-title" id="activityEmptyTitle">Sin actividad registrada</p>
+                    <p class="empty-subtitle text-muted" id="activityEmptySubtitle">No hay registros recientes para este usuario.</p>
+                </div>
+                <div class="table-responsive" id="activityTableWrap" style="display:none;">
+                    <table class="table table-vcenter card-table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fecha y Hora</th>
+                                <th>Acción</th>
+                                <th>Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activityTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         function setCancelEmail(email) {
             document.getElementById('cancelEmailInput').value = email;
             document.getElementById('cancelEmailDisplay').textContent = email;
+        }
+
+        function formatActivityDate(value) {
+            if (!value) return "";
+
+            var data = value;
+            if (typeof data === "string" && !data.endsWith("Z")) {
+                data += "Z";
+            }
+
+            var date = new Date(data);
+            if (isNaN(date.getTime())) return value;
+
+            return date.toLocaleString('es-CR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+
+        function renderActivityRows(logs) {
+            var tbody = document.getElementById("activityTableBody");
+            if (!tbody) return;
+
+            tbody.innerHTML = "";
+
+            logs.forEach(function (log) {
+                var tr = document.createElement("tr");
+
+                var tdDate = document.createElement("td");
+                tdDate.textContent = formatActivityDate(log.timestamp);
+
+                var tdType = document.createElement("td");
+                var badge = document.createElement("span");
+                badge.className = "badge " + (log.colorClass || "bg-blue-lt");
+                badge.textContent = log.type || "";
+                tdType.appendChild(badge);
+
+                var tdDesc = document.createElement("td");
+                tdDesc.textContent = log.description || "";
+
+                tr.appendChild(tdDate);
+                tr.appendChild(tdType);
+                tr.appendChild(tdDesc);
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function loadActivityLog(userId) {
+            var loadingEl = document.getElementById("activityLoading");
+            var emptyEl = document.getElementById("activityEmpty");
+            var tableWrap = document.getElementById("activityTableWrap");
+            var emptyTitle = document.getElementById("activityEmptyTitle");
+            var emptySubtitle = document.getElementById("activityEmptySubtitle");
+
+            if (loadingEl) loadingEl.style.display = "block";
+            if (emptyEl) emptyEl.style.display = "none";
+            if (tableWrap) tableWrap.style.display = "none";
+
+            var url = '@Url.Action("GetActivityLog", "Users")' + "?userId=" + encodeURIComponent(userId || "");
+
+            fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+                .then(function (response) {
+                    if (!response.ok) throw new Error("No autorizado");
+                    return response.json();
+                })
+                .then(function (data) {
+                    var logs = Array.isArray(data) ? data : [];
+
+                    if (!logs.length) {
+                        if (emptyTitle) emptyTitle.textContent = "Sin actividad registrada";
+                        if (emptySubtitle) emptySubtitle.textContent = "No hay registros recientes para este usuario.";
+                        if (emptyEl) emptyEl.style.display = "block";
+                        if (tableWrap) tableWrap.style.display = "none";
+                        return;
+                    }
+
+                    renderActivityRows(logs);
+                    if (tableWrap) tableWrap.style.display = "block";
+                })
+                .catch(function () {
+                    if (emptyTitle) emptyTitle.textContent = "No se pudo cargar la actividad";
+                    if (emptySubtitle) emptySubtitle.textContent = "Intenta de nuevo más tarde.";
+                    if (emptyEl) emptyEl.style.display = "block";
+                })
+                .finally(function () {
+                    if (loadingEl) loadingEl.style.display = "none";
+                });
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -376,6 +613,140 @@
                         btn.disabled = true;
                         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Enviando...';
                     }
+                });
+            }
+
+            var searchInput = document.getElementById("userSearchInput");
+            if (searchInput) {
+                searchInput.addEventListener("input", function () {
+                    var query = (searchInput.value || "").toLowerCase().trim();
+                    var rows = document.querySelectorAll("#teamMembersTable tbody tr.member-row");
+                    var noResultsRow = document.getElementById("noSearchResultsRow");
+
+                    if (!rows.length) {
+                        if (noResultsRow) noResultsRow.style.display = "none";
+                        return;
+                    }
+
+                    var visibleCount = 0;
+                    rows.forEach(function (row) {
+                        var text = (row.textContent || "").toLowerCase();
+                        if (!query || text.indexOf(query) !== -1) {
+                            row.style.display = "";
+                            visibleCount += 1;
+                        } else {
+                            row.style.display = "none";
+                        }
+                    });
+
+                    if (noResultsRow) {
+                        noResultsRow.style.display = (query && visibleCount === 0) ? "" : "none";
+                    }
+                });
+            }
+
+            var changeRoleModal = document.getElementById("modal-change-role");
+            if (changeRoleModal) {
+                changeRoleModal.addEventListener("show.bs.modal", function (event) {
+                    var trigger = event.relatedTarget;
+                    if (!trigger) return;
+
+                    var userId = trigger.getAttribute("data-user-id");
+                    var userName = trigger.getAttribute("data-user-name");
+                    var userRole = trigger.getAttribute("data-user-role");
+
+                    var userIdInput = document.getElementById("changeRoleUserId");
+                    var userNameLabel = document.getElementById("changeRoleUserName");
+                    var roleSelect = document.getElementById("changeRoleSelect");
+
+                    if (userIdInput) userIdInput.value = userId || "";
+                    if (userNameLabel) userNameLabel.textContent = userName || "";
+
+                    if (roleSelect) {
+                        var option = roleSelect.querySelector('option[value="' + userRole + '"]');
+                        if (option) {
+                            roleSelect.value = userRole;
+                        } else {
+                            roleSelect.selectedIndex = 0;
+                        }
+                    }
+                });
+            }
+
+            var toggleActiveModal = document.getElementById("modal-toggle-active");
+            if (toggleActiveModal) {
+                toggleActiveModal.addEventListener("show.bs.modal", function (event) {
+                    var trigger = event.relatedTarget;
+                    if (!trigger) return;
+
+                    var userId = trigger.getAttribute("data-user-id");
+                    var userName = trigger.getAttribute("data-user-name");
+                    var isActive = (trigger.getAttribute("data-user-active") || "false").toLowerCase() === "true";
+                    var newState = !isActive;
+
+                    var userIdInput = document.getElementById("toggleActiveUserId");
+                    var isActiveInput = document.getElementById("toggleActiveIsActive");
+                    var titleEl = document.getElementById("toggleActiveTitle");
+                    var messageEl = document.getElementById("toggleActiveMessage");
+                    var iconEl = document.getElementById("toggleActiveIcon");
+                    var statusEl = document.getElementById("toggleActiveStatus");
+                    var confirmBtn = document.getElementById("toggleActiveConfirm");
+
+                    if (userIdInput) userIdInput.value = userId || "";
+                    if (isActiveInput) isActiveInput.value = newState;
+
+                    if (newState) {
+                        if (titleEl) titleEl.textContent = "¿Reactivar acceso?";
+                        if (messageEl) messageEl.textContent = "El usuario " + (userName || "") + " podrá ingresar nuevamente.";
+                        if (iconEl) iconEl.className = "bi bi-play-circle text-success display-1 mb-2";
+                        if (statusEl) statusEl.className = "modal-status bg-success";
+                        if (confirmBtn) {
+                            confirmBtn.className = "btn btn-success w-100";
+                            confirmBtn.textContent = "Reactivar";
+                        }
+                    } else {
+                        if (titleEl) titleEl.textContent = "¿Suspender acceso?";
+                        if (messageEl) messageEl.textContent = "El usuario " + (userName || "") + " no podrá ingresar hasta reactivarlo.";
+                        if (iconEl) iconEl.className = "bi bi-pause-circle text-warning display-1 mb-2";
+                        if (statusEl) statusEl.className = "modal-status bg-warning";
+                        if (confirmBtn) {
+                            confirmBtn.className = "btn btn-warning w-100";
+                            confirmBtn.textContent = "Suspender";
+                        }
+                    }
+                });
+            }
+
+            var removeModal = document.getElementById("modal-remove-user");
+            if (removeModal) {
+                removeModal.addEventListener("show.bs.modal", function (event) {
+                    var trigger = event.relatedTarget;
+                    if (!trigger) return;
+
+                    var userId = trigger.getAttribute("data-user-id");
+                    var userName = trigger.getAttribute("data-user-name");
+
+                    var userIdInput = document.getElementById("removeUserId");
+                    var userNameLabel = document.getElementById("removeUserName");
+
+                    if (userIdInput) userIdInput.value = userId || "";
+                    if (userNameLabel) userNameLabel.textContent = userName || "";
+                });
+            }
+
+            var activityModal = document.getElementById("modal-activity-user");
+            if (activityModal) {
+                activityModal.addEventListener("show.bs.modal", function (event) {
+                    var trigger = event.relatedTarget;
+                    if (!trigger) return;
+
+                    var userId = trigger.getAttribute("data-user-id");
+                    var userName = trigger.getAttribute("data-user-name");
+
+                    var nameEl = document.getElementById("activityUserName");
+                    if (nameEl) nameEl.textContent = userName || "";
+
+                    loadActivityLog(userId);
                 });
             }
         });
