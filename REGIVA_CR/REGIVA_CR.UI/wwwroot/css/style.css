@@ -1,22 +1,43 @@
-﻿
-:root {
-    --litepicker-day-width: 48px;
+﻿/* DARK MODE LITEPICKER */
+[data-bs-theme="dark"] .litepicker {
+    color: #e6e6e6;
 }
 
-.litepicker {
-    font-size: 1rem;
-    z-index: 1060 !important;
+/* fondo del calendario */
+[data-bs-theme="dark"] .litepicker .container__months {
+    background: #1e1e2d !important;
+    border: 1px solid #2c2c3a !important;
 }
 
-    .litepicker .container__days .day-item {
-        font-size: 0.80rem;
-    }
+/* encabezado mes */
+[data-bs-theme="dark"] .litepicker .month-item-header {
+    background: #1e1e2d !important;
+    color: #e6e6e6 !important;
+}
 
-    .litepicker .month-item-name, .litepicker .month-item-year {
-        font-size: 1.1rem !important;
-    }
+/* fila de días de semana */
+[data-bs-theme="dark"] .litepicker .month-item-weekdays-row {
+    background: #1e1e2d !important;
+    color: #9aa0ac !important;
+}
 
-.full-bleed {
-    margin-left: calc(-1 * var(--tblr-page-padding));
-    margin-right: calc(-1 * var(--tblr-page-padding));
+/* días */
+[data-bs-theme="dark"] .litepicker .day-item {
+    color: #e6e6e6 !important;
+}
+
+/* hover */
+[data-bs-theme="dark"] .litepicker .day-item:hover {
+    background: #2c2c3a !important;
+}
+
+/* día seleccionado */
+[data-bs-theme="dark"] .litepicker .is-selected {
+    background: #206bc4 !important;
+    color: #fff !important;
+}
+
+/* día actual */
+[data-bs-theme="dark"] .litepicker .is-today {
+    color: #4da3ff !important;
 }
