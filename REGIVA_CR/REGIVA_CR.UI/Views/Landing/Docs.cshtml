@@ -7,7 +7,7 @@
     string searchQuery = ViewData["SearchQuery"] as string ?? "";
 }
 
-<div class="py-6 bg-light">
+<div class="py-6">
     <div class="container-xl">
         <div class="text-center mb-6" style="max-width: 700px; margin: 0 auto;">
             <span class="badge bg-purple-lt mb-3 text-uppercase">Centro de Ayuda</span>
@@ -17,7 +17,7 @@
             </p>
             
             <form asp-action="Docs" method="get" class="mt-5 mx-auto" style="max-width: 600px;">
-                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden bg-white border">
+                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden border">
                     <span class="input-group-text border-0 bg-transparent ps-4 text-muted">
                         <i class="bi bi-search"></i>
                     </span>
@@ -34,7 +34,7 @@
                         </a>
                     }
                     
-                    <button type="submit" class="btn btn-primary px-4 fw-bold border-start border-light">
+                    <button type="submit" class="btn btn-primary px-4 fw-bold border-start">
                         Buscar
                     </button>
                 </div>
@@ -49,7 +49,7 @@
 
             <div class="row row-cards">
                 <div class="col-md-4">
-                    <a href="@Url.Action("Docs", new { q = "Primeros Pasos" })" class="card h-100 border-0 shadow-sm hover-shadow transition-all text-decoration-none text-dark">
+                    <a href="@Url.Action("Docs", new { q = "Primeros Pasos" })" class="card h-100 border-0 shadow-sm hover-shadow transition-all text-decoration-none">
                         <div class="card-body text-center p-4">
                             <div class="avatar avatar-lg bg-blue-lt rounded-circle mb-3"><i class="bi bi-rocket-takeoff-fill fs-2"></i></div>
                             <h3 class="card-title mb-2">Primeros Pasos</h3>
@@ -58,7 +58,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="@Url.Action("Docs", new { q = "Facturación" })" class="card h-100 border-0 shadow-sm hover-shadow transition-all text-decoration-none text-dark">
+                    <a href="@Url.Action("Docs", new { q = "Facturación" })" class="card h-100 border-0 shadow-sm hover-shadow transition-all text-decoration-none">
                         <div class="card-body text-center p-4">
                             <div class="avatar avatar-lg bg-green-lt rounded-circle mb-3"><i class="bi bi-receipt-cutoff fs-2"></i></div>
                             <h3 class="card-title mb-2">Facturación</h3>
@@ -67,7 +67,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="@Url.Action("Docs", new { q = "Errores" })" class="card h-100 border-0 shadow-sm hover-shadow transition-all text-decoration-none text-dark">
+                    <a href="@Url.Action("Docs", new { q = "Errores" })" class="card h-100 border-0 shadow-sm hover-shadow transition-all text-decoration-none">
                         <div class="card-body text-center p-4">
                             <div class="avatar avatar-lg bg-red-lt rounded-circle mb-3"><i class="bi bi-exclamation-triangle-fill fs-2"></i></div>
                             <h3 class="card-title mb-2">Solución de Errores</h3>
@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<div class="py-6 bg-white border-top">
+<div class="py-6 border-top">
     <div class="container-xl">
         <div class="text-center mb-5">
             @if (string.IsNullOrEmpty(searchQuery))
@@ -115,7 +115,7 @@
                                     <span class="avatar bg-blue-lt rounded"><i class="@(article.IconClass ?? "bi-file-text") fs-4"></i></span>
                                 </div>
                                 <div class="flex-fill">
-                                    <div class="fw-bold text-dark">@article.Title</div>
+                                    <div class="fw-bold">@article.Title</div>
                                     <div class="text-muted small">@article.Category • @article.Summary</div>
                                 </div>
                                 <div class="text-muted"><i class="bi bi-chevron-right"></i></div>

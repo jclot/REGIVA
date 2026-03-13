@@ -1,17 +1,30 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>@ViewData["Title"] - ADMIN PANEL</title>
 
+    <script>
+            (function () {
+                const theme = localStorage.getItem('app-theme') || 'auto';
+                if (theme === 'auto') {
+                    document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', theme);
+                }
+            })();
+    </script>
+
     <link rel="stylesheet" href="~/css/tabler.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" />
 </head>
+
 <body class="theme-light d-flex flex-column">
     <div class="page">
         <header class="navbar navbar-expand-md navbar-light d-print-none">
@@ -25,6 +38,23 @@
                     </a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">
+                    <div class="nav-item dropdown d-none d-md-flex me-3">
+                        <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
+                               aria-label="Cambiar tema">
+                            <i class="bi bi-circle-half fs-4" id="theme-icon-active"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <button class="dropdown-item theme-switch" data-theme="light">
+                                <i class="bi bi-sun me-2"></i> Claro
+                            </button>
+                            <button class="dropdown-item theme-switch" data-theme="dark">
+                                <i class="bi bi-moon-stars me-2"></i> Oscuro
+                            </button>
+                            <button class="dropdown-item theme-switch" data-theme="auto">
+                                <i class="bi bi-circle-half me-2"></i> Sistema
+                            </button>
+                        </div>
+                    </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown">
                             @{
@@ -32,9 +62,9 @@
                                 var email = User.Identity?.Name ?? "usuario@email.com";
                                 var initials = string.Join("", fullName.Split(' ').Take(2).Select(s => s[0]));
                             }
-       
+
                             <span class="avatar avatar-sm bg-blue-lt">@initials</span>
-       
+
                             <div class="d-none d-xl-block ps-2">
                                 <div>@fullName</div>
                                 <div class="mt-1 small text-muted">@email</div>
@@ -44,7 +74,8 @@
                             <a asp-controller="Profile" asp-action="Index" class="dropdown-item">Perfil</a>
                             <a asp-controller="Profile" asp-action="Settings" class="dropdown-item">Configuración</a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#modal-logout">Cerrar sesión</a>
+                            <a href="#" class="dropdown-item text-danger" data-bs-toggle="modal"
+                               data-bs-target="#modal-logout">Cerrar sesión</a>
                         </div>
                     </div>
                 </div>
@@ -59,184 +90,230 @@
                             @{
                                 // Lógica para detectar el controlador activo (funciona igual en Core)
                                 // Agregamos '?' para null-safety
-                                string currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                                string currentController = (ViewContext.RouteData.Values["controller"] as string) ??
+                            string.Empty;
                             }
-                            
+
                             <li class="nav-item @(currentController == "Home" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Home" asp-action="Index">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-house"></i></span>
-                                    <span class="nav-link-title">Inicio</span>
-                                </a>
-                            </li>
-                            <li class="nav-item @(currentController == "Users" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Users" asp-action="Index">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-people"></i></span>
-                                    <span class="nav-link-title">Usuarios</span>
-                                </a>
-                            </li>
-                            <li class="nav-item @(currentController == "Reports" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Reports" asp-action="Index">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-file-earmark-bar-graph"></i></span>
-                                    <span class="nav-link-title">Reportes</span>
-                                </a>
-                            </li>
-                            <li class="nav-item @(currentController == "Landing" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Landing" asp-action="Index">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-house-up"></i></span>
-                                    <span class="nav-link-title">Landing</span>
-                                </a>
-                            </li>
-                            @using System.Security.Claims
-                            @{
-                                var userEmailCheck = User.FindFirst(ClaimTypes.Name)?.Value;
-                            }
-
-                            @if (userEmailCheck == "juliclot123@gmail.com") 
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-primary fw-bold" asp-controller="AdminBlog" asp-action="Index">
-                                        <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="bi bi-pen-fill"></i></span>
-                                        <span class="nav-link-title">Mis Blogs</span>
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block"><i
+                                        class="bi bi-house"></i></span>
+                                        <span class="nav-link-title">Inicio</span>
                                     </a>
                                 </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </header>
+                                <li class="nav-item @(currentController == "Users" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Users" asp-action="Index">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block"><i
+                                            class="bi bi-people"></i></span>
+                                            <span class="nav-link-title">Usuarios</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item @(currentController == "Reports" ? "active" : "")">
+                                        <a class="nav-link" asp-controller="Reports" asp-action="Index">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i
+                                                class="bi bi-file-earmark-bar-graph"></i></span>
+                                                <span class="nav-link-title">Reportes</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item @(currentController == "Landing" ? "active" : "")">
+                                            <a class="nav-link" asp-controller="Landing" asp-action="Index">
+                                                <span class="nav-link-icon d-md-none d-lg-inline-block"><i
+                                                    class="bi bi-house-up"></i></span>
+                                                    <span class="nav-link-title">Landing</span>
+                                                </a>
+                                            </li>
+                                            @using System.Security.Claims
+                                        @{
+                                                var userEmailCheck = User.FindFirst(ClaimTypes.Name)?.Value;
+                                            }
 
-        <div class="container-xl mt-3">
-        @if (TempData["SuccessMessage"] != null)
-        {
-        <div class="alert alert-success alert-dismissible shadow-sm" role="alert">
-            <div class="d-flex">
-                <div><i class="bi bi-check-circle me-2"></i></div>
-                <div>
-                    <h4 class="alert-title">@(TempData["AlertTitle"] ?? "¡Excelente!")</h4>
-                    <div class="text-secondary">@TempData["SuccessMessage"]</div>
-                </div>
-            </div>
-            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
-        </div>
-        }
+                                            @if (userEmailCheck == "juliclot123@gmail.com")
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-primary fw-bold" asp-controller="AdminBlog" asp-action="Index">
+                                                        <span class="nav-link-icon d-md-none d-lg-inline-block"><i
+                                                            class="bi bi-pen-fill"></i></span>
+                                                            <span class="nav-link-title">Mis Blogs</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
 
-        @if (TempData["ErrorMessage"] != null)
-        {
-        <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
-            <div class="d-flex">
-                <div><i class="bi bi-exclamation-triangle me-2"></i></div>
-                <div>
-                    <h4 class="alert-title">@(TempData["AlertTitle"] ?? "Error")</h4>
-                    <div class="text-secondary">@TempData["ErrorMessage"]</div>
-                </div>
-            </div>
-            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
-        </div>
-        }
-        </div>
+                            <div class="container-xl mt-3">
+                                @if (TempData["SuccessMessage"] != null)
+                                {
+                                    <div class="alert alert-success alert-dismissible shadow-sm" role="alert">
+                                        <div class="d-flex">
+                                            <div><i class="bi bi-check-circle me-2"></i></div>
+                                            <div>
+                                                <h4 class="alert-title">@(TempData["AlertTitle"] ?? "¡Excelente!")</h4>
+                                                <div class="text-secondary">@TempData["SuccessMessage"]</div>
+                                            </div>
+                                        </div>
+                                        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                                    </div>
+                                }
 
-        <div class="page-wrapper">
-            @RenderBody()
-
-            <footer class="footer footer-transparent d-print-none">
-                <div class="container-xl text-center">
-                    Copyright &copy; @DateTime.Now.Year - REGIVA Admin
-                </div>
-            </footer>
-        </div>
-    </div>
-
-    <div class="modal modal-blur fade" id="modal-logout" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-status bg-danger"></div>
-                <div class="modal-body text-center py-4">
-                    <i class="bi bi-box-arrow-right text-danger display-1 mb-2"></i>
-                    <h3>¿Cerrar sesión?</h3>
-                    <div class="text-muted">Tendrás que volver a ingresar tus datos para acceder.</div>
-                </div>
-                <div class="modal-footer">
-                    <div class="w-100">
-                        <div class="row">
-                            <div class="col">
-                                <a href="#" class="btn w-100" data-bs-dismiss="modal">
-                                    Cancelar
-                                </a>
+                                @if (TempData["ErrorMessage"] != null)
+                                {
+                                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
+                                        <div class="d-flex">
+                                            <div><i class="bi bi-exclamation-triangle me-2"></i></div>
+                                            <div>
+                                                <h4 class="alert-title">@(TempData["AlertTitle"] ?? "Error")</h4>
+                                                <div class="text-secondary">@TempData["ErrorMessage"]</div>
+                                            </div>
+                                        </div>
+                                        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                                    </div>
+                                }
                             </div>
-                            <div class="col">
-                                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger w-100">
-                                    Salir
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal modal-blur fade" id="modal-new-report" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Crear Nuevo Reporte</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Nombre del Reporte</label>
-                        <input type="text" class="form-control" placeholder="Ej: Ventas Enero">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tipo</label>
-                                <select class="form-select">
-                                    <option value="1">Ventas</option>
-                                    <option value="2">Usuarios</option>
-                                    <option value="3">Inventario</option>
-                                </select>
+                            <div class="page-wrapper">
+                                @RenderBody()
+
+                                <footer class="footer footer-transparent d-print-none">
+                                    <div class="container-xl text-center">
+                                        Copyright &copy; @DateTime.Now.Year - REGIVA Admin
+                                    </div>
+                                </footer>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Fecha del Reporte</label>
-                                <div class="input-icon">
-                                    <span class="input-icon-addon"><i class="bi bi-calendar-event"></i></span>
-                                    <input class="form-control" placeholder="Selecciona fecha" id="datepicker-icon" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+
+                        <div class="modal modal-blur fade" id="modal-logout" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-sm modal-dialog-centered">
+                                <div class="modal-content">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div class="modal-status bg-danger"></div>
+                                    <div class="modal-body text-center py-4">
+                                        <i class="bi bi-box-arrow-right text-danger display-1 mb-2"></i>
+                                        <h3>¿Cerrar sesión?</h3>
+                                        <div class="text-muted">Tendrás que volver a ingresar tus datos para acceder.</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                                        Cancelar
+                                                    </a>
+                                                </div>
+                                                <div class="col">
+                                                    <a asp-controller="Account" asp-action="Logout" class="btn btn-danger w-100">
+                                                        Salir
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">Cancelar</a>
-                    <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                        <i class="bi bi-plus-lg"></i> Crear
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                        <div class="modal modal-blur fade" id="modal-new-report" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Crear Nuevo Reporte</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre del Reporte</label>
+                                            <input type="text" class="form-control" placeholder="Ej: Ventas Enero">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tipo</label>
+                                                    <select class="form-select">
+                                                        <option value="1">Ventas</option>
+                                                        <option value="2">Usuarios</option>
+                                                        <option value="3">Inventario</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Fecha del Reporte</label>
+                                                    <div class="input-icon">
+                                                        <span class="input-icon-addon"><i class="bi bi-calendar-event"></i></span>
+                                                        <input class="form-control" placeholder="Selecciona fecha" id="datepicker-icon"
+                                                               value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">Cancelar</a>
+                                        <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                                            <i class="bi bi-plus-lg"></i> Crear
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-    <script src="~/js/tabler.min.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (window.Litepicker && document.getElementById('datepicker-icon')) {
-                new Litepicker({
-                    element: document.getElementById('datepicker-icon'),
-                    buttonText: { previousMonth: `<i class="bi bi-chevron-left"></i>`, nextMonth: `<i class="bi bi-chevron-right"></i>` },
-                });
-            }
-        });
-    </script>
-    
-    @await RenderSectionAsync("scripts", required: false)
-</body>
-</html>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+                        <script src="~/js/tabler.min.js" asp-append-version="true"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                            // Configuración del Theme Switcher
+                            const themeSwitches = document.querySelectorAll('.theme-switch');
+                            const activeIcon = document.getElementById('theme-icon-active');
+
+                            const updateIcon = (theme) => {
+                            if (theme === 'light') activeIcon.className = 'bi bi-sun fs-4';
+                            else if (theme === 'dark') activeIcon.className = 'bi bi-moon-stars fs-4';
+                            else activeIcon.className = 'bi bi-circle-half fs-4';
+                            };
+
+                            const setTheme = (theme) => {
+                            localStorage.setItem('app-theme', theme);
+                            if (theme === 'auto') {
+                            document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                            } else {
+                            document.documentElement.setAttribute('data-bs-theme', theme);
+                            }
+                            updateIcon(theme);
+                            };
+
+                            // Inicializar icono
+                            updateIcon(localStorage.getItem('app-theme') || 'auto');
+
+                            // Escuchar clicks
+                            themeSwitches.forEach(btn => {
+                            btn.addEventListener('click', () => {
+                            setTheme(btn.getAttribute('data-theme'));
+                            });
+                            });
+
+                            // Escuchar cambios del sistema (Windows/Mac) en tiempo real
+                            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                            if ((localStorage.getItem('app-theme') || 'auto') === 'auto') {
+                            setTheme('auto');
+                            }
+                            });
+
+                            // Inicializar Litepicker (Tu código original)
+                            if (window.Litepicker && document.getElementById('datepicker-icon')) {
+                            new Litepicker({
+                            element: document.getElementById('datepicker-icon'),
+                            buttonText: { previousMonth: `<i class="bi bi-chevron-left"></i>`, nextMonth: `<i class="bi bi-chevron-right"></i>` },
+                            });
+                            }
+                            });
+                        </script>
+
+                        @await RenderSectionAsync("scripts", required: false)
+                    </body>
+
+                </html>

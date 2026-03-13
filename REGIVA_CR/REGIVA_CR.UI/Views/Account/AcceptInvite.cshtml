@@ -9,19 +9,56 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Unirse a REGIVA</title>
+
+    <script>
+                    (function () {
+                        const theme = localStorage.getItem('app-theme') || 'auto';
+                        if (theme === 'auto') {
+                            document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                        } else {
+                            document.documentElement.setAttribute('data-bs-theme', theme);
+                        }
+                    })();
+    </script>
+
     <link href="~/css/tabler.min.css" rel="stylesheet" />
     <style>
-        .field-validation-error { color: #d63939; font-size: 0.85rem; margin-top: 0.25rem; display: block; }
-        .input-validation-error { border-color: #d63939; }
+            .field-validation-error {
+                color: #d63939;
+                font-size: 0.85rem;
+                margin-top: 0.25rem;
+                display: block;
+            }
+            .input-validation-error {
+                border-color: #d63939;
+            }
     </style>
 </head>
-<body class="d-flex flex-column theme-light">
+<body class="d-flex flex-column">
     <div class="page page-center">
         <div class="container container-tight py-4">
+
+            <div class="nav-item dropdown d-none d-md-flex me-3">
+                <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Cambiar tema">
+                    <i class="bi bi-circle-half fs-4" id="theme-icon-active"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <button class="dropdown-item theme-switch" data-theme="light">
+                        <i class="bi bi-sun me-2"></i> Claro
+                    </button>
+                    <button class="dropdown-item theme-switch" data-theme="dark">
+                        <i class="bi bi-moon-stars me-2"></i> Oscuro
+                    </button>
+                    <button class="dropdown-item theme-switch" data-theme="auto">
+                        <i class="bi bi-circle-half me-2"></i> Automático (Sistema)
+                    </button>
+                </div>
+            </div>
+
             <div class="text-center mb-4">
                 <a href="#" class="navbar-brand navbar-brand-autodark">REGIVA</a>
             </div>
-            
+
             <form class="card card-md" asp-action="AcceptInvite" method="post" autocomplete="off">
                 @Html.AntiForgeryToken()
 
@@ -35,7 +72,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input asp-for="Email" class="form-control" readonly style="background-color: #f0f2f5; cursor: not-allowed;" />
+                        <input asp-for="Email" class="form-control" readonly style="cursor: not-allowed;" />
                     </div>
 
                     <div class="row">
@@ -60,9 +97,11 @@
                     <div class="mb-3">
                         <label class="form-label required">Contraseña</label>
                         <div class="input-group input-group-flat">
-                            <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" autocomplete="new-password" />
+                            <input asp-for="Password" type="password" class="form-control" placeholder="••••••••"
+                                   autocomplete="new-password" />
                             <span class="input-group-text">
-                                <a href="#" class="link-secondary" title="Mostrar contraseña" onclick="togglePass('Password'); return false;">👁</a>
+                                <a href="#" class="link-secondary" title="Mostrar contraseña"
+                                   onclick="togglePass('Password'); return false;">👁</a>
                             </span>
                         </div>
                         <span asp-validation-for="Password"></span>
@@ -71,9 +110,11 @@
                     <div class="mb-3">
                         <label class="form-label required">Confirmar</label>
                         <div class="input-group input-group-flat">
-                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="••••••••" />
+                            <input asp-for="ConfirmPassword" type="password" class="form-control"
+                                   placeholder="••••••••" />
                             <span class="input-group-text">
-                                <a href="#" class="link-secondary" title="Mostrar contraseña" onclick="togglePass('ConfirmPassword'); return false;">👁</a>
+                                <a href="#" class="link-secondary" title="Mostrar contraseña"
+                                   onclick="togglePass('ConfirmPassword'); return false;">👁</a>
                             </span>
                         </div>
                         <span asp-validation-for="ConfirmPassword"></span>
@@ -89,15 +130,57 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+        // Configuración del Theme Switcher
+        const themeSwitches = document.querySelectorAll('.theme-switch');
+        const activeIcon = document.getElementById('theme-icon-active');
+
+        const updateIcon = (theme) => {
+        if (theme === 'light') activeIcon.className = 'bi bi-sun fs-4';
+        else if (theme === 'dark') activeIcon.className = 'bi bi-moon-stars fs-4';
+        else activeIcon.className = 'bi bi-circle-half fs-4';
+        };
+
+        const setTheme = (theme) => {
+        localStorage.setItem('app-theme', theme);
+        if (theme === 'auto') {
+        document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } else {
+        document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+        updateIcon(theme);
+        };
+
+        // Inicializar icono
+        updateIcon(localStorage.getItem('app-theme') || 'auto');
+
+        // Escuchar clicks
+        themeSwitches.forEach(btn => {
+        btn.addEventListener('click', () => {
+        setTheme(btn.getAttribute('data-theme'));
+        });
+        });
+
+        // Escuchar cambios del sistema (Windows/Mac) en tiempo real
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if ((localStorage.getItem('app-theme') || 'auto') === 'auto') {
+        setTheme('auto');
+        }
+        });
+        });
+
         function togglePass(fieldName) {
-            var input = document.querySelector('input[name="' + fieldName + '"]');
-            if (input) {
-                input.type = input.type === "password" ? "text" : "password";
-            }
+        var input = document.querySelector('input[name="' + fieldName + '"]');
+        if (input) {
+        input.type = input.type === "password" ? "text" : "password";
+        }
         }
     </script>
 </body>
+
 </html>

@@ -6,7 +6,7 @@
     ViewData["Title"] = "Contacto";
 }
 
-<div class="bg-light py-6 border-bottom">
+<div class="py-6 border-bottom">
     <div class="container-xl text-center">
         <span class="badge bg-teal-lt mb-3 text-uppercase border border-teal-lt px-3 py-2">
             <i class="bi bi-chat-text-fill me-2"></i> Hablemos
@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="py-6 bg-white position-relative overflow-hidden">
+<div class="py-6 position-relative overflow-hidden">
     <div class="position-absolute top-0 end-0 w-100 h-100 opacity-10" 
          style="background: radial-gradient(circle at top right, var(--tblr-primary) 0%, transparent 40%); pointer-events: none;"></div>
 
@@ -28,8 +28,8 @@
                 <div class="card border-0 shadow-lg overflow-hidden rounded-3 hover-shadow transition-all">
                     <div class="row g-0">
                         
-                        <div class="col-lg-7 p-5 bg-white">
-                            <h3 class="mb-4 fw-bold text-dark">Envíanos un mensaje</h3>
+                        <div class="col-lg-7 p-5">
+                            <h3 class="mb-4 fw-bold">Envíanos un mensaje</h3>
                             
                             @* @if (TempData["SuccessMessage"] != null)
                             {
@@ -45,17 +45,17 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label asp-for="Name" class="form-label fw-bold small text-uppercase text-muted"></label>
-                                        <input asp-for="Name" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="Juan Pérez">
+                                        <input asp-for="Name" class="form-control form-control-lg border-0 ps-3" placeholder="Juan Pérez">
                                         <span asp-validation-for="Name" class="text-danger small"></span>
                                     </div>
                                     <div class="col-md-6">
                                         <label asp-for="Email" class="form-label fw-bold small text-uppercase text-muted"></label>
-                                        <input asp-for="Email" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="juan@empresa.com">
+                                        <input asp-for="Email" class="form-control form-control-lg border-0 ps-3" placeholder="juan@empresa.com">
                                         <span asp-validation-for="Email" class="text-danger small"></span>
                                     </div>
                                     <div class="col-md-6">
                                         <label asp-for="Subject" class="form-label fw-bold small text-uppercase text-muted"></label>
-                                        <select asp-for="Subject" class="form-select form-select-lg bg-light border-0 ps-3">
+                                        <select asp-for="Subject" class="form-select form-select-lg border-0 ps-3">
                                             <option value="">Selecciona una opción...</option>
                                             <option value="Quiero una demo comercial">Quiero una demo comercial</option>
                                             <option value="Soporte Técnico / Ayuda">Soporte Técnico / Ayuda</option>
@@ -67,12 +67,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label asp-for="Phone" class="form-label fw-bold small text-uppercase text-muted"></label>
-                                        <input asp-for="Phone" class="form-control form-control-lg bg-light border-0 ps-3" placeholder="88888888">
+                                        <input asp-for="Phone" class="form-control form-control-lg border-0 ps-3" placeholder="88888888">
                                         <span asp-validation-for="Phone" class="text-danger small"></span>
                                     </div>
                                     <div class="col-12">
                                         <label asp-for="Message" class="form-label fw-bold small text-uppercase text-muted"></label>
-                                        <textarea asp-for="Message" class="form-control form-control-lg bg-light border-0 ps-3" rows="5" placeholder="Cuéntanos más sobre tu consulta..."></textarea>
+                                        <textarea asp-for="Message" class="form-control form-control-lg border-0 ps-3" rows="5" placeholder="Cuéntanos más sobre tu consulta..."></textarea>
                                         <span asp-validation-for="Message" class="text-danger small"></span>
                                     </div>
                                     <div class="col-12 mt-4">
@@ -133,7 +133,7 @@
     </div>
 </div>
 
-<div class="py-6 bg-light border-top">
+<div class="py-6 border-top">
     <div class="container-xl text-center">
         <h3 class="mb-3">¿Buscas respuestas rápidas?</h3>
         <p class="text-muted mb-4">Consulta nuestra documentación antes de escribirnos.</p>

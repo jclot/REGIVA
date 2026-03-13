@@ -4,6 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>@ViewData["Title"] - El CFO Autónomo</title>
+
+    <script>
+        (function () {
+            const theme = localStorage.getItem('app-theme') || 'auto';
+            if (theme === 'auto') {
+                document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            }
+        })();
+    </script>
+
     <link rel="stylesheet" href="~/css/tabler.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
@@ -20,7 +32,6 @@
 
         /* Navbar Glassmorphism */
         .navbar-custom {
-            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: all 0.3s ease;
@@ -34,7 +45,6 @@
         /* --- MENÚ & BOTONES --- */
         .nav-link { 
             font-weight: 500; 
-            color: #1d273b; 
             transition: color 0.2s ease-in-out; 
         }
         .nav-link:hover, .nav-link:focus {
@@ -43,7 +53,6 @@
 
         /* Botón Iniciar Sesión Personalizado */
         .btn-nav-login {
-            color: #64748b; /* Gris pizarra elegante */
             background: transparent;
             border: 1px solid transparent;
             font-weight: 500;
@@ -122,13 +131,29 @@
             </button>
             
             <a asp-controller="Landing" asp-action="Index" class="navbar-brand d-none-navbar-horizontal pe-0 pe-md-3">
-                <span class="avatar bg-primary text-white rounded-2 me-2" style="width: 32px; height: 32px; min-width: 32px;">
-                    <i class="bi bi-graph-up-arrow fs-5"></i>
+                <span class="avatar bg-primary rounded-2 me-2" style="width: 32px; height: 32px; min-width: 32px;">
+                    <i class="bi bi-graph-up-arrow fs-5 text-white"></i>
                 </span>
-                <span class="fw-bold tracking-tight text-dark" style="letter-spacing: -0.5px; font-size: 1.25rem;">CFO Autónomo</span>
+                <span class="fw-bold tracking-tight" style="letter-spacing: -0.5px; font-size: 1.25rem;">CFO Autónomo</span>
             </a>
 
             <div class="navbar-nav flex-row order-md-last">
+                <div class="nav-item dropdown me-2 me-md-3">
+                    <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Cambiar tema">
+                        <i class="bi bi-circle-half fs-4" id="theme-icon-active"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <button class="dropdown-item theme-switch" data-theme="light">
+                            <i class="bi bi-sun me-2"></i> Claro
+                        </button>
+                        <button class="dropdown-item theme-switch" data-theme="dark">
+                            <i class="bi bi-moon-stars me-2"></i> Oscuro
+                        </button>
+                        <button class="dropdown-item theme-switch" data-theme="auto">
+                            <i class="bi bi-circle-half me-2"></i> Sistema
+                        </button>
+                    </div>
+                </div>
                 <div class="nav-item d-none d-md-flex me-2">
                     <div class="btn-list">
                         <a asp-controller="Account" asp-action="Login" class="btn btn-nav-login">
@@ -282,6 +307,41 @@
             } else {
                 navbar.classList.remove('navbar-scrolled');
             }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const themeSwitches = document.querySelectorAll('.theme-switch');
+            const activeIcon = document.getElementById('theme-icon-active');
+
+            const updateIcon = (theme) => {
+                if(theme === 'light') activeIcon.className = 'bi bi-sun fs-4';
+                else if(theme === 'dark') activeIcon.className = 'bi bi-moon-stars fs-4';
+                else activeIcon.className = 'bi bi-circle-half fs-4';
+            };
+
+            const setTheme = (theme) => {
+                localStorage.setItem('app-theme', theme);
+                if (theme === 'auto') {
+                    document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', theme);
+                }
+                updateIcon(theme);
+            };
+
+            updateIcon(localStorage.getItem('app-theme') || 'auto');
+
+            themeSwitches.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setTheme(btn.getAttribute('data-theme'));
+                });
+            });
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if ((localStorage.getItem('app-theme') || 'auto') === 'auto') {
+                    setTheme('auto');
+                }
+            });
         });
     </script>
     @await RenderSectionAsync("Scripts", required: false)

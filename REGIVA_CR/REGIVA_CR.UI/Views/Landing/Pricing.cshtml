@@ -3,7 +3,7 @@
     ViewData["Title"] = "Planes y Precios";
 }
 
-<div class="bg-light py-6 border-bottom">
+<div class="py-6 border-bottom">
     <div class="container-xl">
         <div class="text-center mb-6" style="max-width: 700px; margin: 0 auto;">
 
@@ -18,11 +18,11 @@
             </p>
 
             <div class="d-flex justify-content-center align-items-center mt-4">
-                <span class="fw-bold text-muted me-3">Mensual</span>
+                <span class="fw-bold me-3">Mensual</span>
                 <div class="form-check form-switch mb-0">
                     <input class="form-check-input" type="checkbox" role="switch" id="billingSwitch" checked style="width: 3rem; height: 1.5rem; cursor: pointer;">
                 </div>
-                <span class="fw-bold text-dark ms-3">Anual <span class="badge bg-green-lt ms-1 text-green">-20%</span></span>
+                <span class="fw-bold ms-3">Anual <span class="badge bg-green-lt ms-1 text-green">-20%</span></span>
             </div>
         </div>
 
@@ -111,10 +111,10 @@
                             <span class="text-muted ms-1 billing-period">/mes</span>
                         </div>
 
-                        <p class="text-dark opacity-75 mb-4 small">Toma el control con IA predictiva.</p>
+                        <p class="text-muted opacity-75 mb-4 small">Toma el control con IA predictiva.</p>
 
                         <ul class="list-unstyled space-y-2 mb-5 flex-grow-1 small">
-                            <li class="d-flex fw-bold text-dark"><i class="bi bi-check-circle-fill text-primary me-2"></i> Todo Estándar</li>
+                            <li class="d-flex fw-bold"><i class="bi bi-check-circle-fill text-primary me-2"></i> Todo Estándar</li>
                             <li class="d-flex"><i class="bi bi-magic text-purple me-2"></i> <span class="text-purple fw-bold">Predicción IA</span></li>
                             <li class="d-flex"><i class="bi bi-graph-up-arrow text-purple me-2"></i> Score Clientes</li>
                             <li class="d-flex"><i class="bi bi-whatsapp text-green me-2"></i> Cobros WhatsApp</li>
@@ -163,7 +163,7 @@
     </div>
 </div>
 
-<div class="py-6 bg-light container-xl border-top">
+<div class="py-6 container-xl border-top">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="text-center mb-5">
@@ -174,10 +174,10 @@
             <div class="accordion accordion-custom" id="faqAccordion">
 
                 <div class="card mb-3 border-0 shadow-sm">
-                    <div class="card-header border-0 bg-white p-0" id="headingOne">
+                    <div class="card-header border-0 p-0" id="headingOne">
                         <button class="accordion-button p-4 shadow-none bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <span class="fw-bold text-dark fs-3 me-3">01.</span>
-                            <span class="fw-bold fs-3 text-dark">¿Qué pasa cuando terminan mis 14 días?</span>
+                            <span class="fw-bold fs-3 me-3">01.</span>
+                            <span class="fw-bold fs-3">¿Qué pasa cuando terminan mis 14 días?</span>
                         </button>
                     </div>
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
@@ -190,10 +190,10 @@
                 </div>
 
                 <div class="card mb-3 border-0 shadow-sm">
-                    <div class="card-header border-0 bg-white p-0" id="headingTwo">
+                    <div class="card-header border-0 p-0" id="headingTwo">
                         <button class="accordion-button collapsed p-4 shadow-none bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <span class="fw-bold text-dark fs-3 me-3">02.</span>
-                            <span class="fw-bold fs-3 text-dark">¿El precio incluye el IVA?</span>
+                            <span class="fw-bold fs-3 me-3">02.</span>
+                            <span class="fw-bold fs-3">¿El precio incluye el IVA?</span>
                         </button>
                     </div>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
@@ -206,10 +206,10 @@
                 </div>
 
                 <div class="card mb-3 border-0 shadow-sm">
-                    <div class="card-header border-0 bg-white p-0" id="headingThree">
+                    <div class="card-header border-0 p-0" id="headingThree">
                         <button class="accordion-button collapsed p-4 shadow-none bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <span class="fw-bold text-dark fs-3 me-3">03.</span>
-                            <span class="fw-bold fs-3 text-dark">¿Puedo cambiar de plan?</span>
+                            <span class="fw-bold fs-3 me-3">03.</span>
+                            <span class="fw-bold fs-3">¿Puedo cambiar de plan?</span>
                         </button>
                     </div>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
@@ -393,13 +393,8 @@
     }
 
     /* FAQ (Igual al Landing) */
-    .accordion-custom .accordion-button {
-        background-color: white;
-    }
 
         .accordion-custom .accordion-button:not(.collapsed) {
-            color: var(--tblr-dark);
-            background-color: white;
             box-shadow: none;
         }
 
