@@ -77,7 +77,7 @@ namespace REGIVA_CR.AD.Auth
             IQueryable<UserSessionDto> query = from u in _context.Users
                                                join tu in _context.TenantUsers on u.UserId equals tu.UserId
                                                join t in _context.Tenants on tu.TenantId equals t.TenantId
-                                               where u.Email == email && u.DeletedAt == null
+                                               where u.Email == email && u.DeletedAt == null && tu.IsActive
                                                select new UserSessionDto
                                                {
                                                    UserId = u.UserId,
@@ -126,6 +126,22 @@ namespace REGIVA_CR.AD.Auth
                     LockedUntil = u.LockedUntil
                 })
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> IsUserSuspendedAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email)) return false;
+
+            IQueryable<bool> query = from u in _context.Users
+                                     join tu in _context.TenantUsers on u.UserId equals tu.UserId
+                                     where u.Email == email && u.DeletedAt == null
+                                     select tu.IsActive;
+
+            bool hasActive = await query.AnyAsync(isActive => isActive);
+            if (hasActive) return false;
+
+            bool hasInactive = await query.AnyAsync(isActive => !isActive);
+            return hasInactive;
         }
 
         public async Task UpdateUserLoginStatsAsync(int userId, int failedAttempts, DateTime? lockedUntil)
@@ -401,6 +417,7 @@ namespace REGIVA_CR.AD.Auth
                                                  where tu.TenantId == tenantId && u.DeletedAt == null
                                                  select new TeamMemberDto
                                                  {
+                                                     UserId = u.UserId,
                                                      FullName = u.FirstName + " " + u.LastName,
                                                      Email = u.Email ?? "",
                                                      Role = tu.RoleInTenant ?? "user",
@@ -426,6 +443,58 @@ namespace REGIVA_CR.AD.Auth
                 Members = members,
                 PendingInvites = pendingInvites
             };
+        }
+
+        public async Task<TeamMemberDto?> GetTeamMemberAsync(int tenantId, int userId)
+        {
+            return await (from tu in _context.TenantUsers
+                          join u in _context.Users on tu.UserId equals u.UserId
+                          where tu.TenantId == tenantId && u.UserId == userId && u.DeletedAt == null
+                          select new TeamMemberDto
+                          {
+                              UserId = u.UserId,
+                              FullName = u.FirstName + " " + u.LastName,
+                              Email = u.Email ?? "",
+                              Role = tu.RoleInTenant ?? "user",
+                              IsActive = tu.IsActive,
+                              JoinedAt = tu.JoinedAt
+                          }).FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateTenantUserRoleAsync(int tenantId, int userId, string role)
+        {
+            TenantUserEntity? link = await _context.TenantUsers
+                .FirstOrDefaultAsync(tu => tu.TenantId == tenantId && tu.UserId == userId);
+
+            if (link != null)
+            {
+                link.RoleInTenant = role;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task SetTenantUserActiveAsync(int tenantId, int userId, bool isActive)
+        {
+            TenantUserEntity? link = await _context.TenantUsers
+                .FirstOrDefaultAsync(tu => tu.TenantId == tenantId && tu.UserId == userId);
+
+            if (link != null)
+            {
+                link.IsActive = isActive;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveTenantUserAsync(int tenantId, int userId)
+        {
+            TenantUserEntity? link = await _context.TenantUsers
+                .FirstOrDefaultAsync(tu => tu.TenantId == tenantId && tu.UserId == userId);
+
+            if (link != null)
+            {
+                _context.TenantUsers.Remove(link);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task SaveInvitationAsync(InvitationDto dto)

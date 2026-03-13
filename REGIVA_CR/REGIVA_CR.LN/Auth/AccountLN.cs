@@ -90,6 +90,11 @@ namespace REGIVA_CR.LN.Auth
 
             if (isPasswordValid)
             {
+                if (await _accountAD.IsUserSuspendedAsync(data.Email!))
+                {
+                    throw new Exception("Tu cuenta está suspendida. Contacta al administrador de tu organización.");
+                }
+
                 if (securityInfo.FailedLoginAttempts > 0 || securityInfo.LockedUntil != null)
                 {
                     await _accountAD.UpdateUserLoginStatsAsync(securityInfo.UserId, 0, null);
@@ -263,6 +268,26 @@ namespace REGIVA_CR.LN.Auth
         public async Task<OrganizationViewModel> GetOrganizationDataAsync(int tenantId)
         {
             return await _accountAD.GetOrganizationDetailsAsync(tenantId);
+        }
+
+        public async Task<TeamMemberDto?> GetTeamMemberAsync(int tenantId, int userId)
+        {
+            return await _accountAD.GetTeamMemberAsync(tenantId, userId);
+        }
+
+        public async Task UpdateTeamMemberRoleAsync(int tenantId, int userId, string role)
+        {
+            await _accountAD.UpdateTenantUserRoleAsync(tenantId, userId, role);
+        }
+
+        public async Task SetTeamMemberActiveAsync(int tenantId, int userId, bool isActive)
+        {
+            await _accountAD.SetTenantUserActiveAsync(tenantId, userId, isActive);
+        }
+
+        public async Task RemoveTeamMemberAsync(int tenantId, int userId)
+        {
+            await _accountAD.RemoveTenantUserAsync(tenantId, userId);
         }
 
         public async Task InviteUserAsync(int tenantId, CreateInviteDto model, string inviteUrlFormat)
