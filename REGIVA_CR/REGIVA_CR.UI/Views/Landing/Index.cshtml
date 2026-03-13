@@ -5,7 +5,7 @@
 
 <div class="hero-section position-relative overflow-hidden">
     <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: -1;">
-        <div class="position-absolute top-0 start-50 translate-middle rounded-circle opacity-10" style="width: 600px; height: 600px; background: radial-gradient(circle, var(--tblr-primary) 0%, transparent 70%); filter: blur(80px);"></div>
+        <div class="hero-glow position-absolute top-0 start-50 translate-middle rounded-circle opacity-10"></div>
     </div>
 
     <div class="container-xl py-6">
@@ -45,7 +45,7 @@
             </div>
             
             <div class="col-lg-6 order-lg-2">
-                <div class="card shadow-lg border-0 tilt-effect" style="transform: rotate(-2deg); transition: transform 0.3s;">
+                <div class="card shadow-lg border-0 tilt-effect hero-preview-card">
                     <div class="card-header bg-dark text-white py-2 min-h-auto border-bottom-0">
                         <div class="d-flex gap-2">
                             <span class="badge bg-danger rounded-circle p-1"></span>
@@ -158,19 +158,19 @@
                 <div class="card shadow border-0">
                     <div class="card-body p-0">
                         <div class="list-group list-group-flush">
-                            <div class="list-group-item d-flex align-items-center">
+                            <div class="list-group-item d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
                                 <span class="status-dot status-dot-animated bg-green d-block me-3"></span>
                                 <div class="text-truncate"><div class="d-block fw-bold">Factura #001-000054</div><div class="text-muted small text-truncate">Enviada a Hacienda • Aceptada</div></div>
-                                <div class="ms-auto"><i class="bi bi-whatsapp" style="color:#25D366;"></i></div>
+                                <div class="ms-sm-auto"><i class="bi bi-whatsapp" style="color:#25D366;"></i></div>
                             </div>
-                            <div class="list-group-item d-flex align-items-center">
+                            <div class="list-group-item d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
                                 <span class="status-dot bg-green d-block me-3"></span>
                                 <div class="text-truncate"><div class="d-block fw-bold">Factura #001-000053</div><div class="text-muted small text-truncate">Enviada a Hacienda • Aceptada</div></div>
                             </div>
-                             <div class="list-group-item d-flex align-items-center bg-danger-lt">
+                             <div class="list-group-item d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2 bg-danger-lt">
                                 <span class="status-dot bg-red d-block me-3"></span>
                                 <div class="text-truncate"><div class="d-block text-danger fw-bold">Factura #001-000052</div><div class="text-danger small text-truncate">Rechazada: Cédula inválida</div></div>
-                                <div class="ms-auto"><button class="btn btn-sm btn-danger">Corregir</button></div>
+                                <div class="ms-sm-auto mt-2 mt-sm-0"><button class="btn btn-sm btn-danger">Corregir</button></div>
                             </div>
                         </div>
                     </div>

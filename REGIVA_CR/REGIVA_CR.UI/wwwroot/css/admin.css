@@ -1,0 +1,75 @@
+/* Admin panel responsive tweaks */
+.admin-layout img,
+.admin-layout svg,
+.admin-layout video,
+.admin-layout iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+.admin-layout .page-wrapper {
+  min-width: 0;
+}
+
+.admin-layout .card-header {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.admin-layout .btn-list {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .admin-layout .container-xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .admin-layout .page-header .row {
+    row-gap: 0.75rem;
+  }
+
+  .admin-layout .page-header .col-auto {
+    width: 100%;
+  }
+
+  .admin-layout .page-header .btn,
+  .admin-layout .page-header .btn-list {
+    width: 100%;
+  }
+
+  .admin-layout .page-header .btn-list .btn {
+    flex: 1 1 auto;
+  }
+
+  .admin-layout .card-header {
+    align-items: flex-start;
+  }
+
+  .admin-layout .card-header .card-actions,
+  .admin-layout .card-header .input-icon,
+  .admin-layout .card-header .form-control {
+    width: 100%;
+  }
+
+  .admin-layout .table-responsive,
+  .admin-layout .table-responsive-md {
+    overflow-x: auto;
+  }
+
+  .admin-layout .table.text-nowrap {
+    white-space: normal !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-layout .navbar-brand {
+    white-space: normal;
+  }
+
+  .admin-layout .modal-dialog {
+    margin: 1rem;
+  }
+}

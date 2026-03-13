@@ -1,0 +1,58 @@
+/* Auth pages responsive tweaks */
+.auth-layout {
+  text-rendering: optimizeLegibility;
+}
+
+.auth-layout img,
+.auth-layout svg,
+.auth-layout video,
+.auth-layout iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+.auth-layout .container-tight {
+  max-width: 460px;
+}
+
+.auth-layout .card-md {
+  border-radius: 1rem;
+}
+
+.auth-layout .form-label-description {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.auth-layout .btn-back-home {
+  align-items: center;
+}
+
+@media (max-width: 576px) {
+  .auth-layout .page-center {
+    min-height: 100vh;
+  }
+
+  .auth-layout .container-tight {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .auth-layout .card-body {
+    padding: 1.25rem !important;
+  }
+
+  .auth-layout .card-title {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+  }
+
+  .auth-layout .btn-back-home .fs-3,
+  .auth-layout .btn-back-home .fs-4 {
+    font-size: 1.1rem !important;
+  }
+
+  .auth-layout .row > .col-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

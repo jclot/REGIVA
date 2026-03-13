@@ -145,15 +145,15 @@
     /* --- ANIMACIÓN: REACTOR DE SEGURIDAD --- */
     
     .reactor-container {
-        width: 400px;
-        height: 400px;
+        width: clamp(260px, 80vw, 400px);
+        height: clamp(260px, 80vw, 400px);
         position: relative;
     }
 
     /* Núcleo Central */
     .reactor-core {
-        width: 140px;
-        height: 140px;
+        width: 35%;
+        height: 35%;
         z-index: 10;
         position: relative;
         border: 1px solid rgba(0,0,0,0.05);
@@ -171,8 +171,8 @@
 
     /* Anillo 1: Grande, lento, discontinuo */
     .ring-outer {
-        width: 380px;
-        height: 380px;
+        width: 95%;
+        height: 95%;
         border-top: 2px solid var(--tblr-primary);
         border-bottom: 2px solid var(--tblr-primary);
         opacity: 0.3;
@@ -181,8 +181,8 @@
 
     /* Anillo 2: Medio, velocidad media, color secundario */
     .ring-middle {
-        width: 280px;
-        height: 280px;
+        width: 70%;
+        height: 70%;
         border-left: 2px solid var(--tblr-green);
         border-right: 2px solid var(--tblr-green);
         opacity: 0.5;
@@ -191,8 +191,8 @@
 
     /* Anillo 3: Pequeño, rápido, brillante */
     .ring-inner {
-        width: 180px;
-        height: 180px;
+        width: 45%;
+        height: 45%;
         border-top: 4px solid var(--tblr-purple);
         opacity: 0.8;
         animation: spin-right 4s linear infinite;
@@ -209,6 +209,10 @@
     .pos-1 { top: 15%; right: 15%; animation: float-1 4s ease-in-out infinite; }
     .pos-2 { bottom: 20%; left: 10%; animation: float-2 5s ease-in-out infinite; }
     .pos-3 { top: 10%; left: 30%; animation: float-3 4.5s ease-in-out infinite; }
+
+    @@media (max-width: 576px) {
+        .badge-satellite { font-size: 0.7rem; }
+    }
 
     /* Keyframes de Rotación (Escapados con @@ para Razor) */
     @@keyframes spin-right {

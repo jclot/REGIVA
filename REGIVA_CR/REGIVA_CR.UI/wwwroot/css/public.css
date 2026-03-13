@@ -1,0 +1,321 @@
+/* Public pages responsive tweaks */
+.public-layout {
+  text-rendering: optimizeLegibility;
+}
+
+.public-layout img,
+.public-layout svg,
+.public-layout video,
+.public-layout iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fluid typography for public pages */
+.public-layout .display-4 {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+}
+
+.public-layout .display-5 {
+  font-size: clamp(1.8rem, 3.8vw, 3rem);
+}
+
+.public-layout .display-6 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.public-layout .lead,
+.public-layout .fs-3 {
+  font-size: clamp(1rem, 1.4vw, 1.35rem);
+  line-height: 1.6;
+}
+
+.public-layout .fs-4 {
+  font-size: clamp(0.95rem, 1.1vw, 1.2rem);
+}
+
+.public-layout .price-text {
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+}
+
+.public-layout .hero-preview-card {
+  transform: rotate(-2deg);
+  transition: transform 0.3s;
+}
+
+.public-layout .hero-glow {
+  width: min(600px, 90vw);
+  height: min(600px, 90vw);
+  background: radial-gradient(circle, var(--tblr-primary) 0%, transparent 70%);
+  filter: blur(80px);
+}
+
+.public-layout .hero-section .card {
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.public-layout .full-bleed {
+  width: 100%;
+}
+
+/* Navbar responsiveness */
+.public-layout .navbar-custom .container-xl {
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.public-layout .navbar-custom .navbar-nav.flex-row {
+  align-items: center;
+  gap: 0.25rem;
+  flex: 0 0 auto;
+}
+
+.public-layout .navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+.public-layout .navbar-auth .btn {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.1;
+}
+
+.public-layout .navbar-auth .btn.btn-dark {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.public-layout .navbar-brand {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: normal;
+  flex: 0 1 auto;
+}
+
+.public-layout .navbar-brand .tracking-tight {
+  line-height: 1.1;
+}
+
+.public-layout .navbar-collapse {
+  width: 100%;
+}
+
+.public-layout .navbar-brand-title {
+  letter-spacing: -0.5px;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  white-space: nowrap;
+}
+
+.public-layout .navbar-theme .nav-link {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+}
+
+.public-layout .navbar-theme .nav-link:hover,
+.public-layout .navbar-theme .nav-link:focus {
+  background: rgba(32, 107, 196, 0.08);
+}
+
+@media (max-width: 1200px) {
+  .public-layout .navbar-brand-title {
+    font-size: 1.05rem;
+  }
+
+  .public-layout .navbar-custom {
+    padding-top: 1.45rem !important;
+    padding-bottom: 1.45rem !important;
+    min-height: 72px;
+  }
+
+  .public-layout .navbar-brand {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .public-layout .navbar-custom .navbar-collapse {
+    background: var(--tblr-bg-surface);
+    border: 1px solid var(--tblr-border-color);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  }
+
+  .public-layout .navbar-custom .navbar-collapse .nav-link {
+    border-radius: 0.5rem;
+    background: rgba(32, 107, 196, 0.04);
+  }
+
+  .public-layout .navbar-custom .navbar-collapse .nav-link:hover,
+  .public-layout .navbar-custom .navbar-collapse .nav-link:focus {
+    background: rgba(32, 107, 196, 0.12);
+  }
+}
+
+@media (max-width: 768px) {
+  .public-layout .navbar-brand-title {
+    font-size: 1rem;
+  }
+
+}
+
+/* Docs search tweaks */
+.public-layout .docs-search-group {
+  align-items: stretch;
+}
+
+.public-layout .article-content {
+  font-size: clamp(1rem, 1.1vw, 1.25rem);
+  line-height: 1.75;
+}
+
+@media (hover: none) {
+  .public-layout .tilt-effect {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .public-layout .py-6 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .public-layout .mb-6 {
+    margin-bottom: 2.5rem !important;
+  }
+
+  .public-layout .mt-6 {
+    margin-top: 2.5rem !important;
+  }
+
+  .public-layout .p-5 {
+    padding: 1.5rem !important;
+  }
+
+  .public-layout .p-4 {
+    padding: 1.25rem !important;
+  }
+
+  .public-layout .px-5 {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  .public-layout .py-5 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .public-layout .hero-preview-card {
+    transform: none;
+  }
+
+  .public-layout .logo-cloud .logo-item {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .public-layout .logo-cloud .logo-item .h3 {
+    font-size: 1rem;
+  }
+
+  .public-layout .logo-cloud .logo-item .fs-2 {
+    font-size: 1.25rem !important;
+  }
+
+  .public-layout .accordion-button {
+    padding: 1rem !important;
+  }
+
+  .public-layout .accordion-button .fs-3 {
+    font-size: 1rem !important;
+  }
+
+  .public-layout .docs-search-group {
+    flex-wrap: wrap;
+    border-radius: 1rem !important;
+  }
+
+  .public-layout .docs-search-group .form-control {
+    flex: 1 1 100%;
+    min-width: 0;
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  .public-layout .docs-search-group .btn.docs-search-btn {
+    width: 100%;
+    border-left: 0 !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 1rem 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .public-layout .docs-search-group .btn.bg-transparent {
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  .public-layout .text-truncate {
+    white-space: normal;
+  }
+
+  .public-layout .navbar-brand {
+    max-width: 70vw;
+  }
+
+  .public-layout .navbar-brand-title {
+    font-size: 1rem !important;
+  }
+
+  .public-layout .navbar-brand-title {
+    white-space: normal;
+  }
+
+  .public-layout .navbar-custom .navbar-toggler {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .public-layout .navbar-custom .navbar-collapse {
+    padding-top: 0.5rem;
+  }
+
+  .public-layout .navbar-custom .navbar-collapse .nav-link {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .public-layout .navbar-custom .navbar-collapse .navbar-nav {
+    gap: 0.25rem;
+  }
+}
+
+[data-bs-theme="dark"] .public-layout .navbar-theme .nav-link:hover,
+[data-bs-theme="dark"] .public-layout .navbar-theme .nav-link:focus {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 1200px) {
+  [data-bs-theme="dark"] .public-layout .navbar-custom .navbar-collapse {
+    background: rgba(15, 23, 42, 0.96);
+  }
+
+  [data-bs-theme="dark"] .public-layout .navbar-custom .navbar-collapse .nav-link {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  [data-bs-theme="dark"] .public-layout .navbar-custom .navbar-collapse .nav-link:hover,
+  [data-bs-theme="dark"] .public-layout .navbar-custom .navbar-collapse .nav-link:focus {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
