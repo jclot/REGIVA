@@ -1,3 +1,4 @@
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using REGIVA_CR.AB.AccesoADatos.Auth;
@@ -12,13 +13,35 @@ using REGIVA_CR.LN.Auth;
 using REGIVA_CR.LN.Blog;
 using REGIVA_CR.LN.Services;
 
+Env.Load();
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-builder.Services.AddDbContext<RegivaContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+string connectionString =
+    $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
+    $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +
+    $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+    $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
+    $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};" +
+    "Include Error Detail=true";
 
+builder.Services.AddDbContext<RegivaContext>(options =>
+    options.UseNpgsql(connectionString));
+
+builder.Configuration["EmailSettings:Host"] =
+    Environment.GetEnvironmentVariable("EMAIL_HOST");
+
+builder.Configuration["EmailSettings:Port"] =
+    Environment.GetEnvironmentVariable("EMAIL_PORT");
+
+builder.Configuration["EmailSettings:Email"] =
+    Environment.GetEnvironmentVariable("EMAIL_USER");
+
+builder.Configuration["EmailSettings:Password"] =
+    Environment.GetEnvironmentVariable("EMAIL_PASSWORD");
+    
 builder.Services.AddScoped<IAccountAD, AccountAD>();
 builder.Services.AddScoped<IAccountLN, AccountLN>();
 builder.Services.AddScoped<IEmailService, EmailService>();

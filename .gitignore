@@ -1,49 +1,141 @@
+######################################
+# OS
+######################################
+
+.DS_Store
+Thumbs.db
+
+######################################
+# Temporary files
+######################################
+
 *.swp
 *.*~
-project.lock.json
-.DS_Store
-*.pyc
-nupkg/
+*.tmp
+*.temp
+*.log
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
+######################################
+# Environment / secrets
+######################################
 
-# Rider
-.idea/
+.env
+.env.*
+secrets.json
+appsettings.Development.json
 
+######################################
 # Visual Studio
+######################################
+
 .vs/
-
-# Fleet
-.fleet/
-
-# Code Rush
-.cr/
-
-# User-specific files
-*.suo
 *.user
+*.suo
 *.userosscache
 *.sln.docstates
 
+######################################
+# Visual Studio Code
+######################################
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+######################################
+# JetBrains
+######################################
+
+.idea/
+.fleet/
+
+######################################
+# CodeRush
+######################################
+
+.cr/
+
+######################################
 # Build results
+######################################
+
+[Bb]in/
+[Oo]bj/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-x64/
-x86/
 build/
 bld/
-[Bb]in/
-[Oo]bj/
-[Oo]ut/
-msbuild.log
-msbuild.err
-msbuild.wrn
+out/
 
-# Node.js build artifacts
+######################################
+# Architecture specific
+######################################
+
+x64/
+x86/
+ARM/
+ARM64/
+
+######################################
+# Logs
+######################################
+
+logs/
+*.log
+
+######################################
+# Publish output
+######################################
+
+publish/
+*.Publish.xml
+*.pubxml.user
+
+######################################
+# NuGet
+######################################
+
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+######################################
+# Node (si usas npm para frontend)
+######################################
+
 node_modules/
-package-lock.json
-package.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+######################################
+# Coverage / Testing
+######################################
+
+TestResults/
+coverage/
+
+######################################
+# ASP.NET Scaffolding
+######################################
+
+ScaffoldingReadMe.txt
+
+######################################
+# Resharper
+######################################
+
+_ReSharper*/
+*.DotSettings.user
+
+######################################
+# IIS / Kestrel
+######################################
+
+iisexpress/
+.config/
