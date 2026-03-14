@@ -32,16 +32,22 @@
   }
 
   .admin-layout .page-header .col-auto {
-    width: 100%;
+    width: auto;
   }
 
-  .admin-layout .page-header .btn,
+  .admin-layout .page-header .btn {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
   .admin-layout .page-header .btn-list {
-    width: 100%;
+    width: auto;
   }
 
-  .admin-layout .page-header .btn-list .btn {
-    flex: 1 1 auto;
+  .admin-layout .page-header .container-xl.d-flex {
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .admin-layout .card-header {
@@ -71,5 +77,10 @@
 
   .admin-layout .modal-dialog {
     margin: 1rem;
+  }
+
+  .admin-layout .page-header .btn {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.8rem;
   }
 }
