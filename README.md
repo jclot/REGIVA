@@ -1,156 +1,84 @@
-# 🚀 REGIVA Costa Rica (SaaS)
+# REGIVA Costa Rica (SaaS)
 
-**El Ecosistema Financiero y "CFO Autónomo" para PYMES en Costa Rica.**
+[![Status](https://img.shields.io/badge/Status-Development-yellow)](#)
+[![.NET](https://img.shields.io/badge/.NET-Core_8.0-purple)](#)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)](#)
+[![Python](https://img.shields.io/badge/Python-3.11-green)](#)
+[![License](https://img.shields.io/badge/License-Proprietary-red)](#)
 
-![Status](https://img.shields.io/badge/Status-Development-yellow)
-![.NET](https://img.shields.io/badge/.NET-Core_8.0-purple)
-![Postgres](https://img.shields.io/badge/PostgreSQL-16-blue)
-![Python](https://img.shields.io/badge/Python-3.11-green)
-![License](https://img.shields.io/badge/License-Proprietary-red)
-
----
-
-## 📖 Descripción General
-
-**REGIVA** es una plataforma SaaS diseñada para resolver la "ceguera financiera" de las PYMES costarricenses. No es solo un sistema de facturación electrónica; es una herramienta de **inteligencia financiera** que combina el cumplimiento tributario obligatorio (Hacienda v4.4) con modelos de Inteligencia Artificial para proyectar flujos de caja y calcular scores crediticios alternativos.
-
-El sistema utiliza una arquitectura **Multi-Tenant** segura, permitiendo gestionar múltiples empresas de forma aislada bajo una única base de datos mediante discriminación por `tenant_id`.
+The Financial Ecosystem and "Autonomous CFO" for SMEs in Costa Rica.
 
 ---
 
-## 🏗 Stack Tecnológico
+## Overview
 
-El proyecto sigue una arquitectura por capas (N-Layer) integrando servicios modernos:
+**REGIVA** is a SaaS platform designed to eliminate "financial blindness" for Costa Rican Small and Medium Enterprises (SMEs). It operates beyond standard electronic invoicing; it is a **financial intelligence** tool that combines mandatory tax compliance (Hacienda v4.4) with Artificial Intelligence models to project cash flows and calculate alternative credit scores.
 
-| Capa | Tecnología |
+The system is built upon a secure **Multi-Tenant** architecture, allowing the management of multiple isolated companies within a single database through `tenant_id` discrimination.
+
+---
+
+## Technology Stack
+
+The project follows an N-Layer architecture, integrating the following modern services:
+
+| Layer | Technology |
 |---|---|
 | **Backend** | ASP.NET Core 8 (MVC + Web API) |
-| **Base de Datos** | PostgreSQL 16 con Npgsql |
-| **Acceso a Datos** | Repositorios con Dapper (alto rendimiento) |
+| **Database** | PostgreSQL 16 with Npgsql |
+| **Data Access** | Repository Pattern with Dapper (high performance) |
 | **Frontend** | Razor Views, Bootstrap, jQuery |
-| **Inteligencia Artificial** | Python — Pandas, Scikit-learn, LSTM |
-| **Infraestructura** | API de Hacienda (OAuth 2.0 / OIDC) |
+| **Artificial Intelligence** | Python — Pandas, Scikit-learn, LSTM |
+| **Infrastructure** | Ministry of Finance (Hacienda) API (OAuth 2.0 / OIDC) |
 
 ---
 
-## ✨ Módulos Principales
+## Core Modules
 
-### 1. 🏢 Core Multi-Tenant
-- Aislamiento lógico de datos por `tenant_id`
-- Gestión de usuarios y roles (`tenant_users`)
-- Seguridad y auditoría completa (`created_at`, `updated_by`, logs)
+### 1. Multi-Tenant Core
+- Logical data isolation via `tenant_id`.
+- User and role management (`tenant_users`).
+- Comprehensive security and auditing (`created_at`, `updated_by`, system logs).
 
-### 2. 🧾 Facturación Electrónica (Hacienda v4.4)
-- **Documentos soportados:** Facturas, Tiquetes, Notas de Crédito/Débito, Mensajes de Aceptación
-- **Validaciones:** Integración con Código CABYS y validación de esquemas XSD
-- **REP (Recibo Electrónico de Pago):** Cálculo real de días de cobro (DSO) correlacionando facturas y pagos
-- **Almacenamiento XML:** Gestión de XML firmados y respuestas de Hacienda
+### 2. Electronic Invoicing (Hacienda v4.4)
+- **Supported Documents:** Electronic Invoices, Tickets, Credit/Debit Notes, and Acceptance Messages.
+- **Validations:** Direct integration with the CABYS catalog and XSD schema validation.
+- **Electronic Payment Receipt (REP):** Accurate calculation of Days Sales Outstanding (DSO) by correlating invoices with payments.
+- **XML Storage:** Secure management of signed XML files and official responses from Hacienda.
 
-### 3. 🤖 Inteligencia Artificial (Python Engine)
-- **Cash Flow Projections:** Modelos predictivos LSTM para estimar liquidez a 30 días
-- **Credit Scoring:** Algoritmo *Random Forest* que califica el comportamiento de pago de clientes (0–100) sin depender de burós tradicionales
-- **Detección de Anomalías:** "Escudo Fiscal" para detectar patrones de gasto inusuales
+### 3. Artificial Intelligence (Python Engine)
+- **Cash Flow Projections:** Predictive LSTM models designed to estimate 30-day liquidity.
+- **Credit Scoring:** A *Random Forest* algorithm that evaluates customer payment behavior (scoring 0–100) without relying on traditional credit bureaus.
+- **Anomaly Detection:** A "Tax Shield" feature that identifies unusual spending patterns to prevent financial discrepancies.
 
 ---
 
-## 🗄️ Estructura de Base de Datos
+## Database Structure
 
-La base de datos `regiva_cr` está diseñada en **3FN** e incluye los siguientes esquemas clave:
+The `regiva_cr` database is designed in Third Normal Form (**3NF**) and includes the following key schemas:
 
-| Tabla | Propósito |
+| Table(s) | Purpose |
 |---|---|
-| `tenants` & `users` | Gestión de acceso y empresas |
-| `electronic_documents` & `document_lines` | Tablas transaccionales principales |
-| `payment_receipts` | Trazabilidad de pagos parciales y totales |
-| `cash_flow_projections` & `credit_scores` | Resultados de los modelos de IA |
+| `tenants` & `users` | Access control and company management |
+| `electronic_documents` & `document_lines` | Primary transactional records |
+| `payment_receipts` | Traceability of partial and full payments |
+| `cash_flow_projections` & `credit_scores` | Outputs generated by the AI models |
 
-> **Nota:** Se utiliza un patrón de **Soft Delete** (`deleted_at`) en todas las tablas transaccionales.
+> **Note:** A **Soft Delete** pattern (`deleted_at`) is implemented across all transactional tables to preserve data integrity.
 
 ---
 
-## 🛠 Instalación y Configuración
+## Installation and Configuration
 
-### Prerrequisitos
+### Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
 - [PostgreSQL 14+](https://www.postgresql.org/download/)
 - [Python 3.11+](https://www.python.org/)
-- [DBeaver](https://dbeaver.io/) *(recomendado para gestión de BD)*
+- [DBeaver](https://dbeaver.io/) *(recommended for database management)*
 
-### 1. Clonar el Repositorio
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/tu-usuario/regiva-cr.git
+git clone [https://github.com/your-username/regiva-cr.git](https://github.com/your-username/regiva-cr.git)
 cd regiva-cr
-```
-
-### 2. Configuración de Base de Datos
-
-Crea una base de datos vacía en PostgreSQL llamada `regiva_cr` y el usuario de aplicación:
-
-```sql
-CREATE USER regiva_app WITH PASSWORD 'secure_password';
-GRANT ALL PRIVILEGES ON DATABASE regiva_cr TO regiva_app;
-```
-
-Luego actualiza la cadena de conexión en `appsettings.json`:
-
-```xml
-<connectionStrings>
-  <add name="REGIVAConnection"
-       connectionString="Host=localhost; Database=regiva_cr; Username=regiva_app; Password=secure_password; Pooling=true; MinPoolSize=5; MaxPoolSize=100"
-       providerName="Npgsql" />
-</connectionStrings>
-```
-
-### 3. Ejecutar Migraciones
-
-Ejecuta el script SQL inicial ubicado en `/database/init.sql`, o usa EF Core si está configurado para la creación inicial.
-
-### 4. Entorno Python (IA)
-
-```bash
-pip install pandas numpy scikit-learn lxml xmltodict
-```
-
----
-
-## 📂 Estructura del Proyecto
-
-```
-REGIVA.Web/
-├── Controllers/
-│   ├── Public/              # HomeController, AuthController (Landing & Login)
-│   ├── Admin/               # Dashboard, Documents, Customers, Reports
-│   └── API/                 # DocumentsApiController (AJAX)
-├── Views/
-│   ├── Shared/              # _Layout.cshtml, _Sidebar.cshtml
-│   ├── Dashboard/           # Resumen financiero e IA
-│   ├── Documents/           # Creación de facturas y anulación
-│   └── Reports/             # Flujo de caja y reporte fiscal
-├── wwwroot/
-│   ├── css/                 # admin.css, landing.css
-│   └── js/                  # Lógica de cliente (charts.js, documents.js)
-└── Areas/                   # Soporte para estructura Multi-tenant
-```
-
----
-
-## 🗺 Hoja de Ruta (Roadmap)
-
-| Fase | Período | Alcance |
-|---|---|---|
-| **Fase 1** | Q1 2025 | Cimientos legales, conexión API Hacienda, MVP de facturación básica |
-| **Fase 2** | Q2 2025 | Motor de datos, recepción automática de facturas, lanzamiento Alpha |
-| **Fase 3** | Q3 2025 | IA completa (LSTMs), migración v4.4, dashboards predictivos |
-| **Fase 4** | Q4 2025+ | Escalamiento, servicios financieros (Factoring) y expansión |
-
----
-
-## ⚖️ Licencia y Autoría
-
-**Autor:** Julián Clot Córdoba — [julianclot123@gmail.com](mailto:julianclot123@gmail.com)
-
-**Licencia:** Propietario — Todos los derechos reservados.
-
-*Documentación basada en "Horizonte Tecnológico Costa Rica 2030", "Documentación de Base de Datos REGIVA" y "Arquitectura UI/UX REGIVA".*
