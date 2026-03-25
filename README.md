@@ -1,12 +1,16 @@
-# REGIVA Costa Rica (SaaS)
+<div align="center">
+  <img src="public/images/icons/REGIVA_Icon.png" alt="REGIVA Logo" width="200" />
+  
+  <h1>REGIVA Costa Rica (SaaS)</h1>
 
-[![Status](https://img.shields.io/badge/Status-Development-yellow)](#)
-[![.NET](https://img.shields.io/badge/.NET-Core_8.0-purple)](#)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)](#)
-[![Python](https://img.shields.io/badge/Python-3.11-green)](#)
-[![License](https://img.shields.io/badge/License-Proprietary-red)](#)
+  [![Status](https://img.shields.io/badge/Status-Development-yellow)](#)
+  [![.NET](https://img.shields.io/badge/.NET-Core_8.0-purple)](#)
+  [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)](#)
+  [![Python](https://img.shields.io/badge/Python-3.11-green)](#)
+  [![License](https://img.shields.io/badge/License-Proprietary-red)](#)
 
-The Financial Ecosystem and "Autonomous CFO" for SMEs in Costa Rica.
+  <p>The Financial Ecosystem and "Autonomous CFO" for SMEs in Costa Rica.</p>
+</div>
 
 ---
 
