@@ -16,7 +16,7 @@
 
 ## Overview
 
-**REGIVA** is a SaaS platform designed to eliminate "financial blindness" for Costa Rican Small and Medium Enterprises (SMEs). It operates beyond standard electronic invoicing; it is a **financial intelligence** tool that combines mandatory tax compliance (Hacienda v4.4) with Artificial Intelligence models to project cash flows and calculate alternative credit scores.
+**REGIVA** is a SaaS platform designed to eliminate "financial blindness" for Costa Rican Small and Medium Enterprises (SMEs). It operates beyond standard electronic invoicing, it is a **financial intelligence** tool that combines mandatory tax compliance (Hacienda v4.4) with Artificial Intelligence models to project cash flows and calculate alternative credit scores.
 
 The system is built upon a secure **Multi-Tenant** architecture, allowing the management of multiple isolated companies within a single database through `tenant_id` discrimination.
 
